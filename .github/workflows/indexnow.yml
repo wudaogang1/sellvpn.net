@@ -1,0 +1,27 @@
+name: IndexNow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get URLs from sitemap
+        run: |
+          curl https://sellvpn.net/sitemap.xml | grep -oP '(?<=<loc>)[^<]+' > urls.txt
+
+      - name: Submit to IndexNow
+        run: |
+          urls=$(jq -R . < urls.txt | jq -s .)
+          curl -X POST "https://api.indexnow.org/indexnow" \
+          -H "Content-Type: application/json" \
+          -d "{
+            \"host\": \"sellvpn.net\",
+            \"key\": \"8465d5c195b646239252f14d3840d869\",
+            \"keyLocation\": \"https://sellvpn.net/8465d5c195b646239252f14d3840d869.txt\",
+            \"urlList\": $urls
+          }"
