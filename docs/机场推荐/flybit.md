@@ -15,7 +15,7 @@ description: Flybit机场怎么样？2026实测全球节点稳定性、套餐价
 
 Flybit机场怎么样？2026实测全球节点稳定性、套餐价格与速度表现，支持ChatGPT、Netflix与YouTube。本文提供全面评测与使用指南，帮助用户判断是否值得长期使用。
 
-- 官方入口：👉[https://goflybit.com](https://goflybit.com/#/register?code=p3DOcgzt)
+- 官方入口：👉[https://goflybit.com](https://goflybit.com/#/register?code=gsg1tyG4)
 - 最便宜套餐：**25元 / 128GB / 30天**  
 > 🔑 小贴士：首次购买9折优惠码：**flybit**
 
@@ -201,7 +201,7 @@ Flybit是一款 **稳定型、长期使用友好** 的机场，优势：
 
 👉 对于 **科学上网、流媒体、AI应用用户**，是一个值得尝试的选择  
 
-**立即体验**：[注册Flybit新用户，获取24小时/2GB试用](https://goflybit.com/#/register?code=p3DOcgzt)
+**立即体验**：[注册Flybit新用户，获取24小时/2GB试用](https://goflybit.com/#/register?code=gsg1tyG4)
 
 ---
 
