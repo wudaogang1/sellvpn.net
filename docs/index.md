@@ -6,16 +6,16 @@ description: 2026最新科学上网教程，精选稳定VPN与机场推荐，支
 config:
   - type: doc-hero
     hero:
-      name: "Your Proxy 7"
+      name: "Sell VPN 机场测评与推荐"
       text: "科学上网教程与机场推荐"
       tagline: "最新 VPN、机场节点、Shadowrocket 与 Clash 使用指南"
       actions:
         - theme: brand
           text: "查看教程 →"
-          link: "https://www.yp7.net/posts/jieshao/"
+          link: "https://www.sellvpn.net/posts/jieshao/"
         - theme: brand
           text: "机场推荐 →"
-          link: "https://www.yp7.net/posts/vpn-airport-ranking-2026/"
+          link: "https://www.sellvpn.net/posts/vpn-airport-ranking-2026/"
 
   - type: features
     features:
@@ -71,6 +71,6 @@ config:
 
       - title: "更多机场..."
         details: "支持多种评论系统，支持本地搜索、Algolia搜索"
-        link: "https://yp7.net"        
+        link: "https://sellvpn.net"        
 
 ---
