@@ -18,4 +18,4 @@ config:
           link: "https://www.sellvpn.net/posts/vpn-airport-ranking-2026/"
         - theme: brand
           text: "联系方式→"
-          link: "https://www.sellvpn.net/posts/vpn-airport-ranking-2026/"
+          link: "https://sellvpn.net/article/w4q5524n/"
