@@ -12,7 +12,7 @@ config:
       actions:
         - theme: brand
           text: "查看教程 →"
-          link: "https://www.sellvpn.net/posts/jieshao/"
+          link: "https:sellvpn.net/article/eh8f4n86/"
         - theme: brand
           text: "机场推荐 →"
           link: "https://www.sellvpn.net/posts/vpn-airport-ranking-2026/"
