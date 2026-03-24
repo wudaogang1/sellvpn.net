@@ -12,10 +12,8 @@ config:
       actions:
         - theme: brand
           text: "常用工具及教程 →"
-          link: "https:sellvpn.net/article/eh8f4n86/"
+          link: "https://sellvpn.net/blog/clashmi/"
         - theme: brand
           text: "梯子及机场推荐 →"
           link: "https://www.sellvpn.net/posts/vpn-airport-ranking-2026/"
-        - theme: brand
-          text: "联系方式→"
-          link: "https://sellvpn.net/article/w4q5524n/"
+        
