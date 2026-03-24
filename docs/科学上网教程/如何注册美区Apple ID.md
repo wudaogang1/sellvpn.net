@@ -1,6 +1,6 @@
 ---
 title: 如何注册美区 Apple ID（2026 最新教程）：无需信用卡创建美国 Apple ID 完整指南
-createTime: 2026/03/06 12:20:00
+createTime: 2026/03/34 12:20:00
 permalink: /blog/us-apple-id-register/
 description: 2026 最新美区 Apple ID 注册教程，详细讲解如何创建美国 Apple ID、填写美国地址、选择 None 付款方式以及常见问题解决，新手也能快速完成注册。
 tags:

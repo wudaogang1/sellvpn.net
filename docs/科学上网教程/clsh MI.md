@@ -1,6 +1,6 @@
 ---
 title: iOS Clash Mi 使用教程（2026最新版）：下载安装、订阅导入与常见问题
-createTime: 2026/03/05 10:34:23
+createTime: 2026/03/24 10:34:23
 permalink: /blog/clashmi/
 description: 2026年最新 Clash Mi 使用指南，详细讲解 iPhone/iPad 下载、订阅导入、连接设置、TUN 覆写以及常见报错解决方法，新手也能快速完成配置。
 tags:
