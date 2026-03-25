@@ -251,7 +251,7 @@ A：注册后可获得 24小时 / 2GB 免费试用。
 
 **Q4：推荐使用什么客户端？**  
 A：安卓推荐 Clash，iOS 推荐 Clash MI或 Shadowrocket。
-软件使用方法(/blog/clashmi/)
+[软件使用方法](/blog/clashmi/)
 
 ---
 
