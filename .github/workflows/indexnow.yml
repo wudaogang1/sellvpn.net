@@ -21,7 +21,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d "{
             \"host\": \"sellvpn.net\",
-            \"key\": \"8465d5c195b646239252f14d3840d869\",
-            \"keyLocation\": \"https://sellvpn.net/8465d5c195b646239252f14d3840d869.txt\",
+            \"key\": \"47592892f8844e74976c2ed3dc62b730\",
+            \"keyLocation\": \"https://sellvpn.net/47592892f8844e74976c2ed3dc62b730.txt\",
             \"urlList\": $urls
           }"
