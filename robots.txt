@@ -1,0 +1,3 @@
+Sitemap: https://sellvpn.net/sitemap.xml
+User-agent:*
+Disallow:
