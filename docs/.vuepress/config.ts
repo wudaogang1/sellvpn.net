@@ -2,27 +2,53 @@ import { defineUserConfig } from 'vuepress'
 import { viteBundler } from '@vuepress/bundler-vite'
 import { plumeTheme } from 'vuepress-theme-plume'
 
+const siteUrl = 'https://sellvpn.net'
+const siteName = 'Sell VPN'
+const siteDescription =
+  'Sell VPN 提供 2026 年机场推荐、VPN 机场测评、科学上网教程、Clash Mi 配置和美区 Apple ID 注册指南。'
+
+const toISOString = (value: unknown): string => {
+  if (!value) return ''
+  const date = new Date(String(value).replace(/\//g, '-'))
+  return Number.isNaN(date.getTime()) ? '' : date.toISOString()
+}
+
 export default defineUserConfig({
   lang: 'zh-CN',
+  title: siteName,
+  description: siteDescription,
   head: [
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-    ['meta', { name: 'robots', content: 'index, follow' }],
-    ['meta', { name: 'author', content: 'sellvpn' }],
-    ['meta', { name: 'keywords', content: 'VPN推荐,科学上网,机场推荐,翻墙VPN' }],
+    ['meta', { name: 'author', content: siteName }],
+    ['meta', { name: 'theme-color', content: '#2563eb' }],
+    ['meta', { name: 'format-detection', content: 'telephone=no' }],
+    ['meta', { name: 'keywords', content: '机场推荐,VPN推荐,科学上网,翻墙机场,Clash教程' }],
   ],
   theme: plumeTheme({
     // logo: '/images/logo.svg',
     home: '/',
-    hostname: 'https://sellvpn.net',
-    footer: { message: "©  WU 只推荐好用的机场" },
+    hostname: siteUrl,
+    footer: { message: '© Sell VPN 只推荐好用的机场' },
 
     navbar: [
-
+      { text: '首页', link: '/' },
+      { text: '机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
+      { text: '优惠码', link: '/posts/airport-coupon-table/' },
+      { text: '科学上网教程', link: '/posts/jieshao/' },
+      {
+        text: '使用教程',
+        items: [
+          { text: 'Clash Mi 教程', link: '/blog/clashmi/' },
+          { text: '美区 Apple ID', link: '/blog/us-apple-id-register/' },
+          { text: '如何挑选机场', link: '/article/jeslp91s/' },
+        ],
+      },
+      { text: '联系', link: '/article/w4q5524n/' },
     ],
     profile: {
-      name: 'Sell vpn',
-      description: '科学上网推荐达人',
+      name: siteName,
+      description: '机场测评、VPN 推荐与科学上网教程',
       // avatar: '/images/logo.svg',
     },
     social: [
@@ -32,7 +58,70 @@ export default defineUserConfig({
       },
     ],
     plugins: {
+      sitemap: {
+        changefreq: 'weekly',
+        excludePaths: ['/404.html'],
+        modifyTimeGetter: (page) =>
+          page.data.git?.updatedTime
+            ? new Date(page.data.git.updatedTime).toISOString()
+            : toISOString(page.frontmatter.updateTime || page.frontmatter.date || page.frontmatter.createTime),
+      },
+      seo: {
+        canonical: siteUrl,
+        author: {
+          name: siteName,
+          url: `${siteUrl}/article/w4q5524n/`,
+        },
+        fallBackImage: `${siteUrl}/plume.svg`,
+        isArticle: (page) => Boolean(page.filePathRelative && page.path !== '/' && page.path !== '/article/w4q5524n/'),
+        customHead: (head, page) => {
+          const robots =
+            page.path === '/404.html'
+              ? 'noindex, nofollow'
+              : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
+          head.unshift(['meta', { name: 'robots', content: robots }])
+        },
+        jsonLd: (jsonLD, page) => {
+          if ('@type' in jsonLD && jsonLD['@type'] === 'Article') {
+            const datePublished = toISOString(page.frontmatter.date || page.frontmatter.createTime)
+            const dateModified = toISOString(page.frontmatter.updateTime || page.data.git?.updatedTime || page.frontmatter.date || page.frontmatter.createTime)
+
+            return {
+              ...jsonLD,
+              ...(datePublished ? { datePublished } : {}),
+              ...(dateModified ? { dateModified } : {}),
+              publisher: {
+                '@type': 'Organization',
+                name: siteName,
+                url: siteUrl,
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `${siteUrl}${page.path}`,
+              },
+            }
+          }
+
+          if (page.path === '/') {
+            return {
+              ...jsonLD,
+              publisher: {
+                '@type': 'Organization',
+                name: siteName,
+                url: siteUrl,
+              },
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${siteUrl}/?s={search_term_string}`,
+                'query-input': 'required name=search_term_string',
+              },
+            }
+          }
+
+          return jsonLD
+        },
+      },
     },
     markdown: {
       collapse: true,

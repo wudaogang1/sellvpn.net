@@ -1,7 +1,7 @@
 ---
 title: ✈️ XXYUN机场怎么样？2026真实评测：9.9元100GB套餐是否值得入手（测速+官网入口）
-createtime: 2026/03/25
 permalink: /posts/xxyun-review-2026/
+cover: /xxyun.png
 tags:
   - XXYUN
   - 机场评测
@@ -11,6 +11,7 @@ tags:
   - 流媒体解锁
 description: XXYUN机场靠谱吗？本文基于2026真实测试，对XXYUN机场的套餐价格、节点测速、流媒体解锁能力和稳定性进行详细分析，适合寻找9.9元高性价比机场用户参考。
 createTime: 2026/03/15 09:37:04
+date: 2026-03-15T09:37:04.000Z
 ---
 
 更新时间：**2026年3月**
@@ -361,4 +362,3 @@ XXYUN采用 **BGP三网优化中转模式**。
 如果你想查看更多机场选择：
 
 - 👉 [2026机场推荐排行榜](/posts/vpn-airport-ranking-2026/)
-

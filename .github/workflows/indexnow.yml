@@ -1,27 +1,35 @@
 name: IndexNow
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["deploy"]
+    types:
+      - completed
+  workflow_dispatch:
 
 jobs:
   indexnow:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Get URLs from sitemap
         run: |
-          curl https://sellvpn.net/sitemap.xml | grep -oP '(?<=<loc>)[^<]+' > urls.txt
+          set -euo pipefail
+          curl -fsSL --retry 3 https://sellvpn.net/sitemap.xml \
+            | grep -oP '(?<=<loc>)[^<]+' > urls.txt
+          test -s urls.txt
+          echo "Submitting $(wc -l < urls.txt) URLs to IndexNow"
 
       - name: Submit to IndexNow
         run: |
+          set -euo pipefail
           urls=$(jq -R . < urls.txt | jq -s .)
-          curl -X POST "https://api.indexnow.org/indexnow" \
-          -H "Content-Type: application/json" \
-          -d "{
-            \"host\": \"sellvpn.net\",
-            \"key\": \"47592892f8844e74976c2ed3dc62b730\",
-            \"keyLocation\": \"https://sellvpn.net/47592892f8844e74976c2ed3dc62b730.txt\",
-            \"urlList\": $urls
-          }"
+          curl -fsSL -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"sellvpn.net\",
+              \"key\": \"47592892f8844e74976c2ed3dc62b730\",
+              \"keyLocation\": \"https://sellvpn.net/47592892f8844e74976c2ed3dc62b730.txt\",
+              \"urlList\": $urls
+            }"

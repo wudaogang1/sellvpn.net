@@ -1,5 +1,6 @@
 ---
 createTime: 2026/04/02
+date: 2026-04-02T00:00:00.000Z
 tags:
   - 科学上网
   - VPN
@@ -7,6 +8,7 @@ tags:
   - 推荐
 title: ✈️ ssone机场怎么样？2026最新评测：10元60GB套餐是否值得？节点测速与稳定性解析
 permalink: /posts/ssone/
+cover: /ssone.png
 description: ssone机场靠谱吗？本文基于2026真实测试，对ssone机场套餐价格、节点稳定性、测速表现与流媒体解锁能力进行详细评测，适合想寻找10元高性价比VPN机场的用户参考。
 ---
 
