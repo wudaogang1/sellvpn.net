@@ -202,6 +202,30 @@
   text-decoration: none;
 }
 
+.vp-doc.plume-content :where(p > img, p > a > img) {
+  display: block;
+  box-sizing: border-box;
+  margin: 24px auto;
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 8px;
+  background-color: var(--vp-c-bg-soft);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.vp-doc.plume-content :where(p > img, p > a > img):not([alt*="logo" i]) {
+  width: min(100%, 760px);
+  height: clamp(220px, 55vw, 430px);
+  padding: 10px;
+  object-fit: contain;
+}
+
+.vp-doc.plume-content :where(p > img[alt*="logo" i], p > a > img[alt*="logo" i]) {
+  width: 160px;
+  height: 160px;
+  padding: 14px;
+  object-fit: contain;
+}
+
 .index-section {
   margin: 0;
   padding: 20px 0 36px;
@@ -428,5 +452,16 @@
 
   .quick-card {
     min-height: 156px;
+  }
+
+  .vp-doc.plume-content :where(p > img, p > a > img):not([alt*="logo" i]) {
+    height: clamp(180px, 64vw, 300px);
+    padding: 8px;
+  }
+
+  .vp-doc.plume-content :where(p > img[alt*="logo" i], p > a > img[alt*="logo" i]) {
+    width: 128px;
+    height: 128px;
+    padding: 12px;
   }
 }
