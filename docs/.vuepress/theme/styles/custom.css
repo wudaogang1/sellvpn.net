@@ -213,16 +213,16 @@
 }
 
 .vp-doc.plume-content :where(p > img, p > a > img):not([alt*="logo" i]) {
-  width: min(100%, 760px);
-  height: clamp(220px, 55vw, 430px);
-  padding: 10px;
+  width: min(100%, 680px);
+  height: clamp(190px, 48vw, 360px);
+  padding: 8px;
   object-fit: contain;
 }
 
 .vp-doc.plume-content :where(p > img[alt*="logo" i], p > a > img[alt*="logo" i]) {
-  width: 160px;
-  height: 160px;
-  padding: 14px;
+  width: 128px;
+  height: 128px;
+  padding: 10px;
   object-fit: contain;
 }
 
@@ -455,13 +455,13 @@
   }
 
   .vp-doc.plume-content :where(p > img, p > a > img):not([alt*="logo" i]) {
-    height: clamp(180px, 64vw, 300px);
-    padding: 8px;
+    height: clamp(160px, 58vw, 260px);
+    padding: 6px;
   }
 
   .vp-doc.plume-content :where(p > img[alt*="logo" i], p > a > img[alt*="logo" i]) {
-    width: 128px;
-    height: 128px;
-    padding: 12px;
+    width: 104px;
+    height: 104px;
+    padding: 8px;
   }
 }
