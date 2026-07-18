@@ -2,7 +2,21 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const distDir = path.join(process.cwd(), 'docs', '.vuepress', 'dist')
+const siteUrl = 'https://sellvpn.net'
 const siteHostPattern = /^https?:\/\/(?:www\.)?sellvpn\.net/i
+const defaultKeywords =
+  '2026机场推荐,最新机场推荐,各大机场优惠码,机场优惠码,稳定机场推荐,便宜机场推荐,VPN推荐,翻墙VPN,翻墙机场,科学上网,Clash Mi教程,Shadowrocket教程,ChatGPT节点,YouTube加速,流媒体解锁'
+const pageSeoOverrides = new Map([
+  [
+    '/blog/',
+    {
+      title: '所有文章｜2026机场推荐、机场测评与科学上网教程 | Sell VPN',
+      description:
+        'Sell VPN 所有文章列表，汇总2026最新机场推荐、各大机场优惠码、机场测评、VPN推荐、科学上网教程、Clash Mi与Shadowrocket配置指南。',
+      keywords: `${defaultKeywords},所有文章,机场测评汇总,科学上网文章`,
+    },
+  ],
+])
 
 const walk = (dir, predicate = () => true) => {
   const entries = []
@@ -36,20 +50,117 @@ const addNofollow = (tag) => {
   return tag.replace(/<a\b/i, '<a rel="nofollow"')
 }
 
+const routeFromHtmlFile = (file) => {
+  const rel = path.relative(distDir, file).replaceAll(path.sep, '/')
+
+  if (rel === 'index.html') return '/'
+  if (rel.endsWith('/index.html')) return `/${rel.replace(/\/index\.html$/, '/')}`
+
+  return `/${rel}`
+}
+
+const escapeAttribute = (value) =>
+  String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+
+const upsertMetaName = (html, name, content) => {
+  const escaped = escapeAttribute(content)
+  const meta = `<meta name="${name}" content="${escaped}">`
+  const pattern = new RegExp(`<meta\\s+name="${name}"\\s+content="[^"]*"\\s*/?>`, 'i')
+
+  if (pattern.test(html)) return html.replace(pattern, meta)
+  return html.replace('</head>', `${meta}</head>`)
+}
+
+const ensureMetaName = (html, name, content) =>
+  new RegExp(`<meta\\s+name="${name}"\\s+content="[^"]*"\\s*/?>`, 'i').test(html)
+    ? html
+    : upsertMetaName(html, name, content)
+
+const upsertMetaProperty = (html, property, content) => {
+  const escaped = escapeAttribute(content)
+  const meta = `<meta property="${property}" content="${escaped}">`
+  const pattern = new RegExp(`<meta\\s+property="${property}"\\s+content="[^"]*"\\s*/?>`, 'i')
+
+  if (pattern.test(html)) return html.replace(pattern, meta)
+  return html.replace('</head>', `${meta}</head>`)
+}
+
+const ensureMetaProperty = (html, property, content) =>
+  new RegExp(`<meta\\s+property="${property}"\\s+content="[^"]*"\\s*/?>`, 'i').test(html)
+    ? html
+    : upsertMetaProperty(html, property, content)
+
+const getTitle = (html) => html.match(/<title>([^<]*)<\/title>/i)?.[1] || 'Sell VPN'
+
+const getMetaNameContent = (html, name) =>
+  html.match(new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]*)"\\s*/?>`, 'i'))?.[1] || ''
+
+const upsertCanonical = (html, route) => {
+  if (route === '/404.html') return html
+
+  const canonical = `<link rel="canonical" href="${siteUrl}${route}">`
+
+  if (/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i.test(html)) {
+    return html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, canonical)
+  }
+
+  return html.replace('</head>', `${canonical}</head>`)
+}
+
+const replaceTitle = (html, title) =>
+  /<title>[^<]*<\/title>/i.test(html)
+    ? html.replace(/<title>[^<]*<\/title>/i, `<title>${title}</title>`)
+    : html.replace('</head>', `<title>${title}</title></head>`)
+
 let updatedHtmlFiles = 0
 let updatedLinks = 0
+let updatedSeoFiles = 0
 
 for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
   const html = fs.readFileSync(file, 'utf8')
-  const next = html.replace(/<a\b[^>]*\bhref="https?:\/\/[^"]+"[^>]*>/gi, (tag) => {
+  const route = routeFromHtmlFile(file)
+  let next = html.replace(/<a\b[^>]*\bhref="https?:\/\/[^"]+"[^>]*>/gi, (tag) => {
     const updated = addNofollow(tag)
     if (updated !== tag) updatedLinks += 1
     return updated
   })
 
+  next = upsertMetaName(
+    next,
+    'robots',
+    route === '/404.html'
+      ? 'noindex, nofollow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+  )
+  next = upsertCanonical(next, route)
+
+  const override = pageSeoOverrides.get(route)
+
+  if (override) {
+    next = replaceTitle(next, override.title)
+    next = upsertMetaName(next, 'description', override.description)
+    next = upsertMetaName(next, 'keywords', override.keywords)
+  } else {
+    next = ensureMetaName(next, 'keywords', defaultKeywords)
+  }
+
+  if (route !== '/404.html') {
+    next = ensureMetaProperty(next, 'og:url', `${siteUrl}${route}`)
+    next = ensureMetaProperty(next, 'og:site_name', 'Sell VPN')
+    next = ensureMetaProperty(next, 'og:title', getTitle(next).replace(/\s*\|\s*Sell VPN$/, ''))
+    next = ensureMetaProperty(next, 'og:description', getMetaNameContent(next, 'description') || defaultKeywords)
+    next = ensureMetaProperty(next, 'og:type', route === '/' || route === '/blog/' ? 'website' : 'article')
+    next = ensureMetaProperty(next, 'og:locale', 'zh-CN')
+  }
+
   if (next !== html) {
     fs.writeFileSync(file, next)
     updatedHtmlFiles += 1
+    updatedSeoFiles += 1
   }
 }
 
@@ -58,4 +169,6 @@ fs.writeFileSync(
   ['User-agent: *', 'Allow: /', 'Sitemap: https://sellvpn.net/sitemap.xml', ''].join('\n'),
 )
 
-console.log(`Postbuild SEO: updated ${updatedLinks} external links in ${updatedHtmlFiles} HTML files and normalized robots.txt.`)
+console.log(
+  `Postbuild SEO: updated ${updatedLinks} external links in ${updatedHtmlFiles} HTML files, normalized ${updatedSeoFiles} SEO heads and robots.txt.`,
+)

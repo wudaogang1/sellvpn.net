@@ -5,12 +5,69 @@ import { plumeTheme } from 'vuepress-theme-plume'
 const siteUrl = 'https://sellvpn.net'
 const siteName = 'Sell VPN'
 const siteDescription =
-  'Sell VPN 提供 2026 年机场推荐、VPN 机场测评、科学上网教程、Clash Mi 配置和美区 Apple ID 注册指南。'
+  'Sell VPN 面向中国用户整理 2026 最新机场推荐、稳定机场排行榜、各大机场优惠码、VPN 推荐、机场测评、科学上网教程、Clash Mi 与 Shadowrocket 配置指南。'
+const defaultKeywords = [
+  '2026机场推荐',
+  '最新机场推荐',
+  '各大机场优惠码',
+  '机场优惠码',
+  '稳定机场推荐',
+  '便宜机场推荐',
+  'VPN推荐',
+  '翻墙VPN',
+  '翻墙机场',
+  '科学上网',
+  'Clash Mi教程',
+  'Shadowrocket教程',
+  'ChatGPT节点',
+  'YouTube加速',
+  '流媒体解锁',
+]
 
 const toISOString = (value: unknown): string => {
   if (!value) return ''
   const date = new Date(String(value).replace(/\//g, '-'))
   return Number.isNaN(date.getTime()) ? '' : date.toISOString()
+}
+
+const toArray = (value: unknown): string[] => {
+  if (Array.isArray(value)) return value.map(String)
+  if (typeof value === 'string') return value.split(/[,，、]/)
+  return []
+}
+
+const cleanKeyword = (value: string): string =>
+  value
+    .replace(/[✈️👉✅✔]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const getTitleKeywords = (title: unknown): string[] =>
+  String(title || '')
+    .split(/[：:｜|（）(),，、+]/)
+    .map(cleanKeyword)
+    .filter((item) => item.length >= 2 && item.length <= 24)
+
+const getCategoryKeywords = (filePathRelative: unknown): string[] => {
+  const filePath = String(filePathRelative || '')
+
+  if (filePath.includes('机场测评')) return ['机场测评', '机场怎么样', '机场测速', '机场稳定性']
+  if (filePath.includes('机场推荐')) return ['机场推荐', '机场排行', '机场优惠码', '机场入口']
+  if (filePath.includes('科学上网教程')) return ['科学上网教程', '翻墙教程', '代理客户端教程']
+
+  return []
+}
+
+const getPageKeywords = (page: { frontmatter: Record<string, unknown>; filePathRelative?: string | null; title?: string }): string => {
+  const keywords = [
+    ...toArray(page.frontmatter.keywords),
+    ...toArray(page.frontmatter.tags),
+    ...getTitleKeywords(page.frontmatter.title || page.title),
+    ...getCategoryKeywords(page.filePathRelative),
+    ...defaultKeywords,
+  ]
+
+  return [...new Set(keywords.map(cleanKeyword).filter(Boolean))].slice(0, 20).join(',')
 }
 
 export default defineUserConfig({
@@ -23,18 +80,18 @@ export default defineUserConfig({
     ['meta', { name: 'author', content: siteName }],
     ['meta', { name: 'theme-color', content: '#2563eb' }],
     ['meta', { name: 'format-detection', content: 'telephone=no' }],
-    ['meta', { name: 'keywords', content: '机场推荐,VPN推荐,科学上网,翻墙机场,Clash教程' }],
   ],
   theme: plumeTheme({
     // logo: '/images/logo.svg',
     home: '/',
     hostname: siteUrl,
+    blogText: '所有文章',
     footer: { message: '© Sell VPN 只推荐好用的机场' },
 
     navbar: [
       { text: '首页', link: '/' },
-      { text: '机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
-      { text: '优惠码', link: '/posts/airport-coupon-table/' },
+      { text: '2026机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
+      { text: '各大机场优惠码', link: '/posts/airport-coupon-table/' },
       { text: '科学上网教程', link: '/posts/jieshao/' },
       {
         text: '使用教程',
@@ -44,6 +101,7 @@ export default defineUserConfig({
           { text: '如何挑选机场', link: '/article/jeslp91s/' },
         ],
       },
+      { text: '所有文章', link: '/blog/' },
       { text: '联系', link: '/article/w4q5524n/' },
     ],
     profile: {
@@ -81,6 +139,7 @@ export default defineUserConfig({
               : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
           head.unshift(['meta', { name: 'robots', content: robots }])
+          head.unshift(['meta', { name: 'keywords', content: getPageKeywords(page) }])
         },
         jsonLd: (jsonLD, page) => {
           if ('@type' in jsonLD && jsonLD['@type'] === 'Article') {

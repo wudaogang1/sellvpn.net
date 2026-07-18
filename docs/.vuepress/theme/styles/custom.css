@@ -269,6 +269,234 @@
   line-height: 1.8;
 }
 
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.path-card,
+.choice-card,
+.all-articles-entry,
+.read-note {
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 8px;
+  background-color: var(--sellvpn-c-panel);
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.04);
+}
+
+.path-card {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 14px;
+  min-height: 210px;
+  padding: 20px;
+  color: var(--sellvpn-c-ink);
+}
+
+.path-card-primary {
+  border-color: rgba(37, 99, 235, 0.3);
+  background-color: rgba(37, 99, 235, 0.07);
+}
+
+.step-number {
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.path-card strong,
+.choice-card strong,
+.read-note strong {
+  display: block;
+  color: var(--sellvpn-c-ink);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.path-card p,
+.choice-card p,
+.read-note p {
+  margin: 10px 0 0;
+  color: var(--sellvpn-c-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.path-card em {
+  display: inline-flex;
+  margin-top: 16px;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.all-articles-entry {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 18px 20px;
+  background-color: rgba(15, 118, 110, 0.08);
+}
+
+.all-articles-entry span {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background-color: rgba(15, 118, 110, 0.12);
+  color: var(--vp-c-brand-2);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.all-articles-entry strong {
+  display: block;
+  color: var(--sellvpn-c-ink);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.all-articles-entry p {
+  margin: 8px 0 0;
+  color: var(--sellvpn-c-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.all-articles-entry > a {
+  display: inline-flex;
+  min-height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background-color: var(--vp-c-brand-1);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.choice-card {
+  min-height: 160px;
+  padding: 18px;
+  color: var(--sellvpn-c-ink);
+}
+
+.choice-card-all {
+  border-color: rgba(15, 118, 110, 0.26);
+  background-color: rgba(15, 118, 110, 0.07);
+}
+
+.choice-card span {
+  display: inline-flex;
+  max-width: 100%;
+  margin-bottom: 16px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background-color: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.keyword-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.keyword-cloud a {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 40px;
+  align-items: center;
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--sellvpn-c-ink);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.check-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.check-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.check-list li {
+  min-height: 104px;
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 8px;
+  padding: 16px;
+  background-color: var(--sellvpn-c-panel);
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.04);
+}
+
+.check-list strong {
+  display: block;
+  color: var(--sellvpn-c-ink);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.check-list span {
+  display: block;
+  margin-top: 8px;
+  color: var(--sellvpn-c-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.read-note {
+  padding: 20px;
+  background-color: rgba(15, 118, 110, 0.08);
+}
+
+.read-note a {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .quick-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -397,14 +625,23 @@
 }
 
 .quick-card:hover,
-.review-card:hover {
+.review-card:hover,
+.path-card:hover,
+.choice-card:hover,
+.all-articles-entry:hover,
+.keyword-cloud a:hover {
   border-color: var(--vp-c-brand-1);
   transform: translateY(-2px);
   box-shadow: var(--sellvpn-shadow);
 }
 
 .quick-card,
-.review-card {
+.review-card,
+.path-card,
+.choice-card,
+.all-articles-entry,
+.keyword-cloud a,
+.read-note {
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
@@ -414,6 +651,10 @@
 
 .quick-card:focus-visible,
 .review-card:focus-visible,
+.path-card:focus-visible,
+.choice-card:focus-visible,
+.all-articles-entry > a:focus-visible,
+.keyword-cloud a:focus-visible,
 .faq-card a:focus-visible {
   outline: 3px solid var(--vp-c-brand-soft);
   outline-offset: 3px;
@@ -421,9 +662,15 @@
 
 @media (max-width: 959px) {
   .quick-grid,
+  .path-grid,
+  .choice-grid,
   .review-grid,
   .faq-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .check-layout {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -445,9 +692,41 @@
   }
 
   .quick-grid,
+  .path-grid,
+  .choice-grid,
   .review-grid,
-  .faq-grid {
+  .faq-grid,
+  .check-list {
     grid-template-columns: 1fr;
+  }
+
+  .path-card {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .choice-card {
+    min-height: 0;
+  }
+
+  .all-articles-entry {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .all-articles-entry > a {
+    width: 100%;
+  }
+
+  .keyword-cloud {
+    gap: 8px;
+  }
+
+  .keyword-cloud a {
+    min-height: 36px;
+    padding: 7px 12px;
+    font-size: 13px;
   }
 
   .quick-card {

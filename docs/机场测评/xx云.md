@@ -1,5 +1,5 @@
 ---
-title: ✈️ XXYUN机场怎么样？2026真实评测：9.9元100GB套餐是否值得入手（测速+官网入口）
+title: XXYUN机场怎么样？2026真实评测：9.9元100GB套餐是否值得入手（测速+官网入口）
 permalink: /posts/xxyun-review-2026/
 cover: /xxyun.png
 tags:
@@ -19,7 +19,7 @@ date: 2026-03-15T09:37:04.000Z
 在众多平价机场中，**XXYUN机场**凭借 **9.9元100GB 入门套餐**，成为不少用户关注的对象。  
 其主打 **BGP三网优化线路**，支持流媒体访问以及 AI 工具使用，是当前较热门的入门级专线机场之一。
 
-- [官方入口：👉https://xxyun.de/](https://xxyun.at/?code=lZlwmBj9)
+- [官方入口：👉https://xxyun.at/](https://xxyun.at/?code=lZlwmBj9)
 - 入门套餐：**9.9元 / 100GB / 30天**  
 - 新用户优惠码：**xxyun（9折）**
 
@@ -63,7 +63,7 @@ date: 2026-03-15T09:37:04.000Z
 
 | 项目 | 信息 |
 |------|------|
-| 官网入口 | [https://xxyun.de](https://xxyun.at/?code=lZlwmBj9)|
+| 官网入口 | [https://xxyun.at](https://xxyun.at/?code=lZlwmBj9)|
 | 入门套餐 | 9.99元 / 100GB |
 | 网络架构 | BGP三网优化 |
 | 支持协议 | SS / V2Ray / Trojan |
@@ -266,7 +266,7 @@ XXYUN采用 **BGP三网优化中转模式**。
 
 当前官网入口为：
 
-[https://xxyun.de](https://xxyun.at/?code=lZlwmBj9)
+[https://xxyun.at](https://xxyun.at/?code=lZlwmBj9)
 
 如遇无法访问情况，  
 可搜索关键词获取最新地址。
