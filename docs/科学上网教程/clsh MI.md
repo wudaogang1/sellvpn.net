@@ -191,4 +191,21 @@ Clash Mi 本身只是客户端工具，要正常连接网络还需要有效的 C
 
 提示：
 
-如果需要关闭默认覆写，可以在订阅链接后添加
+如果需要关闭默认覆写，可以在订阅链接后添加对应参数；不同机场面板支持的参数不完全相同，建议优先查看机场后台教程或工单说明。
+
+---
+
+## 五、下一步阅读
+
+如果你已经完成 Clash Mi 配置，可以继续阅读：
+
+- [Clash Verge 使用教程：Windows、macOS 导入机场订阅](/blog/clash-verge/)
+- [Shadowrocket 使用教程：iPhone 小火箭导入机场订阅](/blog/shadowrocket/)
+- [机场测速怎么测才准确？](/posts/airport-speed-test-method-2026/)
+- [机场防跑路与避坑指南](/posts/airport-risk-checklist-2026/)
+- [2026 ChatGPT机场推荐](/posts/chatgpt-airport-ranking-2026/)
+- [2026流媒体机场推荐](/posts/streaming-airport-ranking-2026/)
+
+## 总结
+
+Clash Mi 的核心流程是：安装客户端、导入机场订阅、选中配置、开启连接。新手遇到连接异常时，优先检查订阅链接、节点状态、系统代理和规则模式。

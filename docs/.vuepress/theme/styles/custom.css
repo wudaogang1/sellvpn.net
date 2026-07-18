@@ -77,11 +77,15 @@
 }
 
 .layout-home .vp-home-doc-hero .container {
+  box-sizing: border-box;
+  width: 100%;
   max-width: 1152px;
 }
 
 .layout-home .vp-home-doc-hero .main {
+  width: 100%;
   max-width: 800px;
+  min-width: 0;
 }
 
 .layout-home .vp-home-doc-hero .name {
@@ -90,11 +94,14 @@
 
 .layout-home .vp-home-doc-hero .text {
   color: var(--sellvpn-c-ink);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .layout-home .vp-home-doc-hero .tagline {
   max-width: 720px;
   color: var(--sellvpn-c-muted);
+  overflow-wrap: anywhere;
 }
 
 .layout-home .vp-home-doc-hero .actions {
@@ -102,6 +109,9 @@
 }
 
 .layout-home .vp-home-doc-hero .action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   border-radius: 8px;
 }
 
@@ -120,10 +130,12 @@
   margin-right: auto;
   margin-left: auto;
   color: var(--sellvpn-c-muted);
+  overflow-wrap: anywhere;
 }
 
 .layout-home .vp-home-feature {
   overflow: hidden;
+  min-width: 0;
   border-color: var(--sellvpn-c-line);
   border-radius: 8px;
   background-color: var(--sellvpn-c-panel);
@@ -145,6 +157,9 @@
 }
 
 .layout-home .vp-home-feature .box {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   padding: 22px;
 }
 
@@ -179,7 +194,13 @@
 }
 
 .layout-home .vp-home-feature .details {
+  display: block;
+  overflow: visible;
   color: var(--sellvpn-c-muted);
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .layout-home .vp-home-feature .link-text-value {
@@ -675,20 +696,90 @@
 }
 
 @media (max-width: 639px) {
+  .layout-home .vp-home-doc-hero,
+  .layout-home .vp-home-features,
+  .layout-home .vp-home-custom {
+    overflow-x: hidden;
+  }
+
+  .layout-home .vp-home-doc-hero .container,
+  .layout-home .vp-home-features .container,
+  .layout-home .vp-home-custom .container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .layout-home .vp-home-features .items,
+  .layout-home .vp-home-features .item,
+  .layout-home .vp-home-feature {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .layout-home .vp-home-doc-hero .text,
+  .layout-home .vp-home-doc-hero .tagline,
+  .layout-home .vp-home-features .description,
+  .layout-home .vp-home-feature .details {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-all !important;
+  }
+
+  .layout-home .vp-home-doc-hero .action {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .layout-home .vp-home-doc-hero .action .vp-button {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .layout-home .vp-home-doc-hero .action .vp-button .button-content {
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
   .layout-home .vp-home-feature .box {
     padding: 18px;
   }
 
   .index-section {
-    padding-bottom: 28px;
+    padding-bottom: 24px;
   }
 
   .index-section + .index-section {
-    padding-top: 32px;
+    padding-top: 28px;
   }
 
   .sellvpn-index h2 {
-    font-size: 23px;
+    font-size: 22px;
+    line-height: 1.32;
+  }
+
+  .section-heading {
+    margin-bottom: 16px;
+  }
+
+  .section-heading p:not(.section-kicker) {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.72;
+  }
+
+  .section-kicker {
+    margin-bottom: 6px;
+    font-size: 12px;
   }
 
   .quick-grid,
@@ -701,22 +792,60 @@
   }
 
   .path-card {
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 12px;
     min-height: 0;
-    padding: 18px;
+    padding: 16px;
+  }
+
+  .step-number {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
   }
 
   .choice-card {
     min-height: 0;
+    padding: 16px;
+  }
+
+  .path-card strong,
+  .choice-card strong,
+  .read-note strong,
+  .all-articles-entry strong {
+    font-size: 16px;
+    line-height: 1.42;
+  }
+
+  .path-card p,
+  .choice-card p,
+  .read-note p,
+  .all-articles-entry p {
+    margin-top: 7px;
+    font-size: 13px;
+    line-height: 1.68;
+  }
+
+  .path-card em {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .choice-card span {
+    margin-bottom: 10px;
+    white-space: normal;
   }
 
   .all-articles-entry {
     display: grid;
     grid-template-columns: 1fr;
-    padding: 18px;
+    gap: 12px;
+    padding: 16px;
   }
 
   .all-articles-entry > a {
     width: 100%;
+    min-height: 40px;
   }
 
   .keyword-cloud {
@@ -730,7 +859,30 @@
   }
 
   .quick-card {
-    min-height: 156px;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .quick-card strong {
+    margin-top: 16px;
+    font-size: 17px;
+  }
+
+  .check-list li,
+  .faq-card {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .check-list strong,
+  .faq-card h3 {
+    font-size: 16px;
+  }
+
+  .check-list span,
+  .faq-card p {
+    font-size: 13px;
+    line-height: 1.68;
   }
 
   .vp-doc.plume-content :where(p > img, p > a > img):not([alt*="logo" i]) {

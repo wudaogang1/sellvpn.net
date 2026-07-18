@@ -1,7 +1,7 @@
 ---
 title: XXYUN机场怎么样？2026真实评测：9.9元100GB套餐是否值得入手（测速+官网入口）
 permalink: /posts/xxyun-review-2026/
-cover: /xxyun.png
+cover: /cover-review-xxyun-2026.jpg
 tags:
   - XXYUN
   - 机场评测
@@ -15,6 +15,8 @@ date: 2026-03-15T09:37:04.000Z
 ---
 
 更新时间：**2026年3月**
+
+![XXYUN机场测评封面：新人9折优惠码、低价套餐、节点测速与官网入口](/cover-review-xxyun-2026.jpg)
 
 在众多平价机场中，**XXYUN机场**凭借 **9.9元100GB 入门套餐**，成为不少用户关注的对象。  
 其主打 **BGP三网优化线路**，支持流媒体访问以及 AI 工具使用，是当前较热门的入门级专线机场之一。

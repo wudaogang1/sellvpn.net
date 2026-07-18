@@ -5,7 +5,7 @@ const distDir = path.join(process.cwd(), 'docs', '.vuepress', 'dist')
 const siteUrl = 'https://sellvpn.net'
 const siteHostPattern = /^https?:\/\/(?:www\.)?sellvpn\.net/i
 const defaultKeywords =
-  '2026机场推荐,最新机场推荐,各大机场优惠码,机场优惠码,稳定机场推荐,便宜机场推荐,VPN推荐,翻墙VPN,翻墙机场,科学上网,Clash Mi教程,Shadowrocket教程,ChatGPT节点,YouTube加速,流媒体解锁'
+  '2026机场推荐,最新机场推荐,各大机场优惠码,机场优惠码,稳定机场推荐,便宜机场推荐,低价机场,VPN推荐,翻墙VPN,翻墙机场,科学上网,Clash Mi教程,Clash Verge教程,Shadowrocket教程,ChatGPT节点,ChatGPT机场推荐,YouTube加速,流媒体解锁,流媒体机场推荐,机场测速,机场避坑,机场防跑路'
 const pageSeoOverrides = new Map([
   [
     '/blog/',
@@ -13,7 +13,25 @@ const pageSeoOverrides = new Map([
       title: '所有文章｜2026机场推荐、机场测评与科学上网教程 | Sell VPN',
       description:
         'Sell VPN 所有文章列表，汇总2026最新机场推荐、各大机场优惠码、机场测评、VPN推荐、科学上网教程、Clash Mi与Shadowrocket配置指南。',
-      keywords: `${defaultKeywords},所有文章,机场测评汇总,科学上网文章`,
+      keywords: `${defaultKeywords},所有文章,机场测评汇总,科学上网文章,客户端教程`,
+    },
+  ],
+  [
+    '/blog/tags/',
+    {
+      title: '文章标签｜机场推荐、机场测评、科学上网与客户端教程 | Sell VPN',
+      description:
+        'Sell VPN 文章标签页，按机场推荐、机场优惠码、机场测评、科学上网、Clash教程、ChatGPT节点和流媒体解锁等标签浏览内容。',
+      keywords: `${defaultKeywords},文章标签,机场标签,科学上网标签`,
+    },
+  ],
+  [
+    '/blog/archives/',
+    {
+      title: '文章归档｜2026机场推荐与科学上网教程更新记录 | Sell VPN',
+      description:
+        'Sell VPN 文章归档页，按时间查看2026机场推荐、各大机场优惠码、机场测评、科学上网教程和客户端配置指南的更新记录。',
+      keywords: `${defaultKeywords},文章归档,机场文章归档,更新记录`,
     },
   ],
 ])

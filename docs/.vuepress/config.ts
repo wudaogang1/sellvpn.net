@@ -5,7 +5,7 @@ import { plumeTheme } from 'vuepress-theme-plume'
 const siteUrl = 'https://sellvpn.net'
 const siteName = 'Sell VPN'
 const siteDescription =
-  'Sell VPN 面向中国用户整理 2026 最新机场推荐、稳定机场排行榜、各大机场优惠码、VPN 推荐、机场测评、科学上网教程、Clash Mi 与 Shadowrocket 配置指南。'
+  'Sell VPN 整理 2026 最新机场推荐、VPN 推荐、稳定机场排行榜、各大机场优惠码、机场测评、VPN和机场区别、科学上网教程、Clash Mi 与 Shadowrocket 配置指南。'
 const defaultKeywords = [
   '2026机场推荐',
   '最新机场推荐',
@@ -14,14 +14,23 @@ const defaultKeywords = [
   '稳定机场推荐',
   '便宜机场推荐',
   'VPN推荐',
+  'VPN机场推荐',
+  '机场VPN推荐',
+  'VPN和机场区别',
   '翻墙VPN',
   '翻墙机场',
   '科学上网',
   'Clash Mi教程',
   'Shadowrocket教程',
+  'Clash Verge教程',
   'ChatGPT节点',
+  'ChatGPT机场推荐',
   'YouTube加速',
   '流媒体解锁',
+  '流媒体机场推荐',
+  '机场测速',
+  '机场避坑',
+  '机场防跑路',
 ]
 
 const toISOString = (value: unknown): string => {
@@ -51,9 +60,9 @@ const getTitleKeywords = (title: unknown): string[] =>
 const getCategoryKeywords = (filePathRelative: unknown): string[] => {
   const filePath = String(filePathRelative || '')
 
-  if (filePath.includes('机场测评')) return ['机场测评', '机场怎么样', '机场测速', '机场稳定性']
-  if (filePath.includes('机场推荐')) return ['机场推荐', '机场排行', '机场优惠码', '机场入口']
-  if (filePath.includes('科学上网教程')) return ['科学上网教程', '翻墙教程', '代理客户端教程']
+  if (filePath.includes('机场测评')) return ['机场测评', '机场怎么样', '机场测速', '机场稳定性', 'VPN机场测评']
+  if (filePath.includes('机场推荐')) return ['机场推荐', '机场排行', '机场优惠码', '机场入口', 'VPN推荐']
+  if (filePath.includes('科学上网教程')) return ['科学上网教程', '翻墙教程', '代理客户端教程', 'VPN和机场区别']
 
   return []
 }
@@ -86,17 +95,32 @@ export default defineUserConfig({
     home: '/',
     hostname: siteUrl,
     blogText: '所有文章',
+    tagText: '文章标签',
+    archiveText: '文章归档',
     footer: { message: '© Sell VPN 只推荐好用的机场' },
 
     navbar: [
       { text: '首页', link: '/' },
       { text: '2026机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
       { text: '各大机场优惠码', link: '/posts/airport-coupon-table/' },
+      {
+        text: '专题榜单',
+        items: [
+          { text: '便宜机场推荐', link: '/posts/cheap-airport-ranking-2026/' },
+          { text: 'ChatGPT机场推荐', link: '/posts/chatgpt-airport-ranking-2026/' },
+          { text: '流媒体机场推荐', link: '/posts/streaming-airport-ranking-2026/' },
+          { text: '机场测速方法', link: '/posts/airport-speed-test-method-2026/' },
+          { text: '机场防跑路指南', link: '/posts/airport-risk-checklist-2026/' },
+        ],
+      },
       { text: '科学上网教程', link: '/posts/jieshao/' },
       {
         text: '使用教程',
         items: [
           { text: 'Clash Mi 教程', link: '/blog/clashmi/' },
+          { text: 'Clash Verge 教程', link: '/blog/clash-verge/' },
+          { text: 'Shadowrocket 教程', link: '/blog/shadowrocket/' },
+          { text: 'VPN和机场区别', link: '/blog/vpn-vs-airport/' },
           { text: '美区 Apple ID', link: '/blog/us-apple-id-register/' },
           { text: '如何挑选机场', link: '/article/jeslp91s/' },
         ],
@@ -186,9 +210,10 @@ export default defineUserConfig({
       collapse: true,
     },
     blog: {
-      tags: false,
+      tags: true,
+      tagsTheme: 'brand',
       categories: false,
-      archives: false
+      archives: true
     },
   }),
   bundler: viteBundler({
