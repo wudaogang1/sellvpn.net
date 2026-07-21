@@ -1,4 +1,5 @@
 **/node_modules
+**/assets/
 
 docs/.vuepress/.cache
 docs/.vuepress/.temp
