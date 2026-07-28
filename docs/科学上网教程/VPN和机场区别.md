@@ -167,3 +167,4 @@ VPN 是 Virtual Private Network 的缩写，中文常叫“虚拟专用网络”
 - [机场测速怎么测才准确？](/posts/airport-speed-test-method-2026/)
 - [机场防跑路与避坑指南](/posts/airport-risk-checklist-2026/)
 - [科学上网是什么？VPN、机场、翻墙工具与软路由区别详解](/posts/jieshao/)
+- [加速器、VPN、梯子、翻墙有什么区别？](/posts/accelerator-vpn-ladder-difference/)
