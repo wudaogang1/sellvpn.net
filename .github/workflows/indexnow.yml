@@ -84,7 +84,7 @@ jobs:
           [[ "$mode" == "diff" ]] && echo "Deploy range: $base_sha..$head_sha"
 
       - name: Check out IndexNow tooling
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.sha }}
           fetch-depth: 1
@@ -92,7 +92,7 @@ jobs:
           persist-credentials: false
 
       - name: Check out deployed source history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ steps.range.outputs.head_sha }}
           fetch-depth: 0
@@ -100,7 +100,7 @@ jobs:
           persist-credentials: false
 
       - name: Check out deployed site
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           fetch-depth: 1
