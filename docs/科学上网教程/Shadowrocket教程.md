@@ -2,6 +2,7 @@
 title: Shadowrocket 使用教程：iPhone小火箭导入机场订阅、选择节点与常见问题
 createTime: 2026/07/18
 date: 2026-07-18T00:00:00.000Z
+updateTime: 2026/08/05
 permalink: /blog/shadowrocket/
 cover: /cover-shadowrocket.jpg
 sitemap:
@@ -24,7 +25,7 @@ keywords:
   - 美区Apple ID
 ---
 
-更新时间：**2026年7月18日**
+内容修订：**2026年8月5日**；原资料日期：**2026年7月18日**
 
 ![Shadowrocket教程封面：iPhone小火箭导入机场订阅和选择节点](/cover-shadowrocket.jpg)
 

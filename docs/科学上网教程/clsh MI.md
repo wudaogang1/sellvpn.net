@@ -2,6 +2,7 @@
 title: iOS Android Clash Mi 使用教程（2026最新版）：下载安装、订阅导入与常见问题
 createTime: 2026/03/24 10:34:23
 date: 2026-03-24T10:34:23.000Z
+updateTime: 2026/08/05
 permalink: /blog/clashmi/
 cover: https://image.ermao.net/images/blog/clashmi/20260305_103545-57abfa.png
 description: 2026年最新 Clash Mi 使用指南，详细讲解 iPhone/iPad 下载、订阅导入、连接设置、TUN 覆写以及常见报错解决方法，新手也能快速完成配置。 
@@ -12,9 +13,9 @@ tags:
   - mihomo
   - Clash教程
 ---
-亲测，Clash Mi 是目前最好用的翻墙工具，个人感觉超越小火箭（Shadowrocket），博主目前正在使用
+内容修订：**2026年8月5日**
 
-Clash Mi 是一款集成 `mihomo`（Clash Meta）核心的代理客户端，支持 iOS、macOS、Android 和 Windows 等多个平台，并且保持持续更新与优化。
+Clash Mi 是一款集成 `mihomo`（Clash Meta）核心的代理客户端。根据[官方页面](https://clashmi.app/)，它提供 iOS、macOS、Android、Windows 和 Linux 等平台版本；本文聚焦下载安装与配置流程，不把个人偏好写成与 Shadowrocket 的性能排名。
 
 如果你是第一次接触 Clash Mi，本教程将按照「下载安装 → 导入订阅 → 建立连接 → 解决问题」的顺序进行讲解，即使是新手用户，也可以按照步骤顺利完成配置。
 
@@ -28,15 +29,15 @@ Clash Mi 是一款集成 `mihomo`（Clash Meta）核心的代理客户端，支�
 
 ## Clash Mi 有什么特点
 
-与传统代理工具相比，Clash Mi 具有更好的兼容性和稳定性，适合日常科学上网使用。
+Clash Mi 的定位是多平台 `mihomo` 客户端。兼容性和连接表现仍取决于配置文件、内核版本、系统权限与订阅节点，不能只凭客户端名称判断。
 
 主要特点包括：
 
-- 内置最新 `mihomo` 内核，兼容绝大多数 Clash 配置文件。
+- 内置并持续维护 `mihomo` 内核；具体版本以官方发布页为准。
 - 只需导入订阅链接即可快速连接，配置流程简单。
 - 用户界面清晰直观，非常适合新手用户上手。
 - 支持多平台同步使用，提高使用灵活性。
-- 持续更新内核，确保兼容最新规则和节点。
+- 官方提供稳定版与测试版下载，更新前建议先备份现有配置。
 
 ![Clash Mi 主界面预览](https://image.ermao.net/images/blog/clashmi/20260305_103743-3935fc.png)
 

@@ -6,6 +6,23 @@ on:
     types:
       - completed
   workflow_dispatch:
+    inputs:
+      submit_mode:
+        description: URL submission mode (full is safest; last_deploy_diff replays the latest deploy range)
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - last_deploy_diff
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: indexnow-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
   indexnow:
@@ -13,23 +30,129 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get URLs from sitemap
+      - name: Resolve deployed commit range
+        id: range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          MANUAL_MODE: ${{ inputs.submit_mode }}
+          CURRENT_DEPLOY_RUN_ID: ${{ github.event.workflow_run.id }}
+          CURRENT_DEPLOY_CREATED_AT: ${{ github.event.workflow_run.created_at }}
+          CURRENT_DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          curl -fsSL --retry 3 https://sellvpn.net/sitemap.xml \
-            | grep -oP '(?<=<loc>)[^<]+' > urls.txt
-          test -s urls.txt
-          echo "Submitting $(wc -l < urls.txt) URLs to IndexNow"
+
+          mode="full"
+          base_sha=""
+          head_sha="$DISPATCH_SHA"
+          runs='{"workflow_runs":[]}'
+
+          if [[ "$EVENT_NAME" == "workflow_run" || "$MANUAL_MODE" == "last_deploy_diff" ]]; then
+            runs=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?status=success&per_page=100")
+          fi
+
+          if [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            head_sha="$CURRENT_DEPLOY_SHA"
+            base_sha=$(jq -r \
+              --argjson current_id "$CURRENT_DEPLOY_RUN_ID" \
+              --arg created_at "$CURRENT_DEPLOY_CREATED_AT" \
+              '.workflow_runs
+               | map(select(.id != $current_id and .created_at < $created_at))
+               | first
+               | .head_sha // empty' <<<"$runs")
+            [[ -n "$base_sha" ]] && mode="diff"
+          elif [[ "$MANUAL_MODE" == "last_deploy_diff" ]]; then
+            head_sha=$(jq -r '.workflow_runs[0].head_sha // empty' <<<"$runs")
+            base_sha=$(jq -r '.workflow_runs[1].head_sha // empty' <<<"$runs")
+            if [[ -n "$head_sha" && -n "$base_sha" ]]; then
+              mode="diff"
+            else
+              mode="full"
+              head_sha="$DISPATCH_SHA"
+              base_sha=""
+              echo "Fewer than two successful deploys were found; using a safe full submission."
+            fi
+          fi
+
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "IndexNow mode: $mode"
+          [[ "$mode" == "diff" ]] && echo "Deploy range: $base_sha..$head_sha"
+
+      - name: Check out IndexNow tooling
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          path: tooling
+          persist-credentials: false
+
+      - name: Check out deployed source history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.range.outputs.head_sha }}
+          fetch-depth: 0
+          path: source
+          persist-credentials: false
+
+      - name: Check out deployed site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+          path: deployed
+          persist-credentials: false
+
+      - name: Collect changed page URLs
+        id: urls
+        working-directory: source
+        env:
+          SUBMIT_MODE: ${{ steps.range.outputs.mode }}
+          BASE_SHA: ${{ steps.range.outputs.base_sha }}
+          HEAD_SHA: ${{ steps.range.outputs.head_sha }}
+        run: |
+          set -euo pipefail
+
+          args=(--sitemap ../deployed/sitemap.xml)
+          if [[ "$SUBMIT_MODE" == "full" ]]; then
+            args+=(--full)
+          else
+            args+=(--base "$BASE_SHA" --head "$HEAD_SHA")
+          fi
+
+          node ../tooling/scripts/indexnow-urls.mjs "${args[@]}" > ../urls.txt
+          count=$(wc -l < ../urls.txt | tr -d ' ')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+          if [[ "$count" == "0" ]]; then
+            echo "No added, modified, renamed, or deleted page URLs to submit."
+          else
+            echo "Submitting $count URL(s) to IndexNow:"
+            sed 's/^/- /' ../urls.txt
+          fi
 
       - name: Submit to IndexNow
+        if: ${{ steps.urls.outputs.count != '0' }}
+        env:
+          INDEXNOW_KEY: 47592892f8844e74976c2ed3dc62b730
         run: |
           set -euo pipefail
-          urls=$(jq -R . < urls.txt | jq -s .)
-          curl -fsSL -X POST "https://api.indexnow.org/indexnow" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"host\": \"sellvpn.net\",
-              \"key\": \"47592892f8844e74976c2ed3dc62b730\",
-              \"keyLocation\": \"https://sellvpn.net/47592892f8844e74976c2ed3dc62b730.txt\",
-              \"urlList\": $urls
-            }"
+
+          urls=$(jq -Rsc 'split("\n") | map(select(length > 0))' urls.txt)
+          jq -n \
+            --arg host "sellvpn.net" \
+            --arg key "$INDEXNOW_KEY" \
+            --arg keyLocation "https://sellvpn.net/${INDEXNOW_KEY}.txt" \
+            --argjson urlList "$urls" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}' \
+            > indexnow-payload.json
+
+          curl --fail-with-body --silent --show-error \
+            --retry 3 --retry-all-errors \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            --data-binary @indexnow-payload.json

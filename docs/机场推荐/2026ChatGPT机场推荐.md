@@ -2,6 +2,7 @@
 title: 2026 ChatGPT机场推荐与VPN节点选择：AI工具可用地区、测速方法与购买注意事项
 createTime: 2026/07/18
 date: 2026-07-18T00:00:00.000Z
+updateTime: 2026/08/05
 permalink: /posts/chatgpt-airport-ranking-2026/
 cover: /cover-chatgpt-airport-2026.jpg
 sitemap:
@@ -24,7 +25,7 @@ keywords:
   - 科学上网
 ---
 
-更新时间：**2026年7月18日**
+内容修订：**2026年8月5日**；原资料日期：**2026年7月18日**
 
 ![2026 ChatGPT机场推荐封面：AI工具节点、Claude与Gemini访问](/cover-chatgpt-airport-2026.jpg)
 

@@ -2,6 +2,7 @@
 title: Clash Verge 使用教程：Windows、macOS 导入机场订阅与常见问题
 createTime: 2026/07/18
 date: 2026-07-18T00:00:00.000Z
+updateTime: 2026/08/05
 permalink: /blog/clash-verge/
 cover: /cover-clash-verge.jpg
 sitemap:
@@ -24,7 +25,7 @@ keywords:
   - 科学上网
 ---
 
-更新时间：**2026年7月18日**
+内容修订：**2026年8月5日**；原资料日期：**2026年7月18日**
 
 ![Clash Verge教程封面：Windows和macOS导入机场订阅](/cover-clash-verge.jpg)
 

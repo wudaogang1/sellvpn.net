@@ -3,81 +3,156 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import { plumeTheme } from 'vuepress-theme-plume'
 
 const siteUrl = 'https://sellvpn.net'
+const siteHostPattern = /^https?:\/\/(?:www\.)?sellvpn\.net(?=[:/]|$)/i
 const siteName = 'Sell VPN'
 const siteDescription =
   'Sell VPN 整理 2026 最新机场推荐、VPN 推荐、稳定机场排行榜、各大机场优惠码、机场测评、VPN和机场区别、科学上网教程、Clash Mi 与 Shadowrocket 配置指南。'
-const defaultKeywords = [
-  '2026机场推荐',
-  '最新机场推荐',
-  '各大机场优惠码',
-  '机场优惠码',
-  '稳定机场推荐',
-  '便宜机场推荐',
-  'VPN推荐',
-  'VPN机场推荐',
-  '机场VPN推荐',
-  'VPN和机场区别',
-  '翻墙VPN',
-  '翻墙机场',
-  '科学上网',
-  'Clash Mi教程',
-  'Shadowrocket教程',
-  'Clash Verge教程',
-  'ChatGPT节点',
-  'ChatGPT机场推荐',
-  'YouTube加速',
-  '流媒体解锁',
-  '流媒体机场推荐',
-  '机场测速',
-  '机场避坑',
-  '机场防跑路',
+const organizationId = `${siteUrl}/#organization`
+const websiteId = `${siteUrl}/#website`
+const authorUrl = `${siteUrl}/about/`
+const affiliateHrefFragments = [
+  '99ba.net',
+  'bianyuanjiediantttt.xyz',
+  'cocoduck.live',
+  'cpdd.one',
+  'edgenovaaff.com',
+  'fireflyaff.com',
+  'gcvipaff.cc',
+  'gntvipaff.cc',
+  'goflybit.com',
+  'gsyaff.com',
+  'hello-ssone.com',
+  'jichang.best',
+  'kuailiaff.com',
+  'sogoaff.com',
+  'speedworldaff.com',
+  'v2cvipaff.cc',
+  'vipaff.cc',
+  'worryfreeaff.com',
+  'xxyun.at',
+  '1flyunaff.cc',
+  'fb7777.shop',
+  'xn--66tw07h.com',
+  '快车.com',
 ]
+const knownRemoteImageDimensions = new Map([
+  ['https://image.ermao.net/images/blog/clashmi/20260305_103545-57abfa.png', { width: 256, height: 256 }],
+  ['https://image.ermao.net/images/blog/clashmi/20260305_103743-3935fc.png', { width: 480, height: 651 }],
+  ['https://image.ermao.net/images/blog/clashmi/20260305_103809-b1ab1b.png', { width: 706, height: 480 }],
+  ['https://image.ermao.net/images/blog/clashmi/20260305_103816-7c1edf.png', { width: 854, height: 422 }],
+  ['https://image.ermao.net/images/blog/clashmi/20260305_103836-d45527.png', { width: 480, height: 543 }],
+])
 
 const toISOString = (value: unknown): string => {
   if (!value) return ''
-  const date = new Date(String(value).replace(/\//g, '-'))
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? '' : value.toISOString()
+
+  const normalized = String(value).trim().replace(/\//g, '-')
+  const withTimezone = /^\d{4}-\d{2}-\d{2}$/.test(normalized)
+    ? `${normalized}T00:00:00.000Z`
+    : /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/.test(normalized)
+      ? `${normalized.replace(' ', 'T')}Z`
+      : normalized
+  const date = new Date(withTimezone)
   return Number.isNaN(date.getTime()) ? '' : date.toISOString()
 }
 
-const toArray = (value: unknown): string[] => {
-  if (Array.isArray(value)) return value.map(String)
-  if (typeof value === 'string') return value.split(/[,，、]/)
-  return []
+const latestISOString = (...values: unknown[]): string => {
+  const timestamps = values
+    .map(toISOString)
+    .filter(Boolean)
+    .map((value) => new Date(value).getTime())
+
+  return timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : ''
 }
 
-const cleanKeyword = (value: string): string =>
-  value
-    .replace(/[✈️👉✅✔]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-
-const getTitleKeywords = (title: unknown): string[] =>
-  String(title || '')
-    .split(/[：:｜|（）(),，、+]/)
-    .map(cleanKeyword)
-    .filter((item) => item.length >= 2 && item.length <= 24)
-
-const getCategoryKeywords = (filePathRelative: unknown): string[] => {
-  const filePath = String(filePathRelative || '')
-
-  if (filePath.includes('机场测评')) return ['机场测评', '机场怎么样', '机场测速', '机场稳定性', 'VPN机场测评']
-  if (filePath.includes('机场推荐')) return ['机场推荐', '机场排行', '机场优惠码', '机场入口', 'VPN推荐']
-  if (filePath.includes('科学上网教程')) return ['科学上网教程', '翻墙教程', '代理客户端教程', 'VPN和机场区别']
-
-  return []
+const organization = {
+  '@type': 'Organization',
+  '@id': organizationId,
+  name: siteName,
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/sellvpn-logo.svg`,
+    width: 512,
+    height: 512,
+  },
 }
 
-const getPageKeywords = (page: { frontmatter: Record<string, unknown>; filePathRelative?: string | null; title?: string }): string => {
-  const keywords = [
-    ...toArray(page.frontmatter.keywords),
-    ...toArray(page.frontmatter.tags),
-    ...getTitleKeywords(page.frontmatter.title || page.title),
-    ...getCategoryKeywords(page.filePathRelative),
-    ...defaultKeywords,
-  ]
-
-  return [...new Set(keywords.map(cleanKeyword).filter(Boolean))].slice(0, 20).join(',')
+const editorialAuthor = {
+  '@type': 'Organization',
+  '@id': `${authorUrl}#organization`,
+  name: siteName,
+  url: authorUrl,
 }
+
+const breadcrumbJsonLd = (page: { path: string; title?: string }) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首页',
+      item: siteUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: page.title || siteName,
+      item: `${siteUrl}${page.path}`,
+    },
+  ],
+})
+
+const seoMarkdownPlugin = () => ({
+  name: 'sellvpn-seo-markdown',
+  extendsMarkdown: (md: any) => {
+    const defaultLinkOpen = md.renderer.rules.link_open
+      || ((tokens: any[], index: number, options: unknown, _env: unknown, self: any) => self.renderToken(tokens, index, options))
+    const defaultImage = md.renderer.rules.image
+      || ((tokens: any[], index: number, options: unknown, _env: unknown, self: any) => self.renderToken(tokens, index, options))
+
+    md.renderer.rules.link_open = (tokens: any[], index: number, options: unknown, env: unknown, self: any) => {
+      const token = tokens[index]
+      const href = String(token.attrGet('href') || '')
+
+      if (/^https?:\/\//i.test(href) && !siteHostPattern.test(href)) {
+        const relations = new Set(String(token.attrGet('rel') || '').split(/\s+/).filter(Boolean))
+        relations.add('nofollow')
+        relations.add('noopener')
+        const normalized = href.toLowerCase()
+        const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)
+          || affiliateHrefFragments.some((fragment) => normalized.includes(fragment))
+        if (affiliate) relations.add('sponsored')
+        token.attrSet('rel', [...relations].join(' '))
+      }
+
+      return defaultLinkOpen(tokens, index, options, env, self)
+    }
+
+    md.renderer.rules.image = (tokens: any[], index: number, options: unknown, env: unknown, self: any) => {
+      const token = tokens[index]
+      const src = String(token.attrGet('src') || '')
+      const remoteDimensions = knownRemoteImageDimensions.get(src)
+      const frontmatterCover = String((env as { frontmatter?: { cover?: unknown } })?.frontmatter?.cover || '')
+      const cover = /(?:^|\/)cover-[^/?#]+/i.test(src) || src === frontmatterCover
+      token.attrSet('decoding', 'async')
+      token.attrSet('loading', cover ? 'eager' : 'lazy')
+      if (cover) {
+        token.attrSet('fetchpriority', 'high')
+      }
+      if (remoteDimensions) {
+        token.attrSet('width', String(remoteDimensions.width))
+        token.attrSet('height', String(remoteDimensions.height))
+      } else if (/(?:^|\/)cover-[^/?#]+/i.test(src)) {
+        token.attrSet('width', '1200')
+        token.attrSet('height', '675')
+      }
+      return defaultImage(tokens, index, options, env, self)
+    }
+  },
+})
 
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -89,15 +164,26 @@ export default defineUserConfig({
     ['meta', { name: 'author', content: siteName }],
     ['meta', { name: 'theme-color', content: '#2563eb' }],
     ['meta', { name: 'format-detection', content: 'telephone=no' }],
+    ['link', { rel: 'icon', href: '/sellvpn-logo.svg', type: 'image/svg+xml' }],
   ],
+  markdown: {
+    links: {
+      externalAttrs: {
+        target: '_blank',
+        rel: 'nofollow noopener noreferrer',
+      },
+    },
+  },
+  plugins: [seoMarkdownPlugin()],
   theme: plumeTheme({
-    // logo: '/images/logo.svg',
     home: '/',
     hostname: siteUrl,
     blogText: '所有文章',
     tagText: '文章标签',
     archiveText: '文章归档',
-    footer: { message: '© Sell VPN 只推荐好用的机场' },
+    categoryText: '文章分类',
+    footer: { message: '© Sell VPN · 信息整理、测评方法与风险提示' },
+    contributors: false,
 
     navbar: [
       { text: '首页', link: '/' },
@@ -126,12 +212,22 @@ export default defineUserConfig({
         ],
       },
       { text: '所有文章', link: '/blog/' },
-      { text: '联系', link: '/article/w4q5524n/' },
+      {
+        text: '关于本站',
+        items: [
+          { text: '关于 Sell VPN', link: '/about/' },
+          { text: '编辑政策', link: '/editorial-policy/' },
+          { text: '测评方法', link: '/review-methodology/' },
+          { text: '联盟披露', link: '/affiliate-disclosure/' },
+          { text: '隐私说明', link: '/privacy/' },
+          { text: '联系与纠错', link: '/article/w4q5524n/' },
+        ],
+      },
     ],
     profile: {
       name: siteName,
       description: '机场测评、VPN 推荐与科学上网教程',
-      // avatar: '/images/logo.svg',
+      avatar: '/sellvpn-logo.svg',
     },
     social: [
       {
@@ -143,19 +239,72 @@ export default defineUserConfig({
       sitemap: {
         changefreq: 'weekly',
         excludePaths: ['/404.html'],
-        modifyTimeGetter: (page) =>
-          page.data.git?.updatedTime
-            ? new Date(page.data.git.updatedTime).toISOString()
-            : toISOString(page.frontmatter.updateTime || page.frontmatter.date || page.frontmatter.createTime),
+        modifyTimeGetter: (page) => latestISOString(
+          page.frontmatter.updateTime,
+          page.data.git?.updatedTime,
+          page.frontmatter.date,
+          page.frontmatter.createTime,
+        ),
       },
       seo: {
         canonical: siteUrl,
         author: {
           name: siteName,
-          url: `${siteUrl}/article/w4q5524n/`,
+          url: authorUrl,
         },
-        fallBackImage: `${siteUrl}/plume.svg`,
-        isArticle: (page) => Boolean(page.filePathRelative && page.path !== '/' && page.path !== '/article/w4q5524n/'),
+        fallBackImage: `${siteUrl}/cover-airport-ranking-2026.jpg`,
+        isArticle: (page) => Boolean(
+          page.filePathRelative
+          && page.frontmatter.article !== false
+          && page.path !== '/'
+          && page.path !== '/article/w4q5524n/',
+        ),
+        ogp: (ogp, page) => {
+          const article = Boolean(
+            page.filePathRelative
+            && page.frontmatter.article !== false
+            && page.path !== '/'
+            && page.path !== '/article/w4q5524n/',
+          )
+          const title = String(ogp['og:title'] || page.title || siteName)
+          const description = String(ogp['og:description'] || page.frontmatter.description || siteDescription)
+          const image = String(ogp['og:image'] || `${siteUrl}/cover-airport-ranking-2026.jpg`)
+          const result = {
+            ...ogp,
+            'og:site_name': siteName,
+            'og:locale': 'zh_CN',
+            'og:image': image,
+            'og:image:alt': title,
+            'twitter:card': 'summary_large_image',
+            'twitter:title': title,
+            'twitter:description': description,
+            'twitter:image': image,
+            'twitter:image:src': image,
+            'twitter:image:alt': title,
+          }
+
+          if (article) {
+            const modified = latestISOString(
+              page.frontmatter.updateTime,
+              ogp['og:updated_time'],
+              page.data.git?.updatedTime,
+              page.frontmatter.date,
+              page.frontmatter.createTime,
+            )
+            result['article:author'] = authorUrl
+            result['article:published_time'] = toISOString(page.frontmatter.createTime || page.frontmatter.date)
+            result['article:modified_time'] = modified
+            result['og:updated_time'] = modified
+          } else {
+            delete result['article:author']
+            delete result['article:tag']
+            delete result['article:published_time']
+            delete result['article:modified_time']
+            delete result['og:updated_time']
+          }
+
+          return result
+        },
         customHead: (head, page) => {
           const robots =
             page.path === '/404.html'
@@ -163,22 +312,63 @@ export default defineUserConfig({
               : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
           head.unshift(['meta', { name: 'robots', content: robots }])
-          head.unshift(['meta', { name: 'keywords', content: getPageKeywords(page) }])
+
+          if (page.path !== '/' && page.path !== '/404.html') {
+            head.unshift([
+              'script',
+              { type: 'application/ld+json' },
+              JSON.stringify(breadcrumbJsonLd(page)),
+            ])
+          }
+
+          if (page.path === '/') {
+            head.unshift([
+              'script',
+              { type: 'application/ld+json' },
+              JSON.stringify({
+                '@context': 'https://schema.org',
+                ...organization,
+                contactPoint: {
+                  '@type': 'ContactPoint',
+                  contactType: 'editorial corrections',
+                  url: `${siteUrl}/article/w4q5524n/`,
+                },
+              }),
+            ])
+            head.unshift([
+              'script',
+              { type: 'application/ld+json' },
+              JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                '@id': websiteId,
+                name: siteName,
+                url: siteUrl,
+                publisher: { '@id': organizationId },
+                inLanguage: 'zh-CN',
+              }),
+            ])
+          }
         },
         jsonLd: (jsonLD, page) => {
           if ('@type' in jsonLD && jsonLD['@type'] === 'Article') {
-            const datePublished = toISOString(page.frontmatter.date || page.frontmatter.createTime)
-            const dateModified = toISOString(page.frontmatter.updateTime || page.data.git?.updatedTime || page.frontmatter.date || page.frontmatter.createTime)
+            const datePublished = toISOString(page.frontmatter.createTime || page.frontmatter.date)
+            const dateModified = latestISOString(
+              page.frontmatter.updateTime,
+              jsonLD.dateModified,
+              page.data.git?.updatedTime,
+              page.frontmatter.date,
+              page.frontmatter.createTime,
+            )
 
             return {
               ...jsonLD,
               ...(datePublished ? { datePublished } : {}),
               ...(dateModified ? { dateModified } : {}),
-              publisher: {
-                '@type': 'Organization',
-                name: siteName,
-                url: siteUrl,
-              },
+              ...(page.frontmatter.description ? { description: page.frontmatter.description } : {}),
+              author: [editorialAuthor],
+              publisher: organization,
+              inLanguage: 'zh-CN',
               mainEntityOfPage: {
                 '@type': 'WebPage',
                 '@id': `${siteUrl}${page.path}`,
@@ -189,20 +379,22 @@ export default defineUserConfig({
           if (page.path === '/') {
             return {
               ...jsonLD,
-              publisher: {
-                '@type': 'Organization',
-                name: siteName,
-                url: siteUrl,
-              },
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: `${siteUrl}/?s={search_term_string}`,
-                'query-input': 'required name=search_term_string',
-              },
+              '@id': `${siteUrl}/#webpage`,
+              url: siteUrl,
+              isPartOf: { '@id': websiteId },
+              publisher: { '@id': organizationId },
+              inLanguage: 'zh-CN',
             }
           }
 
-          return jsonLD
+          return {
+            ...jsonLD,
+            '@id': `${siteUrl}${page.path}#webpage`,
+            url: `${siteUrl}${page.path}`,
+            isPartOf: { '@id': websiteId },
+            publisher: { '@id': organizationId },
+            inLanguage: 'zh-CN',
+          }
         },
       },
     },
@@ -212,7 +404,7 @@ export default defineUserConfig({
     blog: {
       tags: true,
       tagsTheme: 'brand',
-      categories: false,
+      categories: true,
       archives: true
     },
   }),
