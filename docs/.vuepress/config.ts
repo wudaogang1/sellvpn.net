@@ -409,12 +409,27 @@ export default defineUserConfig({
     markdown: {
       collapse: true,
     },
-    blog: {
-      tags: true,
-      tagsTheme: 'brand',
-      categories: true,
-      archives: true
-    },
+    collections: [
+      {
+        type: 'post',
+        dir: '.',
+        title: '所有文章',
+        include: ['**/*.md'],
+        exclude: ['index.md'],
+        postList: true,
+        link: '/blog/',
+        tags: true,
+        tagsLink: '/blog/tags/',
+        tagsTheme: 'brand',
+        tagsText: '文章标签',
+        categories: true,
+        categoriesLink: '/blog/categories/',
+        categoriesText: '文章分类',
+        archives: true,
+        archivesLink: '/blog/archives/',
+        archivesText: '文章归档',
+      },
+    ],
   }),
   bundler: viteBundler({
     viteOptions: {

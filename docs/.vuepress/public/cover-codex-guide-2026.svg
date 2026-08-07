@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Codex 使用指南</title>
+  <desc id="desc">深色代码编辑器窗口、蓝绿色命令提示符和 Codex 使用指南文字</desc>
+  <defs>
+    <linearGradient id="bg" x1="80" y1="20" x2="1120" y2="655" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#020617" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1090" cy="80" r="260" fill="#1d4ed8" opacity=".13"/>
+  <circle cx="80" cy="620" r="240" fill="#059669" opacity=".1"/>
+  <g filter="url(#shadow)">
+    <rect x="650" y="104" width="448" height="468" rx="26" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+    <path d="M650 170h448" stroke="#334155" stroke-width="2"/>
+    <circle cx="692" cy="138" r="9" fill="#fb7185"/>
+    <circle cx="722" cy="138" r="9" fill="#fbbf24"/>
+    <circle cx="752" cy="138" r="9" fill="#34d399"/>
+    <rect x="690" y="211" width="292" height="14" rx="7" fill="#334155"/>
+    <rect x="690" y="253" width="362" height="14" rx="7" fill="#1e293b"/>
+    <rect x="690" y="295" width="222" height="14" rx="7" fill="#1e293b"/>
+    <path d="m697 362 20 20-20 20" fill="none" stroke="url(#accent)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="738" y="376" width="208" height="12" rx="6" fill="#38bdf8" opacity=".9"/>
+    <rect x="690" y="446" width="322" height="14" rx="7" fill="#1e293b"/>
+    <rect x="690" y="488" width="250" height="14" rx="7" fill="#1e293b"/>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect x="96" y="112" width="166" height="44" rx="22" fill="#0c4a6e" stroke="#38bdf8"/>
+    <text x="179" y="141" fill="#bae6fd" font-size="21" font-weight="700" text-anchor="middle">2026 实用教程</text>
+    <text x="96" y="248" fill="#f8fafc" font-size="72" font-weight="800">Codex</text>
+    <text x="96" y="329" fill="#f8fafc" font-size="58" font-weight="800">使用指南</text>
+    <text x="99" y="400" fill="#94a3b8" font-size="27">安装 · 提示词 · AGENTS.md</text>
+    <text x="99" y="445" fill="#94a3b8" font-size="27">权限沙箱 · 代码审查 · MCP</text>
+    <rect x="96" y="512" width="440" height="5" rx="2.5" fill="url(#accent)"/>
+  </g>
+</svg>
