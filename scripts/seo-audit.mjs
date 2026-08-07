@@ -7,6 +7,7 @@ const vuepressDir = path.join(docsDir, '.vuepress')
 const publicDir = path.join(vuepressDir, 'public')
 const distDir = path.join(vuepressDir, 'dist')
 const postbuildFile = path.join(root, 'scripts', 'postbuild-seo.mjs')
+const configFile = path.join(vuepressDir, 'config.ts')
 const siteUrl = 'https://sellvpn.net'
 const siteHostPattern = /^(?:www\.)?sellvpn\.net$/i
 const generatedRoutes = new Set([
@@ -14,6 +15,12 @@ const generatedRoutes = new Set([
   '/blog/tags/',
   '/blog/categories/',
   '/blog/archives/',
+])
+const focusTopicRoutes = new Map([
+  ['机场', '/posts/vpn-airport-ranking-2026/'],
+  ['VPN', '/blog/vpn-vs-airport/'],
+  ['翻墙', '/posts/jieshao/'],
+  ['加速器', '/posts/accelerator-vpn-ladder-difference/'],
 ])
 const affiliateHostFragments = [
   '99ba.net',
@@ -165,6 +172,45 @@ const pages = markdownFiles.map((file) => {
 })
 
 const routePaths = new Set([...routeOwners.keys(), ...generatedRoutes])
+const configSource = fs.readFileSync(configFile, 'utf8')
+const homePage = pages.find((page) => page.isHome)
+
+for (const [topic, expectedRoute] of focusTopicRoutes) {
+  const owners = pages.filter((page) => page.data.seoFocus === topic)
+  if (owners.length !== 1) {
+    issues.push(`SEO focus ${topic}: expected exactly one owner, found ${owners.length}`)
+    continue
+  }
+
+  const owner = owners[0]
+  if (owner.route !== expectedRoute) {
+    issues.push(`SEO focus ${topic}: expected ${expectedRoute}, found ${owner.route || 'no route'}`)
+  }
+
+  const topicPattern = new RegExp(topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
+  if (!topicPattern.test(owner.data.title || '')) {
+    issues.push(`${owner.rel}: SEO focus ${topic} is missing from title`)
+  }
+  if (!topicPattern.test(owner.data.description || '')) {
+    issues.push(`${owner.rel}: SEO focus ${topic} is missing from description`)
+  }
+  if (!topicPattern.test(owner.body)) {
+    issues.push(`${owner.rel}: SEO focus ${topic} is missing from visible content`)
+  }
+
+  const inboundSources = pages.filter(
+    (page) => page.route !== expectedRoute && page.content.includes(expectedRoute),
+  )
+  if (inboundSources.length < 2) {
+    issues.push(`SEO focus ${topic}: only ${inboundSources.length} source page(s) link to ${expectedRoute}`)
+  }
+  if (!homePage?.content.includes(expectedRoute)) {
+    issues.push(`SEO focus ${topic}: homepage does not link to ${expectedRoute}`)
+  }
+  if (!configSource.includes(expectedRoute)) {
+    issues.push(`SEO focus ${topic}: global navigation does not link to ${expectedRoute}`)
+  }
+}
 
 for (const [route, owners] of routeOwners) {
   if (owners.length > 1) {
@@ -610,6 +656,7 @@ if (issues.length > 0) {
 
 console.log(
   `SEO audit passed: ${pages.length} pages, ${routeOwners.size} unique routes, ` +
-    `${affiliatePages.length} affiliate pages and ${publicAssets.size} public assets checked` +
+    `${focusTopicRoutes.size} focus topics, ${affiliatePages.length} affiliate pages and ` +
+    `${publicAssets.size} public assets checked` +
     `${distIsFresh ? '; generated HTML verified.' : '; source checks only.'}`,
 )

@@ -6,7 +6,7 @@ const siteUrl = 'https://sellvpn.net'
 const siteHostPattern = /^https?:\/\/(?:www\.)?sellvpn\.net(?=[:/]|$)/i
 const siteName = 'Sell VPN'
 const siteDescription =
-  'Sell VPN 整理 2026 最新机场推荐、VPN 推荐、稳定机场排行榜、各大机场优惠码、机场测评、VPN和机场区别、科学上网教程、Clash Mi 与 Shadowrocket 配置指南。'
+  'Sell VPN 按机场、VPN、翻墙和加速器四类需求，整理 2026 机场推荐、优惠信息、概念区别、风险提示、测评与客户端教程。'
 const organizationId = `${siteUrl}/#organization`
 const websiteId = `${siteUrl}/#website`
 const authorUrl = `${siteUrl}/about/`
@@ -187,6 +187,15 @@ export default defineUserConfig({
 
     navbar: [
       { text: '首页', link: '/' },
+      {
+        text: '概念指南',
+        items: [
+          { text: '机场推荐与测评', link: '/posts/vpn-airport-ranking-2026/' },
+          { text: 'VPN和机场区别', link: '/blog/vpn-vs-airport/' },
+          { text: '翻墙与科学上网入门', link: '/posts/jieshao/' },
+          { text: '加速器和VPN区别', link: '/posts/accelerator-vpn-ladder-difference/' },
+        ],
+      },
       { text: '2026机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
       { text: '各大机场优惠码', link: '/posts/airport-coupon-table/' },
       {
@@ -199,7 +208,6 @@ export default defineUserConfig({
           { text: '机场防跑路指南', link: '/posts/airport-risk-checklist-2026/' },
         ],
       },
-      { text: '科学上网教程', link: '/posts/jieshao/' },
       {
         text: '使用教程',
         items: [
@@ -226,7 +234,7 @@ export default defineUserConfig({
     ],
     profile: {
       name: siteName,
-      description: '机场测评、VPN 推荐与科学上网教程',
+      description: '机场、VPN、翻墙与加速器指南',
       avatar: '/sellvpn-logo.svg',
     },
     social: [
