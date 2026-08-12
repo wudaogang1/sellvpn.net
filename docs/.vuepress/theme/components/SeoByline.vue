@@ -10,6 +10,26 @@ const showByline = computed(() => Boolean(
   && page.value.path !== '/'
   && page.value.path !== '/article/w4q5524n/',
 ))
+
+const toDateOnly = (value: unknown): string => {
+  if (!value) return ''
+  if (value instanceof Date) return value.toISOString().slice(0, 10)
+
+  const match = String(value).trim().match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})/)
+  if (match) {
+    return `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`
+  }
+
+  const date = new Date(String(value))
+  return Number.isNaN(date.getTime()) ? '' : date.toISOString().slice(0, 10)
+}
+
+const modifiedDate = computed(() => toDateOnly(
+  frontmatter.value.updateTime
+  || page.value.git?.updatedTime
+  || frontmatter.value.date
+  || frontmatter.value.createTime,
+))
 </script>
 
 <template>
@@ -22,6 +42,10 @@ const showByline = computed(() => Boolean(
     <a href="/review-methodology/">测评方法</a>
     <span aria-hidden="true">·</span>
     <a href="/affiliate-disclosure/">联盟披露</a>
+    <template v-if="modifiedDate">
+      <span aria-hidden="true">·</span>
+      <span>最近核对：<time :datetime="modifiedDate">{{ modifiedDate }}</time></span>
+    </template>
   </p>
 </template>
 

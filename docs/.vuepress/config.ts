@@ -10,6 +10,42 @@ const siteDescription =
 const organizationId = `${siteUrl}/#organization`
 const websiteId = `${siteUrl}/#website`
 const authorUrl = `${siteUrl}/about/`
+const postsUrl = `${siteUrl}/blog/`
+const defaultSocialImage = `${siteUrl}/cover-airport-ranking-2026.jpg`
+const generatedPageSeo = new Map([
+  [
+    '/blog/',
+    {
+      heading: '所有文章',
+      title: '所有文章｜2026机场推荐、机场测评与科学上网教程',
+      description: 'Sell VPN 所有文章列表，汇总2026最新机场推荐、各大机场优惠码、机场测评、VPN推荐、科学上网教程、Clash Mi与Shadowrocket配置指南。',
+    },
+  ],
+  [
+    '/blog/tags/',
+    {
+      heading: '按标签浏览文章',
+      title: '文章标签｜机场推荐、机场测评、科学上网与客户端教程',
+      description: 'Sell VPN 文章标签页，按机场推荐、机场优惠码、机场测评、科学上网、Clash教程、ChatGPT节点和流媒体解锁等标签浏览内容。',
+    },
+  ],
+  [
+    '/blog/categories/',
+    {
+      heading: '按分类浏览文章',
+      title: '文章分类｜机场推荐、机场测评与科学上网教程',
+      description: '按机场推荐、机场测评、科学上网教程和AI工具教程分类浏览 Sell VPN 的文章、使用指南、优惠信息与风险提示。',
+    },
+  ],
+  [
+    '/blog/archives/',
+    {
+      heading: '文章更新归档',
+      title: '文章归档｜2026机场推荐与科学上网教程更新记录',
+      description: 'Sell VPN 文章归档页，按时间查看2026机场推荐、各大机场优惠码、机场测评、科学上网教程和客户端配置指南的更新记录。',
+    },
+  ],
+])
 const affiliateHrefFragments = [
   '99ba.net',
   'bianyuanjiediantttt.xyz',
@@ -57,20 +93,29 @@ const toISOString = (value: unknown): string => {
   return Number.isNaN(date.getTime()) ? '' : date.toISOString()
 }
 
-const latestISOString = (...values: unknown[]): string => {
-  const timestamps = values
-    .map(toISOString)
-    .filter(Boolean)
-    .map((value) => new Date(value).getTime())
+const modifiedISOString = (page: {
+  frontmatter: Record<string, unknown>
+  data?: { git?: { updatedTime?: unknown } }
+}): string =>
+  toISOString(page.frontmatter.updateTime)
+  || toISOString(page.data?.git?.updatedTime)
+  || toISOString(page.frontmatter.date)
+  || toISOString(page.frontmatter.createTime)
 
-  return timestamps.length ? new Date(Math.max(...timestamps)).toISOString() : ''
-}
+const escapeHtml = (value: unknown): string => String(value)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;')
 
 const organization = {
   '@type': 'Organization',
   '@id': organizationId,
   name: siteName,
   url: siteUrl,
+  email: 'mailto:wudaogang0@outlook.com',
+  sameAs: ['https://t.me/sellvpn000'],
   logo: {
     '@type': 'ImageObject',
     url: `${siteUrl}/sellvpn-logo.svg`,
@@ -86,24 +131,51 @@ const editorialAuthor = {
   url: authorUrl,
 }
 
-const breadcrumbJsonLd = (page: { path: string; title?: string }) => ({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
+const breadcrumbJsonLd = (page: {
+  path: string
+  title?: string
+  filePathRelative?: string | null
+  frontmatter: Record<string, unknown>
+  data?: { categoryList?: Array<{ id: string; name: string }> }
+}) => {
+  const article = Boolean(
+    page.filePathRelative
+    && page.frontmatter.article !== false
+    && page.path !== '/'
+    && page.path !== '/article/w4q5524n/',
+  )
+  const items = [
     {
       '@type': 'ListItem',
       position: 1,
       name: '首页',
       item: siteUrl,
     },
-    {
+  ]
+
+  if (article) {
+    items.push({
       '@type': 'ListItem',
-      position: 2,
-      name: page.title || siteName,
-      item: `${siteUrl}${page.path}`,
-    },
-  ],
-})
+      position: items.length + 1,
+      name: '所有文章',
+      item: postsUrl,
+    })
+
+  }
+
+  items.push({
+    '@type': 'ListItem',
+    position: items.length + 1,
+    name: page.title || siteName,
+    item: `${siteUrl}${page.path}`,
+  })
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items,
+  }
+}
 
 const seoMarkdownPlugin = () => ({
   name: 'sellvpn-seo-markdown',
@@ -119,12 +191,17 @@ const seoMarkdownPlugin = () => ({
 
       if (/^https?:\/\//i.test(href) && !siteHostPattern.test(href)) {
         const relations = new Set(String(token.attrGet('rel') || '').split(/\s+/).filter(Boolean))
-        relations.add('nofollow')
         relations.add('noopener')
         const normalized = href.toLowerCase()
         const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)
           || affiliateHrefFragments.some((fragment) => normalized.includes(fragment))
-        if (affiliate) relations.add('sponsored')
+        if (affiliate) {
+          relations.add('nofollow')
+          relations.add('sponsored')
+        } else {
+          relations.delete('nofollow')
+          relations.delete('sponsored')
+        }
         token.attrSet('rel', [...relations].join(' '))
       }
 
@@ -154,13 +231,84 @@ const seoMarkdownPlugin = () => ({
   },
 })
 
+const generatedPageSeoPlugin = () => ({
+  name: 'sellvpn-generated-page-seo',
+  extendsPageOptions: (options: { path?: string; frontmatter?: Record<string, any> }) => {
+    const seo = options.path ? generatedPageSeo.get(options.path) : undefined
+    if (!seo) return
+
+    const canonical = `${siteUrl}${options.path}`
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: seo.heading,
+      description: seo.description,
+      inLanguage: 'zh-CN',
+      isPartOf: { '@id': websiteId },
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: '首页',
+            item: siteUrl,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: seo.heading,
+            item: canonical,
+          },
+        ],
+      },
+    }
+    options.frontmatter ||= {}
+    options.frontmatter.title = seo.title
+    options.frontmatter.description = seo.description
+    options.frontmatter.head = [
+      ...(Array.isArray(options.frontmatter.head) ? options.frontmatter.head : []),
+      ['meta', { name: 'robots', content: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' }],
+      ['link', { rel: 'canonical', href: canonical }],
+      ['meta', { property: 'og:url', content: canonical }],
+      ['meta', { property: 'og:site_name', content: siteName }],
+      ['meta', { property: 'og:title', content: seo.title }],
+      ['meta', { property: 'og:description', content: seo.description }],
+      ['meta', { property: 'og:type', content: 'website' }],
+      ['meta', { property: 'og:locale', content: 'zh_CN' }],
+      ['meta', { property: 'og:image', content: defaultSocialImage }],
+      ['meta', { property: 'og:image:alt', content: seo.title }],
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+      ['meta', { name: 'twitter:title', content: seo.title }],
+      ['meta', { name: 'twitter:description', content: seo.description }],
+      ['meta', { name: 'twitter:image', content: defaultSocialImage }],
+      ['meta', { name: 'twitter:image:alt', content: seo.title }],
+      ['script', { type: 'application/ld+json', 'data-seo-schema': 'collection' }, JSON.stringify(schema)],
+    ]
+  },
+  extendsPage: (page: {
+    filePathRelative?: string | null
+    frontmatter: Record<string, any>
+  }) => {
+    if (
+      page.filePathRelative
+      && page.frontmatter.article !== false
+      && page.frontmatter.excerpt === undefined
+      && page.frontmatter.description
+    ) {
+      page.frontmatter.excerpt = `<p>${escapeHtml(page.frontmatter.description)}</p>`
+    }
+  },
+})
+
 export default defineUserConfig({
   lang: 'zh-CN',
   title: siteName,
   description: siteDescription,
+  shouldPrefetch: false,
   head: [
-    ['meta', { charset: 'utf-8' }],
-    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     ['meta', { name: 'author', content: siteName }],
     ['meta', { name: 'theme-color', content: '#2563eb' }],
     ['meta', { name: 'format-detection', content: 'telephone=no' }],
@@ -170,11 +318,11 @@ export default defineUserConfig({
     links: {
       externalAttrs: {
         target: '_blank',
-        rel: 'nofollow noopener noreferrer',
+        rel: 'noopener noreferrer',
       },
     },
   },
-  plugins: [seoMarkdownPlugin()],
+  plugins: [seoMarkdownPlugin(), generatedPageSeoPlugin()],
   theme: plumeTheme({
     home: '/',
     hostname: siteUrl,
@@ -247,12 +395,7 @@ export default defineUserConfig({
       sitemap: {
         changefreq: 'weekly',
         excludePaths: ['/404.html'],
-        modifyTimeGetter: (page) => latestISOString(
-          page.frontmatter.updateTime,
-          page.data.git?.updatedTime,
-          page.frontmatter.date,
-          page.frontmatter.createTime,
-        ),
+        modifyTimeGetter: (page) => modifiedISOString(page),
       },
       seo: {
         canonical: siteUrl,
@@ -292,13 +435,7 @@ export default defineUserConfig({
           }
 
           if (article) {
-            const modified = latestISOString(
-              page.frontmatter.updateTime,
-              ogp['og:updated_time'],
-              page.data.git?.updatedTime,
-              page.frontmatter.date,
-              page.frontmatter.createTime,
-            )
+            const modified = modifiedISOString(page)
             result['article:author'] = authorUrl
             result['article:published_time'] = toISOString(page.frontmatter.createTime || page.frontmatter.date)
             result['article:modified_time'] = modified
@@ -327,6 +464,13 @@ export default defineUserConfig({
               { type: 'application/ld+json' },
               JSON.stringify(breadcrumbJsonLd(page)),
             ])
+          }
+
+          const cover = String(page.frontmatter.cover || '')
+          if (/^https?:\/\//i.test(cover)) {
+            const origin = new URL(cover).origin
+            head.unshift(['link', { rel: 'dns-prefetch', href: origin }])
+            head.unshift(['link', { rel: 'preconnect', href: origin, crossorigin: '' }])
           }
 
           if (page.path === '/') {
@@ -361,13 +505,7 @@ export default defineUserConfig({
         jsonLd: (jsonLD, page) => {
           if ('@type' in jsonLD && jsonLD['@type'] === 'Article') {
             const datePublished = toISOString(page.frontmatter.createTime || page.frontmatter.date)
-            const dateModified = latestISOString(
-              page.frontmatter.updateTime,
-              jsonLD.dateModified,
-              page.data.git?.updatedTime,
-              page.frontmatter.date,
-              page.frontmatter.createTime,
-            )
+            const dateModified = modifiedISOString(page)
 
             return {
               ...jsonLD,
@@ -405,6 +543,20 @@ export default defineUserConfig({
           }
         },
       },
+      markdownMath: false,
+      llmstxt: {
+        domain: siteUrl,
+        llmsTxt: true,
+        llmsFullTxt: false,
+        llmsPageTxt: false,
+        filter: (page) => page.path !== '/404.html',
+        llmsTxtTemplate: '# {title}\n\n> {description}\n\n{details}\n\n## 内容目录\n\n{toc}',
+        llmsTxtTemplateGetter: {
+          title: siteName,
+          description: siteDescription,
+          details: '本文件列出站内公开内容，链接均应与页面 canonical 网址保持一致。',
+        },
+      },
     },
     markdown: {
       collapse: true,
@@ -412,7 +564,7 @@ export default defineUserConfig({
     collections: [
       {
         type: 'post',
-        dir: '.',
+        dir: '/',
         title: '所有文章',
         include: ['**/*.md'],
         exclude: ['index.md'],

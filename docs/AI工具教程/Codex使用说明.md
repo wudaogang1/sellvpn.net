@@ -4,7 +4,7 @@ createTime: 2026/08/07
 date: 2026-08-07T00:00:00.000Z
 updateTime: 2026/08/07
 permalink: /blog/codex-guide/
-cover: /cover-codex-guide-2026.svg
+cover: /cover-codex-guide-2026.jpg
 sitemap:
   changefreq: monthly
   priority: 0.8
@@ -18,7 +18,7 @@ description: Codex使用说明，介绍桌面端、CLI和IDE扩展的选择与�
 
 内容核对：**2026年8月7日**。本文依据 OpenAI 官方 Codex 文档整理；产品入口、命令和可用功能可能更新，请以文末官方页面为准。
 
-![Codex使用指南：安装、提示词、项目规则与代码审查](/cover-codex-guide-2026.svg)
+![Codex使用指南：安装、提示词、项目规则与代码审查](/cover-codex-guide-2026.jpg)
 
 Codex 是 OpenAI 面向软件开发任务的智能编程助手。它可以阅读代码库、解释项目结构、修改文件、运行测试、排查错误和审查代码。与普通聊天工具不同，Codex 能在获得许可后直接操作你选定的项目，因此适合把“理解需求—修改代码—验证结果”串成一个完整流程。
 

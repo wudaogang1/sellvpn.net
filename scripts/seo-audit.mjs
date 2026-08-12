@@ -16,6 +16,13 @@ const generatedRoutes = new Set([
   '/blog/categories/',
   '/blog/archives/',
 ])
+const generatedRouteHeadings = new Map([
+  ['/blog/', '所有文章'],
+  ['/blog/tags/', '按标签浏览文章'],
+  ['/blog/categories/', '按分类浏览文章'],
+  ['/blog/archives/', '文章更新归档'],
+])
+const expectedCategoryNames = ['机场推荐', '机场测评', '科学上网教程', 'AI工具教程']
 const focusTopicRoutes = new Map([
   ['机场', '/posts/vpn-airport-ranking-2026/'],
   ['VPN', '/blog/vpn-vs-airport/'],
@@ -253,6 +260,9 @@ for (const page of pages) {
   }
   if (h1Count > 0) {
     issues.push(`${rel}: markdown body has ${h1Count} H1 heading(s); use H2+ under the page title`)
+  }
+  if (page.content.includes('ddd.jichang.best')) {
+    issues.push(`${rel}: contains the retired ddd.jichang.best host`)
   }
 
   if (data.title && [...data.title].length > 80) {
@@ -510,8 +520,172 @@ const hasSchemaType = (value, type) => {
   return types.includes(type)
 }
 
+const parseRenderedSchemas = (html, label) => {
+  const schemas = []
+
+  for (const match of html.matchAll(
+    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+  )) {
+    try {
+      schemas.push(...schemaItems(JSON.parse(match[1])))
+    } catch {
+      issues.push(`${label}: rendered page contains invalid JSON-LD`)
+    }
+  }
+
+  return schemas
+}
+
+const renderedRouteForFile = (file) => {
+  const rel = path.relative(distDir, file).replaceAll(path.sep, '/')
+  if (rel === 'index.html') return '/'
+  if (rel.endsWith('/index.html')) return `/${rel.replace(/\/index\.html$/, '/')}`
+  return `/${rel}`
+}
+
+const attributeValue = (tag, name) =>
+  tag.match(new RegExp(`\\b${name}\\s*=\\s*(["'])(.*?)\\1`, 'i'))?.[2] || ''
+
+const metaContent = (html, attribute, value) => {
+  const tag = [...html.matchAll(/<meta\b[^>]*>/gi)]
+    .map((match) => match[0])
+    .find((candidate) => attributeValue(candidate, attribute).toLowerCase() === value.toLowerCase())
+  return tag ? attributeValue(tag, 'content') : ''
+}
+
+const relValuesForTag = (tag) =>
+  new Set(attributeValue(tag, 'rel').toLowerCase().split(/\s+/).filter(Boolean))
+
+const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 if (distIsFresh) {
   const renderedPolicyIssues = new Set()
+  const renderedTitles = new Map()
+  const renderedDescriptions = new Map()
+
+  for (const htmlFile of walk(distDir, (file) => file.endsWith('.html'))) {
+    const route = renderedRouteForFile(htmlFile)
+    const html = fs.readFileSync(htmlFile, 'utf8')
+    const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0])
+    const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map((match) => match[0])
+    const imageTags = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0])
+    const countMetaName = (name) => metaTags.filter(
+      (tag) => attributeValue(tag, 'name').toLowerCase() === name,
+    ).length
+
+    const h1Count = (html.match(/<h1\b/gi) || []).length
+    if (h1Count !== 1) issues.push(`${route}: rendered page must contain exactly one H1; found ${h1Count}`)
+
+    const charsetCount = metaTags.filter((tag) => /\bcharset\s*=/i.test(tag)).length
+    if (charsetCount !== 1) issues.push(`${route}: expected one charset declaration; found ${charsetCount}`)
+
+    const viewportCount = countMetaName('viewport')
+    if (viewportCount !== 1) issues.push(`${route}: expected one viewport declaration; found ${viewportCount}`)
+
+    const robotsCount = countMetaName('robots')
+    if (robotsCount !== 1) issues.push(`${route}: expected one robots directive; found ${robotsCount}`)
+    const robots = metaContent(html, 'name', 'robots')
+    if (route === '/404.html' ? !/\bnoindex\b/i.test(robots) : !/\bindex\b/i.test(robots)) {
+      issues.push(`${route}: robots directive does not match the page indexability`)
+    }
+
+    const canonicalTags = linkTags.filter((tag) => relValuesForTag(tag).has('canonical'))
+    const canonicalCount = canonicalTags.length
+    const expectedCanonicalCount = route === '/404.html' ? 0 : 1
+    if (canonicalCount !== expectedCanonicalCount) {
+      issues.push(`${route}: expected ${expectedCanonicalCount} canonical link(s); found ${canonicalCount}`)
+    }
+    if (
+      route !== '/404.html'
+      && canonicalCount === 1
+      && attributeValue(canonicalTags[0], 'href') !== `${siteUrl}${route}`
+    ) {
+      issues.push(`${route}: canonical URL does not match the rendered route`)
+    }
+
+    const titleCount = (html.match(/<title\b[^>]*>/gi) || []).length
+    if (titleCount !== 1) issues.push(`${route}: expected one title element; found ${titleCount}`)
+    const title = html.match(/<title\b[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() || ''
+    const description = metaContent(html, 'name', 'description')
+    if (route !== '/404.html') {
+      if (!title) issues.push(`${route}: rendered title is empty`)
+      if (!description) issues.push(`${route}: rendered meta description is missing`)
+      if (title) {
+        const owners = renderedTitles.get(title) || []
+        owners.push(route)
+        renderedTitles.set(title, owners)
+      }
+      if (description) {
+        const owners = renderedDescriptions.get(description) || []
+        owners.push(route)
+        renderedDescriptions.set(description, owners)
+      }
+    }
+
+    const prefetchCount = linkTags.filter((tag) => relValuesForTag(tag).has('prefetch')).length
+    if (prefetchCount > 0) issues.push(`${route}: unnecessary page prefetch links found: ${prefetchCount}`)
+
+    const highPriorityImages = imageTags.filter(
+      (tag) => attributeValue(tag, 'fetchpriority').toLowerCase() === 'high',
+    ).length
+    if (highPriorityImages > 1) {
+      issues.push(`${route}: more than one image has fetchpriority=high`)
+    }
+
+    for (const image of imageTags) {
+      const src = attributeValue(image, 'src') || '(unknown image)'
+      if (!/\balt\s*=/i.test(image)) issues.push(`${route}: rendered image lacks alt: ${src}`)
+      if (!/^\d+$/.test(attributeValue(image, 'width'))) {
+        issues.push(`${route}: rendered image lacks a numeric width: ${src}`)
+      }
+      if (!/^\d+$/.test(attributeValue(image, 'height'))) {
+        issues.push(`${route}: rendered image lacks a numeric height: ${src}`)
+      }
+      if (!/^(?:lazy|eager)$/i.test(attributeValue(image, 'loading'))) {
+        issues.push(`${route}: rendered image lacks an explicit loading strategy: ${src}`)
+      }
+    }
+
+    const socialImage = metaContent(html, 'property', 'og:image')
+    if (route !== '/404.html' && !socialImage) issues.push(`${route}: missing og:image`)
+    if (/\.svg(?:[?#]|$)/i.test(socialImage)) {
+      issues.push(`${route}: social preview image must be a raster image, not SVG`)
+    }
+    if (route !== '/404.html') {
+      const ogDescription = metaContent(html, 'property', 'og:description')
+      const twitterDescription = metaContent(html, 'name', 'twitter:description')
+      if (ogDescription !== description || twitterDescription !== description) {
+        issues.push(`${route}: meta, Open Graph and Twitter descriptions must match`)
+      }
+      if (metaContent(html, 'property', 'og:url') !== `${siteUrl}${route}`) {
+        issues.push(`${route}: og:url does not match the canonical URL`)
+      }
+      if (metaContent(html, 'name', 'twitter:image') !== socialImage) {
+        issues.push(`${route}: Twitter and Open Graph images must match`)
+      }
+      if (!metaContent(html, 'property', 'og:image:type')) {
+        issues.push(`${route}: og:image:type is missing`)
+      }
+      if (!/^\d+$/.test(metaContent(html, 'property', 'og:image:width'))) {
+        issues.push(`${route}: og:image:width is missing or invalid`)
+      }
+      if (!/^\d+$/.test(metaContent(html, 'property', 'og:image:height'))) {
+        issues.push(`${route}: og:image:height is missing or invalid`)
+      }
+    }
+    if (html.includes('ddd.jichang.best')) {
+      issues.push(`${route}: rendered page contains the retired ddd.jichang.best host`)
+    }
+  }
+
+  for (const [title, routes] of renderedTitles) {
+    if (routes.length > 1) issues.push(`duplicate rendered title “${title}”: ${routes.join(', ')}`)
+  }
+  for (const [description, routes] of renderedDescriptions) {
+    if (routes.length > 1) {
+      issues.push(`duplicate rendered description “${description}”: ${routes.join(', ')}`)
+    }
+  }
 
   for (const route of generatedRoutes) {
     const htmlFile = htmlFileForRoute(route)
@@ -528,6 +702,39 @@ if (distIsFresh) {
     }
     if (!/<meta\s+property=["']og:image["']\s+content=["'][^"']+["']/i.test(html)) {
       issues.push(`${route}: generated aggregate page is missing og:image`)
+    }
+
+    const heading = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]
+      ?.replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+    if (heading !== generatedRouteHeadings.get(route)) {
+      issues.push(`${route}: expected visible H1 “${generatedRouteHeadings.get(route)}”, found “${heading || ''}”`)
+    }
+
+    const collection = parseRenderedSchemas(html, route)
+      .find((schema) => hasSchemaType(schema, 'CollectionPage'))
+    if (!collection) {
+      issues.push(`${route}: generated aggregate page is missing CollectionPage JSON-LD`)
+    } else {
+      if (normalizeHref(collection.url) !== `${siteUrl}${route}`) {
+        issues.push(`${route}: CollectionPage URL disagrees with its canonical route`)
+      }
+      if (!hasSchemaType(collection.breadcrumb, 'BreadcrumbList')) {
+        issues.push(`${route}: CollectionPage JSON-LD is missing breadcrumbs`)
+      }
+      if (
+        ['/blog/', '/blog/archives/'].includes(route)
+        && !hasSchemaType(collection.mainEntity, 'ItemList')
+      ) {
+        issues.push(`${route}: article collection is missing an ItemList`)
+      }
+    }
+
+    if (route === '/blog/categories/') {
+      for (const category of expectedCategoryNames) {
+        if (!html.includes(category)) issues.push(`${route}: missing category ${category}`)
+      }
     }
   }
 
@@ -576,9 +783,14 @@ if (distIsFresh) {
             `${page.rel}: ordinary external link must not be sponsored: ${href}`,
           )
         }
-        if (!relValues.has('nofollow') && !relValues.has('noopener')) {
+        if (relValues.has('nofollow')) {
           renderedPolicyIssues.add(
-            `${page.rel}: ordinary external link needs nofollow or noopener: ${href}`,
+            `${page.rel}: ordinary editorial link must not be nofollow: ${href}`,
+          )
+        }
+        if (!relValues.has('noopener')) {
+          renderedPolicyIssues.add(
+            `${page.rel}: ordinary external link needs noopener: ${href}`,
           )
         }
       }
@@ -586,16 +798,7 @@ if (distIsFresh) {
 
     if (!page.isArticle) continue
 
-    const schemas = []
-    for (const match of html.matchAll(
-      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
-    )) {
-      try {
-        schemas.push(...schemaItems(JSON.parse(match[1])))
-      } catch {
-        issues.push(`${page.rel}: rendered page contains invalid JSON-LD`)
-      }
-    }
+    const schemas = parseRenderedSchemas(html, page.rel)
 
     const article = schemas.find((schema) => hasSchemaType(schema, 'Article'))
     if (!article) {
@@ -625,10 +828,25 @@ if (distIsFresh) {
     if (!/作者[：:]\s*Sell VPN/.test(mainText)) {
       issues.push(`${page.rel}: visible article byline must read “作者：Sell VPN”`)
     }
+    if (!/最近核对[：:]\s*\d{4}-\d{2}-\d{2}/.test(mainText)) {
+      issues.push(`${page.rel}: visible article byline must include a recent-check date`)
+    }
+    if (!/<a\b[^>]*href=["']\/blog\/tags\/\?tag=/i.test(html)) {
+      issues.push(`${page.rel}: rendered article tags must link to the tag collection`)
+    }
+
+    const breadcrumb = schemas.find((schema) => hasSchemaType(schema, 'BreadcrumbList'))
+    const breadcrumbItems = Array.isArray(breadcrumb?.itemListElement)
+      ? breadcrumb.itemListElement
+      : []
+    if (!breadcrumbItems.some((item) => normalizeHref(item?.item) === `${siteUrl}/blog/`)) {
+      issues.push(`${page.rel}: article breadcrumb must include the all-articles page`)
+    }
 
     const published = parseSeoDate(article.datePublished)
     const modified = parseSeoDate(article.dateModified)
     const expectedPublished = parseSeoDate(page.data.createTime || page.data.date)
+    const expectedModified = parseSeoDate(page.data.updateTime)
     if (!published) issues.push(`${page.rel}: Article datePublished is missing or invalid`)
     if (!modified) issues.push(`${page.rel}: Article dateModified is missing or invalid`)
     if (published && expectedPublished && published.getTime() !== expectedPublished.getTime()) {
@@ -637,9 +855,52 @@ if (distIsFresh) {
     if (published && modified && modified < published) {
       issues.push(`${page.rel}: Article dateModified is earlier than datePublished`)
     }
+    if (modified && expectedModified && modified.getTime() !== expectedModified.getTime()) {
+      issues.push(`${page.rel}: Article dateModified disagrees with updateTime`)
+    }
   }
 
   issues.push(...renderedPolicyIssues)
+
+  const sitemapFile = path.join(distDir, 'sitemap.xml')
+  if (!fs.existsSync(sitemapFile)) {
+    issues.push('fresh build is missing sitemap.xml')
+  } else {
+    const sitemap = fs.readFileSync(sitemapFile, 'utf8')
+    for (const route of routePaths) {
+      const canonical = `${siteUrl}${route}`
+      if (!sitemap.includes(`<loc>${canonical}</loc>`)) {
+        issues.push(`sitemap.xml is missing ${canonical}`)
+      }
+    }
+    for (const route of generatedRoutes) {
+      const canonical = `${siteUrl}${route}`
+      const match = sitemap.match(
+        new RegExp(`<url>\\s*<loc>${escapeRegExp(canonical)}<\\/loc>([\\s\\S]*?)<\\/url>`),
+      )
+      if (!match || !/<lastmod>[^<]+<\/lastmod>/.test(match[1])) {
+        issues.push(`sitemap.xml aggregate route lacks lastmod: ${canonical}`)
+      }
+    }
+  }
+
+  const llmsFile = path.join(distDir, 'llms.txt')
+  if (!fs.existsSync(llmsFile)) {
+    issues.push('fresh build is missing llms.txt')
+  } else {
+    const llms = fs.readFileSync(llmsFile, 'utf8')
+    if (/\/index\.html(?:[\s)#]|$)/.test(llms)) {
+      issues.push('llms.txt contains non-canonical /index.html URLs')
+    }
+    const llmsUrls = new Set(
+      [...llms.matchAll(/\]\((https:\/\/sellvpn\.net[^)\s]+)\)/g)].map((match) => match[1]),
+    )
+    for (const page of pages) {
+      if (page.route && !llmsUrls.has(`${siteUrl}${page.route}`)) {
+        issues.push(`llms.txt is missing ${siteUrl}${page.route}`)
+      }
+    }
+  }
 } else if (fs.existsSync(distIndex)) {
   warnings.push('rendered HTML is older than its SEO inputs; generated-output checks were skipped')
 } else {

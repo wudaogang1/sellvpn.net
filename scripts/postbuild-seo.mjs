@@ -12,6 +12,7 @@ const pageSeoOverrides = new Map([
   [
     '/blog/',
     {
+      heading: '所有文章',
       title: '所有文章｜2026机场推荐、机场测评与科学上网教程 | Sell VPN',
       description:
         'Sell VPN 所有文章列表，汇总2026最新机场推荐、各大机场优惠码、机场测评、VPN推荐、科学上网教程、Clash Mi与Shadowrocket配置指南。',
@@ -20,6 +21,7 @@ const pageSeoOverrides = new Map([
   [
     '/blog/tags/',
     {
+      heading: '按标签浏览文章',
       title: '文章标签｜机场推荐、机场测评、科学上网与客户端教程 | Sell VPN',
       description:
         'Sell VPN 文章标签页，按机场推荐、机场优惠码、机场测评、科学上网、Clash教程、ChatGPT节点和流媒体解锁等标签浏览内容。',
@@ -28,6 +30,7 @@ const pageSeoOverrides = new Map([
   [
     '/blog/archives/',
     {
+      heading: '文章更新归档',
       title: '文章归档｜2026机场推荐与科学上网教程更新记录 | Sell VPN',
       description:
         'Sell VPN 文章归档页，按时间查看2026机场推荐、各大机场优惠码、机场测评、科学上网教程和客户端配置指南的更新记录。',
@@ -36,9 +39,10 @@ const pageSeoOverrides = new Map([
   [
     '/blog/categories/',
     {
+      heading: '按分类浏览文章',
       title: '文章分类｜机场推荐、机场测评与科学上网教程 | Sell VPN',
       description:
-        '按机场推荐、机场测评和科学上网教程分类浏览 Sell VPN 的文章、使用指南、优惠信息与风险提示。',
+        '按机场推荐、机场测评、科学上网教程和AI工具教程分类浏览 Sell VPN 的文章、使用指南、优惠信息与风险提示。',
     },
   ],
 ])
@@ -115,16 +119,27 @@ const addLinkRelations = (tag) => {
 
   if (!/^https?:\/\//i.test(href) || siteHostPattern.test(href)) return tag
 
-  const values = new Set(['nofollow', 'noopener'])
-  if (isAffiliateUrl(href)) values.add('sponsored')
+  const affiliate = isAffiliateUrl(href)
+  const values = new Set(['noopener'])
 
   if (/\brel="/i.test(tag)) {
     return tag.replace(/\brel="([^"]*)"/i, (_match, rel) => {
       for (const value of String(rel).split(/\s+/).filter(Boolean)) values.add(value)
+      if (affiliate) {
+        values.add('nofollow')
+        values.add('sponsored')
+      } else {
+        values.delete('nofollow')
+        values.delete('sponsored')
+      }
       return `rel="${[...values].join(' ')}"`
     })
   }
 
+  if (affiliate) {
+    values.add('nofollow')
+    values.add('sponsored')
+  }
   return tag.replace(/<a\b/i, `<a rel="${[...values].join(' ')}"`)
 }
 
@@ -222,15 +237,21 @@ const setTagAttribute = (tag, name, value, overwrite = false) => {
   return tag.replace(/\s*\/?>(?=$)/, ` ${name}="${value}">`)
 }
 
-const optimizeImageTag = (tag) => {
+const removeTagAttribute = (tag, name) =>
+  tag.replace(new RegExp(`\\s${name}=(?:"[^"]*"|'[^']*')`, 'gi'), '')
+
+const isPriorityImage = (src) =>
+  /(?:^|\/)cover-[^/?#]+/i.test(src) || knownPriorityImages.has(src)
+
+const optimizeImageTag = (tag, priority = false) => {
   const src = tag.match(/\bsrc="([^"]+)"/i)?.[1] || ''
   const dimensions = getLocalImageDimensions(src)
-  const important = /(?:^|\/)cover-[^/?#]+/i.test(src)
-    || /sellvpn-logo\.svg/i.test(src)
-    || knownPriorityImages.has(src)
+  const eager = priority || /sellvpn-logo\.svg/i.test(src)
   let result = setTagAttribute(tag, 'decoding', 'async')
-  result = setTagAttribute(result, 'loading', important ? 'eager' : 'lazy', true)
-  if (important) result = setTagAttribute(result, 'fetchpriority', 'high')
+  result = setTagAttribute(result, 'loading', eager ? 'eager' : 'lazy', true)
+  result = priority
+    ? setTagAttribute(result, 'fetchpriority', 'high', true)
+    : removeTagAttribute(result, 'fetchpriority')
   if (dimensions) {
     result = setTagAttribute(result, 'width', dimensions.width)
     result = setTagAttribute(result, 'height', dimensions.height)
@@ -312,15 +333,125 @@ const replaceTitle = (html, title) =>
     ? html.replace(/<title>[^<]*<\/title>/i, `<title>${title}</title>`)
     : html.replace('</head>', `<title>${title}</title></head>`)
 
+const decodeHtmlText = (value) => String(value)
+  .replace(/<!--([\s\S]*?)-->/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&nbsp;/gi, ' ')
+  .replace(/&amp;/gi, '&')
+  .replace(/&quot;/gi, '"')
+  .replace(/&#39;|&apos;/gi, "'")
+  .replace(/&lt;/gi, '<')
+  .replace(/&gt;/gi, '>')
+  .replace(/&#(\d+);/g, (_match, code) => String.fromCodePoint(Number(code)))
+  .replace(/&#x([\da-f]+);/gi, (_match, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+  .replace(/\s+/g, ' ')
+  .trim()
+
+const extractPostItems = (html) => {
+  const items = []
+  const seen = new Set()
+
+  const addItem = (href, rawName) => {
+    const name = decodeHtmlText(rawName)
+    if (!href.startsWith('/') || !name || seen.has(href)) return
+
+    seen.add(href)
+    items.push({ href, name })
+  }
+
+  for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+    const attributes = match[1]
+    const className = attributes.match(/\bclass=(?:"([^"]*)"|'([^']*)')/i)?.slice(1).find(Boolean) || ''
+    if (!/(?:^|\s)post-link(?:\s|$)/i.test(className)) continue
+
+    const href = attributes.match(/\bhref=(?:"([^"]+)"|'([^']+)')/i)?.slice(1).find(Boolean) || ''
+    addItem(href, match[2])
+  }
+
+  for (const match of html.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)) {
+    const anchor = match[1].match(/<a\b([^>]*)>([\s\S]*?)<\/a>/i)
+    if (!anchor) continue
+
+    const href = anchor[1].match(/\bhref=(?:"([^"]+)"|'([^']+)')/i)?.slice(1).find(Boolean) || ''
+    addItem(href, anchor[2])
+  }
+
+  return items
+}
+
+const upsertCollectionJsonLd = (html, route, override) => {
+  const postItems = extractPostItems(html)
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${siteUrl}${route}#webpage`,
+    url: `${siteUrl}${route}`,
+    name: override.heading,
+    description: override.description,
+    inLanguage: 'zh-CN',
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首页',
+          item: siteUrl,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: override.heading,
+          item: `${siteUrl}${route}`,
+        },
+      ],
+    },
+    ...(postItems.length > 0
+      ? {
+          mainEntity: {
+            '@type': 'ItemList',
+            numberOfItems: postItems.length,
+            itemListElement: postItems.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: `${siteUrl}${item.href}`,
+              name: item.name,
+            })),
+          },
+        }
+      : {}),
+  }
+  const json = JSON.stringify(schema).replaceAll('<', '\\u003c')
+  const script = `<script type="application/ld+json" data-seo-schema="collection">${json}</script>`
+  const pattern = /<script\s+type="application\/ld\+json"\s+data-seo-schema="collection">[\s\S]*?<\/script>/i
+
+  return pattern.test(html)
+    ? html.replace(pattern, script)
+    : html.replace('</head>', `${script}</head>`)
+}
+
+const imageMimeType = (src) => {
+  const pathname = String(src).split(/[?#]/)[0].toLowerCase()
+  if (pathname.endsWith('.jpg') || pathname.endsWith('.jpeg')) return 'image/jpeg'
+  if (pathname.endsWith('.png')) return 'image/png'
+  if (pathname.endsWith('.webp')) return 'image/webp'
+  if (pathname.endsWith('.gif')) return 'image/gif'
+  return ''
+}
+
 let updatedHtmlFiles = 0
 let updatedLinks = 0
 let sponsoredLinks = 0
 let updatedImages = 0
 let updatedSeoFiles = 0
+let normalizedLlmsLinks = 0
+let updatedSitemapRoutes = 0
 
 for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
   const html = fs.readFileSync(file, 'utf8')
   const route = routeFromHtmlFile(file)
+  let priorityImageSelected = false
   let next = html.replace(/<a\b[^>]*\bhref="https?:\/\/[^"]+"[^>]*>/gi, (tag) => {
     const href = tag.match(/\bhref="([^"]+)"/i)?.[1] || ''
     const updated = addLinkRelations(tag)
@@ -331,7 +462,10 @@ for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
     return updated
   })
   next = next.replace(/<img\b[^>]*>/gi, (tag) => {
-    const updated = optimizeImageTag(tag)
+    const src = tag.match(/\bsrc="([^"]+)"/i)?.[1] || ''
+    const priority = !priorityImageSelected && isPriorityImage(src)
+    if (priority) priorityImageSelected = true
+    const updated = optimizeImageTag(tag, priority)
     if (updated !== tag) updatedImages += 1
     return updated
   })
@@ -351,13 +485,14 @@ for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
   if (override) {
     next = replaceTitle(next, override.title)
     next = upsertMetaName(next, 'description', override.description)
+    next = upsertCollectionJsonLd(next, route, override)
   }
 
   if (route !== '/404.html') {
-    next = ensureMetaProperty(next, 'og:url', `${siteUrl}${route}`)
-    next = ensureMetaProperty(next, 'og:site_name', 'Sell VPN')
-    next = ensureMetaProperty(next, 'og:title', getTitle(next).replace(/\s*\|\s*Sell VPN$/, ''))
-    next = ensureMetaProperty(next, 'og:description', getMetaNameContent(next, 'description') || siteDescription)
+    next = upsertMetaProperty(next, 'og:url', `${siteUrl}${route}`)
+    next = upsertMetaProperty(next, 'og:site_name', 'Sell VPN')
+    next = upsertMetaProperty(next, 'og:title', getTitle(next).replace(/\s*\|\s*Sell VPN$/, ''))
+    next = upsertMetaProperty(next, 'og:description', getMetaNameContent(next, 'description') || siteDescription)
     next = websiteRoutes.has(route)
       ? upsertMetaProperty(next, 'og:type', 'website')
       : ensureMetaProperty(next, 'og:type', 'article')
@@ -367,12 +502,15 @@ for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
     const title = getTitle(next).replace(/\s*\|\s*Sell VPN$/, '')
     const description = getMetaNameContent(next, 'description') || siteDescription
     const socialImage = getMetaPropertyContent(next, 'og:image') || `${siteUrl}/cover-airport-ranking-2026.jpg`
-    next = ensureMetaProperty(next, 'og:image:alt', title)
-    next = ensureMetaName(next, 'twitter:card', 'summary_large_image')
-    next = ensureMetaName(next, 'twitter:title', title)
-    next = ensureMetaName(next, 'twitter:description', description)
-    next = ensureMetaName(next, 'twitter:image', socialImage)
-    next = ensureMetaName(next, 'twitter:image:alt', title)
+    next = upsertMetaProperty(next, 'og:image:alt', title)
+    next = upsertMetaName(next, 'twitter:card', 'summary_large_image')
+    next = upsertMetaName(next, 'twitter:title', title)
+    next = upsertMetaName(next, 'twitter:description', description)
+    next = upsertMetaName(next, 'twitter:image', socialImage)
+    next = upsertMetaName(next, 'twitter:image:alt', title)
+
+    const mimeType = imageMimeType(socialImage)
+    if (mimeType) next = ensureMetaProperty(next, 'og:image:type', mimeType)
 
     const dimensions = getLocalImageDimensions(socialImage)
     if (dimensions) {
@@ -388,6 +526,61 @@ for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
   }
 }
 
+const llmsFile = path.join(distDir, 'llms.txt')
+if (fs.existsSync(llmsFile)) {
+  const source = fs.readFileSync(llmsFile, 'utf8')
+  const normalized = source.replace(
+    /https:\/\/sellvpn\.net(\/[^\s)]*?)?\/index\.html/g,
+    (_match, pathname = '') => `${siteUrl}${pathname || ''}/`,
+  )
+  normalizedLlmsLinks = (source.match(/https:\/\/sellvpn\.net(?:\/[^\s)]*?)?\/index\.html/g) || []).length
+  if (normalized !== source) fs.writeFileSync(llmsFile, normalized)
+}
+
+const articleModifiedDates = []
+for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
+  const html = fs.readFileSync(file, 'utf8')
+  for (const match of html.matchAll(
+    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+  )) {
+    try {
+      const queue = [JSON.parse(match[1])]
+      while (queue.length > 0) {
+        const schema = queue.shift()
+        if (Array.isArray(schema)) {
+          queue.push(...schema)
+          continue
+        }
+        if (!schema || typeof schema !== 'object') continue
+        if (Array.isArray(schema['@graph'])) queue.push(...schema['@graph'])
+        const types = Array.isArray(schema['@type']) ? schema['@type'] : [schema['@type']]
+        if (types.includes('Article') && schema.dateModified) {
+          const timestamp = new Date(schema.dateModified).getTime()
+          if (!Number.isNaN(timestamp)) articleModifiedDates.push(timestamp)
+        }
+      }
+    } catch {
+      // The audit reports malformed JSON-LD with the page path; postbuild stays resilient.
+    }
+  }
+}
+
+const sitemapFile = path.join(distDir, 'sitemap.xml')
+if (fs.existsSync(sitemapFile) && articleModifiedDates.length > 0) {
+  const latestArticleUpdate = new Date(Math.max(...articleModifiedDates)).toISOString()
+  let sitemap = fs.readFileSync(sitemapFile, 'utf8')
+
+  for (const route of ['/blog/', '/blog/tags/', '/blog/categories/', '/blog/archives/']) {
+    const loc = `${siteUrl}${route}`.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const pattern = new RegExp(`(<url>\\s*<loc>${loc}<\\/loc>)(?!\\s*<lastmod>)`)
+    const next = sitemap.replace(pattern, `$1<lastmod>${latestArticleUpdate}</lastmod>`)
+    if (next !== sitemap) updatedSitemapRoutes += 1
+    sitemap = next
+  }
+
+  fs.writeFileSync(sitemapFile, sitemap)
+}
+
 fs.writeFileSync(
   path.join(distDir, 'robots.txt'),
   ['User-agent: *', 'Allow: /', 'Sitemap: https://sellvpn.net/sitemap.xml', ''].join('\n'),
@@ -395,4 +588,7 @@ fs.writeFileSync(
 
 console.log(
   `Postbuild SEO: updated ${updatedLinks} external links (${sponsoredLinks} sponsored) and ${updatedImages} images in ${updatedHtmlFiles} HTML files; normalized ${updatedSeoFiles} SEO heads and robots.txt.`,
+)
+console.log(
+  `Postbuild discovery: normalized ${normalizedLlmsLinks} llms.txt links and added lastmod to ${updatedSitemapRoutes} aggregate sitemap routes.`,
 )

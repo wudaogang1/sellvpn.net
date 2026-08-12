@@ -3,6 +3,7 @@ import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vuepress/client'
 import { Layout as PlumeLayout } from 'vuepress-theme-plume/client'
 import SeoByline from '../components/SeoByline.vue'
+import SeoCollectionHeader from '../components/SeoCollectionHeader.vue'
 
 const route = useRoute()
 const affiliateHrefFragments = [
@@ -51,10 +52,14 @@ const applyExternalLinkPolicy = () => {
     const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)
       || affiliateHrefFragments.some(fragment => normalized.includes(fragment))
 
-    relations.add('nofollow')
     relations.add('noopener')
-    if (affiliate) relations.add('sponsored')
-    else relations.delete('sponsored')
+    if (affiliate) {
+      relations.add('sponsored')
+      relations.add('nofollow')
+    } else {
+      relations.delete('sponsored')
+      relations.delete('nofollow')
+    }
     link.rel = [...relations].join(' ')
   }
 }
@@ -88,11 +93,13 @@ onUnmounted(() => observer?.disconnect())
         height="512"
         loading="eager"
         decoding="async"
-        fetchpriority="high"
       >
     </template>
     <template #doc-meta-after>
       <SeoByline />
+    </template>
+    <template #posts-top>
+      <SeoCollectionHeader />
     </template>
   </PlumeLayout>
 </template>
