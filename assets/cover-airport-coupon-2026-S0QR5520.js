@@ -1,0 +1,1 @@
+var e=`/cover-airport-coupon-2026.jpg`;export{e as t};
