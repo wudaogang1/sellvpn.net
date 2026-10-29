@@ -49,7 +49,7 @@ const affiliateHostFragments = [
   'v2cvipaff.cc',
   'vipaff.cc',
   'worryfreeaff.com',
-  'xxyun.at',
+  'xx-yun.com',
   'xn--66tw07h.com',
   '1flyunaff.cc',
 ]
@@ -261,8 +261,8 @@ for (const page of pages) {
   if (h1Count > 0) {
     issues.push(`${rel}: markdown body has ${h1Count} H1 heading(s); use H2+ under the page title`)
   }
-  if (page.content.includes('ddd.jichang.best')) {
-    issues.push(`${rel}: contains the retired ddd.jichang.best host`)
+  if (page.content.includes('ccc.jichang.best')) {
+    issues.push(`${rel}: contains the retired ccc.jichang.best host`)
   }
 
   if (data.title && [...data.title].length > 80) {
@@ -673,8 +673,8 @@ if (distIsFresh) {
         issues.push(`${route}: og:image:height is missing or invalid`)
       }
     }
-    if (html.includes('ddd.jichang.best')) {
-      issues.push(`${route}: rendered page contains the retired ddd.jichang.best host`)
+    if (html.includes('ccc.jichang.best')) {
+      issues.push(`${route}: rendered page contains the retired ccc.jichang.best host`)
     }
   }
 

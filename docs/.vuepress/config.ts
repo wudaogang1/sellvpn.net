@@ -65,7 +65,7 @@ const affiliateHrefFragments = [
   'v2cvipaff.cc',
   'vipaff.cc',
   'worryfreeaff.com',
-  'xxyun.at',
+  'xx-yun.com',
   '1flyunaff.cc',
   'fb7777.shop',
   'xn--66tw07h.com',
