@@ -51,7 +51,6 @@ const affiliateHostFragments = [
   'worryfreeaff.com',
   'xx-yun.com',
   'xn--66tw07h.com',
-  '1flyunaff.cc',
 ]
 
 const issues = []

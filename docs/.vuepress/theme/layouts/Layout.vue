@@ -27,7 +27,6 @@ const affiliateHrefFragments = [
   'worryfreeaff.com',
   'xx-yun.com',
   'xn--66tw07h.com',
-  '1flyunaff.cc',
   'fb7777.shop',
   '快车.com',
 ]

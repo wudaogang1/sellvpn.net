@@ -67,7 +67,6 @@ const affiliateHostFragments = [
   'vipaff.cc',
   'worryfreeaff.com',
   'xx-yun.com',
-  '1flyunaff.cc',
   'fb7777.shop',
   'xn--66tw07h.com',
   '快车.com',
