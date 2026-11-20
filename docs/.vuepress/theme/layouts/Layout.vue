@@ -48,7 +48,7 @@ const applyExternalLinkPolicy = () => {
 
     const relations = new Set(link.rel.toLowerCase().split(/\s+/).filter(Boolean))
     const normalized = href.toLowerCase()
-    const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)
+    const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|invite_code|ref|referral|r)=/i.test(normalized)
       || affiliateHrefFragments.some(fragment => normalized.includes(fragment))
 
     relations.add('noopener')

@@ -1,8 +1,8 @@
 ---
-title: cocoduck机场怎么样？2026年7月资料整理：官网入口、节点体验与购买建议
+title: COCODUCK 机场套餐与客户端｜100GB 月付、迷你鸭年付与流量加油包
 createTime: 2026/07/18
 date: 2026-07-18T00:00:00.000Z
-updateTime: 2026/08/05
+updateTime: 2026/11/20
 permalink: /posts/cocoduck-review-2026/
 cover: /cover-review-cocoduck-2026.jpg
 sitemap:
@@ -14,10 +14,10 @@ tags:
   - 机场推荐
   - VPN推荐
   - 科学上网
-description: cocoduck机场怎么样？本文整理2026年7月cocoduck机场官网入口、优惠信息、适合人群、节点体验测试方法、流媒体与AI工具访问建议、优缺点和购买建议。
+description: 按 8 月 3 日 COCODUCK 会员商店记录，对比 ¥17 月付个人套餐、¥77 年付迷你鸭和加油包，整理 Android TV、桌面端及 iOS 导入方式。
 ---
 
-内容修订：**2026年8月5日**；原资料日期：**2026年7月18日**
+机场测试于 **2026 年 8 月 3 日**查看了登录后的 COCODUCK 商店。个人套餐当时报价 **¥17/月、100GB/月**，最低的年付方案为 **¥77/年、40GB/月**。首次只试一个月，个人套餐的预付款较低。[COCODUCK 商店记录](https://jichangceshi.com/posts/cocoduck)
 
 ![cocoduck机场测评封面：官网入口、备用机场、节点体验与购买建议](/cover-review-cocoduck-2026.jpg)
 
@@ -27,7 +27,6 @@ description: cocoduck机场怎么样？本文整理2026年7月cocoduck机场官�
 
 - 官网入口：[https://www.cocoduck.live](https://www.cocoduck.live/auth/register?code=cdb08a39e6)
 - 优惠码：**暂无公开优惠码**
-- 公开资料参考：入门月付约 **¥15/月**，流量口径常见为 **100GB-150GB/月**，另有试用套餐记录
 - 推荐定位：**新手体验 / 轻量备用 / 短周期测试**
 - 购买建议：**先短周期体验，确认稳定后再续费**
 
@@ -52,7 +51,7 @@ cocoduck机场官网入口：
 
 [https://www.cocoduck.live](https://www.cocoduck.live/auth/register?code=cdb08a39e6)
 
-目前收集到的信息里没有明确公开优惠码，购买时请以官网活动、套餐页和结算页为准。
+注册链接中的 `code` 是邀请参数。机场测试 8 月整理的活动资料没有列出固定折扣，优惠金额需要在所选订单上核对。[COCODUCK 活动记录](https://jichangceshi.com/posts/airport-compare)
 
 购买前建议查看：
 
@@ -65,16 +64,19 @@ cocoduck机场官网入口：
 
 ## 三、cocoduck机场套餐与节点参考
 
-根据 yp7.net 和 ermao.net 的公开资料，cocoduck机场属于低门槛机场，入门月付约 15元。公开资料对入门流量存在 100GB/月和 150GB/月两种口径，购买前请以官网套餐页为准。
+8 月 3 日的商店记录中，四款常规套餐列有月付价格，另有一款只按年出售。表内价格是对应周期的标价。
 
-| 套餐参考 | 价格 | 流量 | 适合人群 |
-| --- | --- | --- | --- |
-| 试用档 | 约¥0-1 | 约2GB / 1天 | 测试官网、订阅和节点连通性 |
-| 入门月付 | 约¥15/月 | 约100GB-150GB/月 | 新手日常和轻量视频 |
-| 中档月付 | 约¥30/月 | 约300GB/月 | 中度日常使用 |
-| 高级月付 | 约¥60/月 | 约600GB/月 | 多设备和高频视频 |
+| 套餐 | 付款金额 | 每月流量 |
+| --- | ---: | ---: |
+| 个人 | ¥17/月 | 100GB |
+| 精英 | ¥31/月 | 200GB |
+| 家庭 | ¥75/月 | 500GB |
+| 团队 | ¥115/月 | 1,000GB |
+| 迷你鸭77 | ¥77/年 | 40GB |
 
-公开资料还提到 cocoduck 节点覆盖多个常用地区，支持 SS、V2Ray、Trojan 等常见协议，并可能提供 Android 客户端或 iOS 辅助账号服务。具体支持方式会随后台调整，建议注册后查看教程页。
+已有常规套餐的用户可以加购流量。50GB 为 ¥10，100GB 为 ¥20，500GB 为 ¥100，1,000GB 为 ¥200。比如个人套餐偶尔多用 50GB，当月合计 ¥27。若常常需要 200GB，精英月付标价 ¥31，比个人套餐每月再加购 100GB 少 ¥6。
+
+当次查看的账户尚未购买套餐，会员中心没有展示独立节点状态页，无法据此核对节点数量、地区、协议或在线比例。[COCODUCK 套餐、加油包与会员中心记录](https://jichangceshi.com/posts/cocoduck)
 
 ## 四、cocoduck机场适合哪些人？
 
@@ -107,14 +109,7 @@ cocoduck机场可以作为新手体验对象，但不建议首次直接购买长
 
 ## 六、cocoduck机场客户端配置建议
 
-常用客户端：
-
-| 系统 | 推荐客户端 |
-| --- | --- |
-| Windows | Clash Verge、V2RayN、sing-box |
-| macOS | Clash Verge、Stash、ClashX |
-| iOS | Shadowrocket、Stash、Quantumult X |
-| Android | Clash Meta、v2rayNG、sing-box |
+8 月 3 日的会员中心列有 Android、Android TV、Windows 和 macOS 自有客户端。iOS 和 OpenWrt 自有客户端当时仍标注开发中。iPhone 用户可从后台取用 Shadowrocket 订阅，电脑用户可按 Windows 或 macOS 的 Clash Verge 教程导入。会员页还列有 Quantumult、Stash、V2Ray 等订阅格式。[COCODUCK 客户端与订阅入口记录](https://jichangceshi.com/posts/cocoduck)
 
 导入订阅后，可以先检查：
 
@@ -130,7 +125,7 @@ cocoduck机场可以作为新手体验对象，但不建议首次直接购买长
 
 - 官网入口已整理，方便注册测试
 - 入门月付门槛较低，适合先体验
-- 公开资料提到有试用档，适合先验证连通性
+- 个人套餐可按月购买，适合先验证连通性
 - 适合新手短周期体验
 - 可作为主力机场之外的轻量备用
 - 适合网页、AI 工具和视频访问测试

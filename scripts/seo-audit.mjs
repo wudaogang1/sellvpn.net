@@ -145,7 +145,7 @@ const isAffiliateUrl = (href) => {
         (fragment) => url.hostname === fragment || url.hostname.endsWith(`.${fragment}`),
       ) ||
       /(?:^|[.-])(?:aff|affiliate|vipaff)(?:[.-]|$)/i.test(url.hostname) ||
-      /[?&#](?:aff|affiliate|affid|ref|referral|invite|inviter|r|code)=/i.test(normalized) ||
+      /[?&#](?:aff|affiliate|affid|ref|referral|invite|invite_code|inviter|r|code)=/i.test(normalized) ||
       /\/(?:register|signup)(?:[/?#]|$).*?[?&#](?:code|aff|ref|r)=/i.test(normalized)
     )
   } catch {

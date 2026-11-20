@@ -192,7 +192,7 @@ const seoMarkdownPlugin = () => ({
         const relations = new Set(String(token.attrGet('rel') || '').split(/\s+/).filter(Boolean))
         relations.add('noopener')
         const normalized = href.toLowerCase()
-        const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)
+        const affiliate = /[?&#](?:aff|affid|affiliate|code|invite|invite_code|ref|referral|r)=/i.test(normalized)
           || affiliateHrefFragments.some((fragment) => normalized.includes(fragment))
         if (affiliate) {
           relations.add('nofollow')

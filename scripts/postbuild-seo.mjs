@@ -102,7 +102,7 @@ const walk = (dir, predicate = () => true) => {
 const isAffiliateUrl = (href) => {
   const normalized = href.toLowerCase()
 
-  if (/[?&#](?:aff|affid|affiliate|code|invite|ref|referral|r)=/i.test(normalized)) return true
+  if (/[?&#](?:aff|affid|affiliate|code|invite|invite_code|ref|referral|r)=/i.test(normalized)) return true
   if (affiliateHostFragments.some((fragment) => normalized.includes(fragment))) return true
 
   try {
@@ -177,6 +177,27 @@ const getImageDimensionsFromBuffer = (buffer, extension) => {
 
   if (extension === '.gif' && buffer.length >= 10) {
     return { width: buffer.readUInt16LE(6), height: buffer.readUInt16LE(8) }
+  }
+
+  if (extension === '.webp' && buffer.length >= 20
+    && buffer.toString('ascii', 0, 4) === 'RIFF'
+    && buffer.toString('ascii', 8, 12) === 'WEBP') {
+    const chunkType = buffer.toString('ascii', 12, 16)
+    const chunkSize = buffer.readUInt32LE(16)
+    if (chunkSize > buffer.length - 20) return null
+
+    if (chunkType === 'VP8X' && chunkSize >= 10) {
+      return { width: buffer.readUIntLE(24, 3) + 1, height: buffer.readUIntLE(27, 3) + 1 }
+    }
+
+    if (chunkType === 'VP8L' && chunkSize >= 5 && buffer[20] === 0x2f) {
+      const size = buffer.readUInt32LE(21)
+      return { width: (size & 0x3fff) + 1, height: ((size >>> 14) & 0x3fff) + 1 }
+    }
+
+    if (chunkType === 'VP8 ' && chunkSize >= 10 && buffer.readUIntLE(23, 3) === 0x2a019d) {
+      return { width: buffer.readUInt16LE(26) & 0x3fff, height: buffer.readUInt16LE(28) & 0x3fff }
+    }
   }
 
   if (extension === '.svg') {
