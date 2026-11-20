@@ -289,8 +289,13 @@ const generatedPageSeoPlugin = () => ({
   },
   extendsPage: (page: {
     filePathRelative?: string | null
+    data: { title: string }
     frontmatter: Record<string, any>
   }) => {
+    const title = page.frontmatter.title
+    if (page.filePathRelative && title && page.data.title === `${title} | 所有文章`) {
+      page.data.title = title
+    }
     if (
       page.filePathRelative
       && page.frontmatter.article !== false

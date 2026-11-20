@@ -65,6 +65,17 @@ const applyExternalLinkPolicy = () => {
 
 let observer: MutationObserver | undefined
 
+const trackAffiliateClick = (event: MouseEvent) => {
+  if (event.button !== (event.type === 'auxclick' ? 1 : 0) || !(event.target instanceof Element)) return
+  const link = event.target.closest<HTMLAnchorElement>('a[rel~="sponsored"][href]')
+  if (!link || !['https:', 'http:'].includes(link.protocol) || link.origin === location.origin) return
+
+  window.zaraz?.track('affiliate_click', {
+    page_path: location.pathname,
+    link_domain: link.hostname,
+  })
+}
+
 const refreshExternalLinks = async () => {
   await nextTick()
   applyExternalLinkPolicy()
@@ -74,11 +85,17 @@ watch(() => route.fullPath, refreshExternalLinks)
 
 onMounted(() => {
   applyExternalLinkPolicy()
+  document.addEventListener('click', trackAffiliateClick, true)
+  document.addEventListener('auxclick', trackAffiliateClick, true)
   observer = new MutationObserver(applyExternalLinkPolicy)
   observer.observe(document.body, { childList: true, subtree: true })
 })
 
-onUnmounted(() => observer?.disconnect())
+onUnmounted(() => {
+  observer?.disconnect()
+  document.removeEventListener('click', trackAffiliateClick, true)
+  document.removeEventListener('auxclick', trackAffiliateClick, true)
+})
 </script>
 
 <template>

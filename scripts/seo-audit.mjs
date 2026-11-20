@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { legacyRedirects } from './legacy-redirects.mjs'
 
 const root = process.cwd()
 const docsDir = path.join(root, 'docs')
@@ -178,6 +179,10 @@ const pages = markdownFiles.map((file) => {
 })
 
 const routePaths = new Set([...routeOwners.keys(), ...generatedRoutes])
+for (const [source, destination] of legacyRedirects) {
+  if (routePaths.has(source)) issues.push(`${source}: redirect would replace an active page`)
+  if (!routePaths.has(destination)) issues.push(`${source}: redirect target ${destination} is missing`)
+}
 const configSource = fs.readFileSync(configFile, 'utf8')
 const homePage = pages.find((page) => page.isHome)
 
@@ -496,6 +501,7 @@ const renderInputs = [
       !file.includes(`${path.sep}.temp${path.sep}`),
   ),
   postbuildFile,
+  path.join(root, 'scripts', 'legacy-redirects.mjs'),
 ].filter((file) => fs.existsSync(file))
 const distIndex = path.join(distDir, 'index.html')
 const newestRenderInput = Math.max(...renderInputs.map((file) => fs.statSync(file).mtimeMs), 0)
@@ -561,10 +567,29 @@ if (distIsFresh) {
   const renderedPolicyIssues = new Set()
   const renderedTitles = new Map()
   const renderedDescriptions = new Map()
+  const redirectsFile = path.join(distDir, '_redirects')
+  const redirectRules = new Set(
+    fs.existsSync(redirectsFile) ? fs.readFileSync(redirectsFile, 'utf8').trim().split(/\r?\n/) : [],
+  )
+  for (const [source, destination] of legacyRedirects) {
+    if (!redirectRules.has(`${source} ${destination} 301`)) issues.push(`${source}: missing 301 in _redirects`)
+    if (!fs.existsSync(htmlFileForRoute(source))) issues.push(`${source}: missing static redirect page`)
+  }
 
   for (const htmlFile of walk(distDir, (file) => file.endsWith('.html'))) {
     const route = renderedRouteForFile(htmlFile)
     const html = fs.readFileSync(htmlFile, 'utf8')
+    if (legacyRedirects.has(route)) {
+      const destination = `${siteUrl}${legacyRedirects.get(route)}`
+      if (
+        metaContent(html, 'http-equiv', 'refresh') !== `0; url=${destination}` ||
+        !html.includes(`<link rel="canonical" href="${destination}">`) ||
+        !html.includes(`<a href="${destination}">`)
+      ) {
+        issues.push(`${route}: static redirect must immediately refresh, link and canonicalize to ${destination}`)
+      }
+      continue
+    }
     const metaTags = [...html.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0])
     const linkTags = [...html.matchAll(/<link\b[^>]*>/gi)].map((match) => match[0])
     const imageTags = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0])
@@ -866,6 +891,9 @@ if (distIsFresh) {
     issues.push('fresh build is missing sitemap.xml')
   } else {
     const sitemap = fs.readFileSync(sitemapFile, 'utf8')
+    for (const source of legacyRedirects.keys()) {
+      if (sitemap.includes(`<loc>${siteUrl}${source}</loc>`)) issues.push(`sitemap.xml includes redirected URL ${source}`)
+    }
     for (const route of routePaths) {
       const canonical = `${siteUrl}${route}`
       if (!sitemap.includes(`<loc>${canonical}</loc>`)) {

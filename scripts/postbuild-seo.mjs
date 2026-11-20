@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { legacyRedirects } from './legacy-redirects.mjs'
 
 const distDir = path.join(process.cwd(), 'docs', '.vuepress', 'dist')
 const publicDir = path.join(process.cwd(), 'docs', '.vuepress', 'public')
@@ -469,8 +470,9 @@ let normalizedLlmsLinks = 0
 let updatedSitemapRoutes = 0
 
 for (const file of walk(distDir, (item) => item.endsWith('.html'))) {
-  const html = fs.readFileSync(file, 'utf8')
   const route = routeFromHtmlFile(file)
+  if (legacyRedirects.has(route)) continue
+  const html = fs.readFileSync(file, 'utf8')
   let priorityImageSelected = false
   let next = html.replace(/<a\b[^>]*\bhref="https?:\/\/[^"]+"[^>]*>/gi, (tag) => {
     const href = tag.match(/\bhref="([^"]+)"/i)?.[1] || ''
@@ -605,6 +607,27 @@ fs.writeFileSync(
   path.join(distDir, 'robots.txt'),
   ['User-agent: *', 'Allow: /', 'Sitemap: https://sellvpn.net/sitemap.xml', ''].join('\n'),
 )
+
+const redirectRules = []
+for (const [source, destination] of legacyRedirects) {
+  redirectRules.push(`${source} ${destination} 301`)
+  const directory = path.join(distDir, source)
+  const canonical = `${siteUrl}${destination}`
+  fs.mkdirSync(directory, { recursive: true })
+  fs.writeFileSync(path.join(directory, 'index.html'), `<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="0; url=${canonical}">
+<link rel="canonical" href="${canonical}">
+<title>文章已迁移 | Sell VPN</title>
+</head>
+<body><p>文章已迁移。<a href="${canonical}">打开新地址</a></p></body>
+</html>
+`)
+}
+fs.writeFileSync(path.join(distDir, '_redirects'), `${redirectRules.join('\n')}\n`)
 
 console.log(
   `Postbuild SEO: updated ${updatedLinks} external links (${sponsoredLinks} sponsored) and ${updatedImages} images in ${updatedHtmlFiles} HTML files; normalized ${updatedSeoFiles} SEO heads and robots.txt.`,
