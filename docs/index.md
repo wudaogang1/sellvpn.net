@@ -1,5 +1,6 @@
 ---
 home: true
+pageClass: sellvpn-home-page
 title: 机场推荐、VPN、翻墙与加速器指南（2026）
 date: 2026-07-18T00:00:00.000Z
 updateTime: 2026/11/19
@@ -13,276 +14,131 @@ tags:
 sitemap:
   changefreq: daily
   priority: 1.0
-
 config:
-  - type: doc-hero
-    hero:
-      name: "Sell VPN"
-      text: "2026 机场推荐、VPN、翻墙与加速器指南"
-      tagline: "查机场套餐与验券价格，看有日期的节点记录，找到适合自己设备的配置教程。"
-      actions:
-        - theme: brand
-          text: "对比机场套餐"
-          link: "/posts/vpn-airport-ranking-2026/"
-        - theme: alt
-          text: "新手按步骤开始"
-          link: "#start-path"
-        - theme: alt
-          text: "浏览所有文章"
-          link: "/blog/"
-        - theme: alt
-          text: "查各大机场优惠码"
-          link: "/posts/airport-coupon-table/"
-  - type: features
-    title: "按你的当前问题快速进入"
-    description: "不知道先看哪篇时，按使用阶段选择：先入门、再对比、下单前查优惠、购买后看配置。"
-    features:
-      - icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4H19v16H7.5A2.5 2.5 0 0 1 5 17.5v-11Z" stroke="currentColor" stroke-width="2"/><path d="M8.5 8H15M8.5 12H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-        title: "VPN和机场新手入门"
-        details: "先弄清 VPN、机场、订阅链接、代理客户端、节点和规则模式的区别。"
-        link: "/blog/vpn-vs-airport/"
-        linkText: "看区别教程"
-      - icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M7 20V10M12 20V4M17 20v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-        title: "机场套餐与节点记录"
-        details: "对比网际快车的按量包和 XXYUN 的 100GB 月付套餐，再查其他套餐的验券价格与节点记录。"
-        link: "/posts/vpn-airport-ranking-2026/"
-        linkText: "查看套餐对比"
-      - icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M4 9h16v11H4V9Z" stroke="currentColor" stroke-width="2"/><path d="M8 9V7a4 4 0 0 1 8 0v2M8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-        title: "各大机场优惠码"
-        details: "下单前先核对机场优惠码、折扣限制、套餐价格和结算页状态。"
-        link: "/posts/airport-coupon-table/"
-        linkText: "查优惠码"
-      - icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M6 6h12v12H6z" stroke="currentColor" stroke-width="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-        title: "Clash与Shadowrocket教程"
-        details: "查看 Clash Mi、Shadowrocket 等客户端的订阅导入、规则模式和常见问题。"
-        link: "/blog/clashmi/"
-        linkText: "看配置教程"
   - type: custom
+    containerClass: sv-home-container
 ---
 
-<div class="sellvpn-index">
-<section class="index-section index-path" aria-labelledby="start-path">
-<div class="section-heading">
-<p class="section-kicker">新手阅读路径</p>
-<h2 id="start-path">新手用户怎么选择机场？按这三步看</h2>
-<p>先确认你需要企业 VPN 还是个人订阅，再按每月用量比较套餐。下单前核对优惠和客户端兼容性。</p>
-</div>
-<div class="path-grid">
-<a class="path-card path-card-primary" href="/blog/vpn-vs-airport/">
-<span class="step-number">01</span>
-<div>
-<strong>先弄清VPN和机场区别</strong>
-<p>了解传统 VPN、机场订阅、代理客户端、节点地区和规则模式，避免一开始就买错工具或套餐。</p>
-<em>阅读区别教程</em>
-</div>
-</a>
-<a class="path-card" href="/posts/vpn-airport-ranking-2026/">
-<span class="step-number">02</span>
-<div>
-<strong>按月用量比较机场套餐</strong>
-<p>对照月付价格、可用流量和节点测试时间，挑出适合短期试用的服务。</p>
-<em>查看套餐对比</em>
-</div>
-</a>
-<a class="path-card" href="/posts/airport-coupon-table/">
-<span class="step-number">03</span>
-<div>
-<strong>下单前核对优惠码</strong>
-<p>集中查看各大机场优惠码、折扣说明、适用限制、参考价格和购买前检查事项。</p>
-<em>查看优惠码汇总</em>
-</div>
-</a>
-</div>
-<div class="all-articles-entry">
-<div>
-<span>文章总入口</span>
-<strong>浏览本站所有文章</strong>
-<p>按发布时间、文章标签和归档查看全部机场推荐、VPN推荐、机场测评、各大机场优惠码、科学上网教程和客户端配置指南。</p>
-</div>
-<a href="/blog/">进入所有文章</a>
-</div>
-</section>
-
-<section class="index-section" aria-labelledby="need-title">
-<div class="section-heading compact">
-<p class="section-kicker">按搜索需求查找</p>
-<h2 id="need-title">常见搜索问题，对应看这些文章</h2>
-<p>很多用户会搜索“机场推荐哪个好”“机场优惠码怎么用”“Clash怎么导入订阅”。下面按问题分流，直接进入对应专题。</p>
-</div>
-<div class="choice-grid">
-<a class="choice-card" href="/blog/vpn-vs-airport/">
-<span>搜索：VPN和机场区别</span>
-<strong>VPN与机场入门</strong>
-<p>先了解传统 VPN、机场订阅、翻墙软件、订阅链接和节点的基本区别。</p>
-</a>
-<a class="choice-card" href="/article/jeslp91s/">
-<span>搜索：机场怎么选</span>
-<strong>如何挑选机场</strong>
-<p>按稳定性、流量、倍率、售后和客户端支持做判断。</p>
-</a>
-<a class="choice-card" href="/posts/vpn-airport-ranking-2026/">
-<span>搜索：机场推荐2026</span>
-<strong>2026 机场套餐对比</strong>
-<p>查当次验券金额、适用套餐和记录日期，按月用量筛选。</p>
-</a>
-<a class="choice-card" href="/posts/airport-recommend-2026/">
-<span>搜索：机场怎么测</span>
-<strong>机场候选与自测指南</strong>
-<p>按延迟、断线和播放情况，逐项核对常用节点。</p>
-</a>
-<a class="choice-card" href="/posts/cheap-airport-ranking-2026/">
-<span>搜索：便宜机场推荐</span>
-<strong>低价与备用机场</strong>
-<p>适合预算有限、想先月付试用或准备备用订阅的用户。</p>
-</a>
-<a class="choice-card" href="/posts/chatgpt-airport-ranking-2026/">
-<span>搜索：ChatGPT机场推荐</span>
-<strong>ChatGPT 连接测试</strong>
-<p>核对支持地区，用同一设备区分网络故障、登录异常和服务中断。</p>
-</a>
-<a class="choice-card" href="/posts/streaming-airport-ranking-2026/">
-<span>搜索：流媒体机场推荐</span>
-<strong>Netflix与YouTube解锁</strong>
-<p>关注视频速度、地区解锁、节点倍率和晚高峰稳定性。</p>
-</a>
-<a class="choice-card" href="/posts/airport-coupon-table/">
-<span>搜索：机场优惠码</span>
-<strong>各大机场优惠码</strong>
-<p>购买前核对折扣码、优惠次数和结算页是否生效。</p>
-</a>
-<a class="choice-card" href="/blog/clashmi/">
-<span>搜索：Clash教程</span>
-<strong>Clash Mi配置教程</strong>
-<p>处理下载安装、订阅导入、规则模式和连接异常。</p>
-</a>
-<a class="choice-card choice-card-all" href="/blog/">
-<span>搜索：所有文章</span>
-<strong>全部文章列表</strong>
-<p>一次查看本站所有机场推荐、测评、优惠码和科学上网教程。</p>
-</a>
-</div>
-</section>
-
-<section class="index-section" aria-labelledby="topic-title">
-<div class="section-heading compact">
-<p class="section-kicker">场景专题</p>
-<h2 id="topic-title">按预算、用途、设备和风险继续阅读</h2>
-<p>按预算选套餐，按设备找教程，按使用时段查测速方法。</p>
-</div>
-<div class="choice-grid">
-<a class="choice-card" href="/posts/airport-speed-test-method-2026/">
-<span>测评可信度</span>
-<strong>机场测速怎么测才准确</strong>
-<p>从延迟、丢包、YouTube、ChatGPT、流媒体和晚高峰判断真实体验。</p>
-</a>
-<a class="choice-card" href="/blog/vpn-vs-airport/">
-<span>新手入门</span>
-<strong>VPN和机场有什么区别</strong>
-<p>按使用方式、客户端、节点数量、价格、速度和适合人群做对比。</p>
-</a>
-<a class="choice-card" href="/posts/airport-risk-checklist-2026/">
-<span>购买避坑</span>
-<strong>机场防跑路与风险清单</strong>
-<p>购买前检查官网、套餐、优惠码、节点、售后和年付风险。</p>
-</a>
-<a class="choice-card" href="/blog/clash-verge/">
-<span>电脑端教程</span>
-<strong>Clash Verge 使用教程</strong>
-<p>适合 Windows、macOS 用户导入机场订阅和配置系统代理。</p>
-</a>
-<a class="choice-card" href="/blog/shadowrocket/">
-<span>iPhone教程</span>
-<strong>Shadowrocket 小火箭教程</strong>
-<p>适合 iPhone、iPad 用户导入订阅、选择节点和排查连接问题。</p>
-</a>
-<a class="choice-card" href="/posts/chatgpt-airport-ranking-2026/">
-<span>AI工具专题</span>
-<strong>ChatGPT 机场怎么选</strong>
-<p>对照日常网络与已有订阅的连接结果，判断是否需要更换套餐。</p>
-</a>
-<a class="choice-card" href="/posts/streaming-airport-ranking-2026/">
-<span>影音专题</span>
-<strong>流媒体机场推荐</strong>
-<p>围绕 Netflix、Disney+、YouTube、TikTok 解锁和视频体验筛选。</p>
-</a>
-</div>
-</section>
-
-<section class="index-section" aria-labelledby="keyword-title">
-<div class="section-heading compact">
-<p class="section-kicker">四类主题入口</p>
-<h2 id="keyword-title">机场、VPN、翻墙、加速器分别看哪一页？</h2>
-<p>选购个人订阅可从机场对比开始；接入公司内网或改善游戏延迟，可先看对应工具的用途。</p>
-</div>
-<div class="choice-grid" aria-label="Sell VPN 四类主题入口">
-<a class="choice-card" href="/posts/vpn-airport-ranking-2026/">
-<span>机场</span>
-<strong>机场推荐、价格与测评</strong>
-<p>查看候选机场、价格、优惠码、适用场景、风险边界与复测方法。</p>
-</a>
-<a class="choice-card" href="/blog/vpn-vs-airport/">
-<span>VPN</span>
-<strong>VPN是什么，与机场怎么选</strong>
-<p>了解传统 VPN 的使用方式，以及它与机场订阅在客户端、节点和价格上的区别。</p>
-</a>
-<a class="choice-card" href="/posts/jieshao/">
-<span>翻墙</span>
-<strong>翻墙与科学上网入门</strong>
-<p>理解翻墙、代理、梯子、机场、订阅链接与软路由分别指什么。</p>
-</a>
-<a class="choice-card" href="/posts/accelerator-vpn-ladder-difference/">
-<span>加速器</span>
-<strong>加速器和VPN有什么区别</strong>
-<p>区分游戏加速器、回国加速器、企业 VPN、梯子与跨境访问场景。</p>
-</a>
-</div>
-</section>
-
-<section class="index-section index-check" aria-labelledby="check-title">
-<div class="section-heading compact">
-<p class="section-kicker">购买前提示</p>
-<h2 id="check-title">选择翻墙机场前，先确认这几项</h2>
-<p>机场价格、优惠码和节点体验变化很快。首页只给出通用判断标准，具体套餐和折扣请进入专题文章查看，并以结算页显示为准。</p>
-</div>
-<div class="check-layout">
-<ul class="check-list">
-<li><strong>套餐周期</strong><span>第一次购买优先月付或短周期，不建议直接年付。</span></li>
-<li><strong>流量规则</strong><span>确认每月流量、倍率规则、是否限速和是否支持多设备。</span></li>
-<li><strong>常用节点</strong><span>重点测试香港、日本、新加坡、美国等自己常用地区。</span></li>
-<li><strong>使用场景</strong><span>分别测试 Google、YouTube、Telegram、ChatGPT、GitHub 和流媒体平台。</span></li>
-<li><strong>客户端支持</strong><span>确认是否能导入 Clash Mi、Shadowrocket、Stash、V2RayN 或 sing-box。</span></li>
-<li><strong>优惠状态</strong><span>输入优惠码后，先看结算金额是否变化，再完成付款。</span></li>
-</ul>
-<div class="read-note">
-<strong>更适合新手的选择方式</strong>
-<p>把机场分成主力和备用两类。主力看长期稳定、晚高峰速度和售后，备用看价格、可用性和临时切换能力。先短期测试，再决定是否续费。</p>
-<a href="/posts/airport-risk-checklist-2026/">先看机场避坑清单</a>
-</div>
-</div>
-</section>
-
-<section class="index-section" aria-labelledby="faq-title">
-<div class="section-heading compact">
-<p class="section-kicker">常见问题</p>
-<h2 id="faq-title">第一次看本站，可以先读这几条</h2>
-</div>
-<div class="faq-grid">
-<article class="faq-card">
-<h3>新手用户应该从哪里开始？</h3>
-<p>先看 <a href="/blog/vpn-vs-airport/">VPN和机场区别</a>，再看 <a href="/article/jeslp91s/">如何挑选机场</a>。选定工具后，再按预算看套餐和测评。</p>
-</article>
-<article class="faq-card">
-<h3>只想快速选一个机场怎么办？</h3>
-<p>可以先看 <a href="/posts/vpn-airport-ranking-2026/">机场套餐对比</a>，根据预算、流量和使用场景筛选，再用短周期套餐测试自己的网络环境。</p>
-</article>
-<article class="faq-card">
-<h3>机场优惠码一定能用吗？</h3>
-<p>不一定。优惠码可能有新人、次数、套餐或活动时间限制。下单前请打开 <a href="/posts/airport-coupon-table/">各大机场优惠码</a> 页面，并以结算页显示为准。</p>
-</article>
-<article class="faq-card">
-<h3>加速器、VPN和翻墙工具是一回事吗？</h3>
-<p>不是。加速器主要优化特定线路，VPN用于建立虚拟专用网络，翻墙描述访问行为。可阅读 <a href="/posts/accelerator-vpn-ladder-difference/">四者区别指南</a>。</p>
-</article>
-</div>
-</section>
+<div class="sv-home">
+  <section class="sv-hero" aria-labelledby="home-title">
+    <div class="sv-hero-copy">
+      <p class="sv-eyebrow">科学上网选购指南</p>
+      <h1 id="home-title"><span>2026 机场推荐</span> <span>VPN 与上网指南</span></h1>
+      <p class="sv-hero-description">对比机场套餐和节点测试记录，购买前核对优惠码，再按设备配置客户端。</p>
+      <div class="sv-hero-actions">
+        <a class="sv-button sv-button-primary" href="/posts/vpn-airport-ranking-2026/">对比机场套餐</a>
+        <a class="sv-button sv-button-secondary" href="#start-path">查看新手指南</a>
+      </div>
+      <p class="sv-hero-meta"><strong>22 家</strong> 机场套餐对比 <span aria-hidden="true"></span> 最近更新 <time datetime="2026-11-19">2026.11.19</time></p>
+    </div>
+    <figure class="sv-hero-figure">
+      <img src="/cover-home-network-atlas.jpg" width="1280" height="853" alt="东亚地图上的网络节点连线示意" loading="eager" decoding="async" fetchpriority="high">
+      <figcaption>网络线路示意</figcaption>
+    </figure>
+  </section>
+  <section class="sv-section sv-quick" aria-labelledby="need-title">
+    <div class="sv-section-heading">
+      <h2 id="need-title">快速入口</h2>
+      <a class="sv-text-link" href="/blog/">全部文章</a>
+    </div>
+    <div class="sv-quick-grid">
+      <a class="sv-quick-card" href="/posts/vpn-airport-ranking-2026/">
+        <span class="sv-card-icon sv-icon-comparison">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19.5h16M7 16v-5m5 5V5m5 11V8"/></svg>
+        </span>
+        <h3>机场套餐对比</h3>
+        <p>查价格、流量和节点记录</p>
+      </a>
+      <a class="sv-quick-card" href="/posts/airport-coupon-table/">
+        <span class="sv-card-icon sv-icon-coupon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 9V6H4v3a3 3 0 0 1 0 6v3h16v-3a3 3 0 0 1 0-6ZM10 14l4-4m-4 .5h.01m4 3h.01"/></svg>
+        </span>
+        <h3>各大机场优惠码</h3>
+        <p>核对折扣、适用套餐和限制</p>
+      </a>
+      <a class="sv-quick-card" href="/blog/categories/">
+        <span class="sv-card-icon sv-icon-reviews">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h8l4 4v12H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm7 0v5h5M8.5 13H15m-6.5 3.5h5"/></svg>
+        </span>
+        <h3>按分类找文章</h3>
+        <p>浏览机场测评、推荐和教程</p>
+      </a>
+      <a class="sv-quick-card" href="#client-guides">
+        <span class="sv-card-icon sv-icon-client">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.5 16H4V5h16v4M2.5 19h10m3-7h5.5v8h-5.5z"/></svg>
+        </span>
+        <h3>客户端教程</h3>
+        <p>按设备查安装和订阅导入步骤</p>
+      </a>
+    </div>
+  </section>
+  <section class="sv-section" aria-labelledby="topic-title">
+    <div class="sv-section-heading">
+      <h2 id="topic-title">按使用场景选机场</h2>
+    </div>
+    <div class="sv-topic-grid">
+      <a class="sv-topic-card" href="/posts/cheap-airport-ranking-2026/">
+        <p class="sv-topic-label">预算有限</p>
+        <h3>低价与备用机场</h3>
+        <p>按月付、按量包和备用订阅比较成本。</p>
+      </a>
+      <a class="sv-topic-card" href="/posts/chatgpt-airport-ranking-2026/">
+        <p class="sv-topic-label">AI 工具</p>
+        <h3>ChatGPT 连接测试</h3>
+        <p>核对地区可用性，排查登录和连接问题。</p>
+      </a>
+      <a class="sv-topic-card" href="/posts/streaming-airport-ranking-2026/">
+        <p class="sv-topic-label">影音串流</p>
+        <h3>流媒体机场推荐</h3>
+        <p>比较 Netflix、YouTube 等服务的可用性与播放体验。</p>
+      </a>
+    </div>
+  </section>
+  <div class="sv-guide-grid" id="keyword-title">
+    <section class="sv-guide-panel sv-guide-start" aria-labelledby="start-path">
+      <h2 id="start-path">新手指南</h2>
+      <p>先理解订阅和节点，再按需求挑选套餐。</p>
+      <ul class="sv-guide-list">
+        <li><a href="/blog/vpn-vs-airport/"><strong>VPN 和机场有什么区别？</strong><span>VPN、订阅与节点</span></a></li>
+        <li><a href="/article/jeslp91s/"><strong>第一次如何挑选机场？</strong><span>流量、稳定性与设备支持</span></a></li>
+        <li><a href="/posts/jieshao/"><strong>翻墙与科学上网入门</strong><span>代理与规则模式</span></a></li>
+        <li><a href="/posts/accelerator-vpn-ladder-difference/"><strong>加速器和 VPN 有什么区别？</strong><span>游戏加速与跨境访问</span></a></li>
+      </ul>
+    </section>
+    <section class="sv-guide-panel" aria-labelledby="client-guides">
+      <h2 id="client-guides">客户端配置</h2>
+      <p>按设备找到安装、订阅导入与故障排查教程。</p>
+      <ul class="sv-guide-list">
+        <li><a href="/blog/clash-verge/"><strong>Clash Verge</strong><span>Windows · macOS</span></a></li>
+        <li><a href="/blog/shadowrocket/"><strong>Shadowrocket 小火箭</strong><span>iPhone · iPad</span></a></li>
+        <li><a href="/blog/clashmi/"><strong>Clash Mi</strong><span>订阅导入与规则模式</span></a></li>
+      </ul>
+    </section>
+  </div>
+  <div class="sv-reference-grid">
+    <section class="sv-reference" aria-labelledby="check-title">
+      <h2 id="check-title">购买前核对</h2>
+      <p>首次购买可先选月付或短周期，确认流量倍率和设备兼容性。完成付款前，以服务商结算页显示为准。</p>
+      <ul class="sv-guide-list">
+        <li><a href="/posts/airport-risk-checklist-2026/"><strong>机场风险与购买清单</strong></a></li>
+        <li><a href="/posts/airport-speed-test-method-2026/"><strong>如何测试延迟、丢包与晚高峰表现</strong></a></li>
+        <li><a href="/posts/airport-recommend-2026/"><strong>候选机场与自测指南</strong></a></li>
+      </ul>
+    </section>
+    <section class="sv-faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">常见问题</h2>
+      <details>
+        <summary>第一次选机场从哪里开始？</summary>
+        <p>先看 <a href="/blog/vpn-vs-airport/">VPN 和机场的区别</a>，再按预算和用量筛选。可以用短周期套餐测试自己的网络环境。</p>
+      </details>
+      <details>
+        <summary>机场优惠码一定能用吗？</summary>
+        <p>优惠码可能限新用户、套餐或活动时间。购买前可以查 <a href="/posts/airport-coupon-table/">优惠码汇总</a>，最终以结算页金额为准。</p>
+      </details>
+      <details>
+        <summary>选套餐要看哪些指标？</summary>
+        <p>先核对月流量、节点倍率和设备支持，再测试常用地区在晚高峰的速度与稳定性。</p>
+      </details>
+    </section>
+  </div>
 </div>

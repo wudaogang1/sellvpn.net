@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vuepress/client'
+import { RouteLink, useRoute } from 'vuepress/client'
 
 const route = useRoute()
 
@@ -24,34 +24,91 @@ const pages: Record<string, { title: string; description: string }> = {
 }
 
 const content = computed(() => pages[route.path])
+const sections = [
+  { path: '/blog/', label: '全部文章' },
+  { path: '/blog/categories/', label: '分类' },
+  { path: '/blog/tags/', label: '标签' },
+  { path: '/blog/archives/', label: '归档' },
+]
 </script>
 
 <template>
-  <header v-if="content" class="seo-collection-header">
-    <h1>{{ content.title }}</h1>
-    <p>{{ content.description }}</p>
-  </header>
+  <div v-if="content" class="seo-collection-header">
+    <header>
+      <h1>{{ content.title }}</h1>
+      <p>{{ content.description }}</p>
+    </header>
+    <nav aria-label="文章索引">
+      <RouteLink
+        v-for="section in sections"
+        :key="section.path"
+        :to="section.path"
+        :aria-current="section.path === route.path ? 'page' : undefined"
+      >
+        {{ section.label }}
+      </RouteLink>
+    </nav>
+  </div>
 </template>
 
 <style scoped>
 .seo-collection-header {
   width: 100%;
   max-width: 1104px;
-  padding: 0;
   margin: 0 auto 24px;
 }
 
+.seo-collection-header header {
+  padding: clamp(24px, 5vw, 52px);
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 18px;
+  background: var(--sellvpn-c-soft);
+}
+
 .seo-collection-header h1 {
-  margin: 0 0 8px;
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  line-height: 1.25;
-  color: var(--vp-c-text-1);
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: var(--sellvpn-c-ink);
 }
 
 .seo-collection-header p {
-  max-width: 780px;
+  max-width: 38rem;
   margin: 0;
   line-height: 1.75;
-  color: var(--vp-c-text-2);
+  color: var(--sellvpn-c-muted);
+}
+
+.seo-collection-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.seo-collection-header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--sellvpn-c-line);
+  border-radius: 8px;
+  background: var(--sellvpn-c-panel);
+  color: var(--sellvpn-c-muted);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.seo-collection-header nav a:hover {
+  border-color: var(--vp-c-border);
+  color: var(--vp-c-brand-1);
+}
+
+.seo-collection-header nav a[aria-current="page"] {
+  border-color: #174a38;
+  background: #174a38;
+  color: #fffefa;
 }
 </style>

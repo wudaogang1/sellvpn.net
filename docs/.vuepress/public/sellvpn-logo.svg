@@ -1,17 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">Sell VPN</title>
-  <desc id="desc">蓝色盾牌与白色网络连接线组成的 Sell VPN 标志</desc>
-  <defs>
-    <linearGradient id="background" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#3b82f6"/>
-      <stop offset="1" stop-color="#1d4ed8"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="112" fill="#eff6ff"/>
-  <path d="M256 54 426 116v116c0 112-67 190-170 226C153 422 86 344 86 232V116L256 54Z" fill="url(#background)"/>
-  <circle cx="170" cy="252" r="30" fill="#fff"/>
-  <circle cx="256" cy="174" r="30" fill="#fff"/>
-  <circle cx="342" cy="252" r="30" fill="#fff"/>
-  <circle cx="256" cy="334" r="30" fill="#fff"/>
-  <path d="m191 233 44-40m42 1 44 39m0 39-44 42m-42 0-44-42" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+  <desc id="desc">绿色盾牌与网络节点组成的 Sell VPN 标志</desc>
+  <rect width="512" height="512" rx="120" fill="#174a38"/>
+  <path d="M256 108 375 151v88c0 70-46 128-119 157-73-29-119-87-119-157v-88Z" fill="none" stroke="#d9ef85" stroke-width="24" stroke-linejoin="round"/>
+  <path d="m203 261 53-50 53 50" fill="none" stroke="#d9ef85" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="203" cy="261" r="20" fill="#d9ef85"/>
+  <circle cx="256" cy="211" r="20" fill="#d9ef85"/>
+  <circle cx="309" cy="261" r="20" fill="#d9ef85"/>
 </svg>

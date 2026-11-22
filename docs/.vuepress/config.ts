@@ -314,7 +314,8 @@ export default defineUserConfig({
   shouldPrefetch: false,
   head: [
     ['meta', { name: 'author', content: siteName }],
-    ['meta', { name: 'theme-color', content: '#2563eb' }],
+    ['meta', { name: 'theme-color', content: '#f8f7f3', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#111f1a', media: '(prefers-color-scheme: dark)' }],
     ['meta', { name: 'format-detection', content: 'telephone=no' }],
     ['link', { rel: 'icon', href: '/sellvpn-logo.svg', type: 'image/svg+xml' }],
   ],
@@ -338,20 +339,10 @@ export default defineUserConfig({
     contributors: false,
 
     navbar: [
-      { text: '首页', link: '/' },
+      { text: '机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
+      { text: '优惠码', link: '/posts/airport-coupon-table/' },
       {
-        text: '概念指南',
-        items: [
-          { text: '机场推荐与测评', link: '/posts/vpn-airport-ranking-2026/' },
-          { text: 'VPN和机场区别', link: '/blog/vpn-vs-airport/' },
-          { text: '翻墙与科学上网入门', link: '/posts/jieshao/' },
-          { text: '加速器和VPN区别', link: '/posts/accelerator-vpn-ladder-difference/' },
-        ],
-      },
-      { text: '2026机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
-      { text: '各大机场优惠码', link: '/posts/airport-coupon-table/' },
-      {
-        text: '专题榜单',
+        text: '场景专题',
         items: [
           { text: '便宜机场推荐', link: '/posts/cheap-airport-ranking-2026/' },
           { text: 'ChatGPT机场推荐', link: '/posts/chatgpt-airport-ranking-2026/' },
@@ -361,14 +352,16 @@ export default defineUserConfig({
         ],
       },
       {
-        text: '使用教程',
+        text: '使用指南',
         items: [
+          { text: 'VPN和机场区别', link: '/blog/vpn-vs-airport/' },
+          { text: '如何挑选机场', link: '/article/jeslp91s/' },
+          { text: '翻墙与科学上网入门', link: '/posts/jieshao/' },
+          { text: '加速器和VPN区别', link: '/posts/accelerator-vpn-ladder-difference/' },
           { text: 'Clash Mi 教程', link: '/blog/clashmi/' },
           { text: 'Clash Verge 教程', link: '/blog/clash-verge/' },
           { text: 'Shadowrocket 教程', link: '/blog/shadowrocket/' },
-          { text: 'VPN和机场区别', link: '/blog/vpn-vs-airport/' },
           { text: '美区 Apple ID', link: '/blog/us-apple-id-register/' },
-          { text: '如何挑选机场', link: '/article/jeslp91s/' },
         ],
       },
       { text: '所有文章', link: '/blog/' },

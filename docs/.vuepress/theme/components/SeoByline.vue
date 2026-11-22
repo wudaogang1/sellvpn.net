@@ -53,11 +53,12 @@ const modifiedDate = computed(() => toDateOnly(
 .seo-byline {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  flex-basis: 100%;
+  gap: 0.2rem 0.45rem;
   align-items: center;
   margin: 0;
-  font-size: 0.875rem;
-  color: var(--vp-c-text-2);
+  font-size: 0.8125rem;
+  color: var(--sellvpn-c-muted);
 }
 
 .seo-byline-label {
@@ -65,7 +66,12 @@ const modifiedDate = computed(() => toDateOnly(
 }
 
 .seo-byline a {
-  font-weight: 600;
+  font-weight: 650;
   color: var(--vp-c-brand-1);
+}
+
+.seo-byline a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 </style>
