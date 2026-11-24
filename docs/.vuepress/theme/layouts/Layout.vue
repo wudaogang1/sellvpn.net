@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vuepress/client'
-import { Layout as PlumeLayout } from 'vuepress-theme-plume/client'
+import { Layout as PlumeLayout, useData } from 'vuepress-theme-plume/client'
 import SeoByline from '../components/SeoByline.vue'
 import SeoCollectionHeader from '../components/SeoCollectionHeader.vue'
 
 const route = useRoute()
+const { frontmatter, theme } = useData()
+const outlineSide = computed(() => {
+  const aside = frontmatter.value.aside ?? theme.value.aside
+  const outline = frontmatter.value.outline ?? theme.value.outline
+  if (outline === false) return
+  if (aside === false) return 'mobile'
+  return aside === 'left' ? 'left' : 'right'
+})
+
 const affiliateHrefFragments = [
   '99ba.net',
   'bianyuanjiediantttt.xyz',
@@ -110,6 +119,9 @@ onUnmounted(() => {
         loading="eager"
         decoding="async"
       >
+    </template>
+    <template #doc-top>
+      <span v-if="outlineSide" :data-sellvpn-outline="outlineSide" hidden />
     </template>
     <template #doc-meta-after>
       <SeoByline />

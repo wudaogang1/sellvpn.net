@@ -567,6 +567,12 @@ if (distIsFresh) {
   const renderedPolicyIssues = new Set()
   const renderedTitles = new Map()
   const renderedDescriptions = new Map()
+  for (const file of walk(path.join(distDir, 'assets'), (file) => file.endsWith('.js'))) {
+    const relativePath = path.relative(distDir, file)
+    if (/[^\x20-\x7e]/.test(relativePath)) {
+      issues.push(`${relativePath}: published JavaScript asset path must use printable ASCII`)
+    }
+  }
   const redirectsFile = path.join(distDir, '_redirects')
   const redirectRules = new Set(
     fs.existsSync(redirectsFile) ? fs.readFileSync(redirectsFile, 'utf8').trim().split(/\r?\n/) : [],

@@ -367,6 +367,34 @@
   margin: 0;
 }
 
+@media screen and (width < 1120px) {
+  /* Reserve the in-flow outline bar until Plume renders it. */
+  .vp-layout:not(:has(> .vp-local-nav)) > .vp-content > .vp-doc-container.is-posts:has(> [data-sellvpn-outline]):has(.vp-doc :is(h2, h3)[id]) {
+    margin-top: 49px;
+  }
+
+  @media (min-width: 960px) {
+    .vp-layout:not(:has(> .vp-local-nav)) > .vp-content > .vp-doc-container.is-posts:has(> [data-sellvpn-outline]):has(.vp-doc :is(h2, h3)[id]) {
+      margin-top: 48px;
+    }
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  /* Match Plume's outline column while it resolves headings after mount. */
+  .vp-doc-container.is-posts:not(.has-aside):has(> [data-sellvpn-outline]:not([data-sellvpn-outline="mobile"])):has(.vp-doc :is(h2, h3)[id]) > .container::after {
+    width: 100%;
+    max-width: 256px;
+    flex-grow: 1;
+    order: 2;
+    content: '';
+  }
+
+  .vp-doc-container.is-posts:not(.has-aside):has(> [data-sellvpn-outline="left"]) > .container::after {
+    order: 0;
+  }
+}
+
 .vp-doc-aside-outline.has-outline .content {
   padding-left: 14px;
 }

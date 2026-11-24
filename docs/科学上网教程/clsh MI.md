@@ -1,11 +1,11 @@
 ---
-title: iOS Android Clash Mi 使用教程（2026最新版）：下载安装、订阅导入与常见问题
+title: Clash Mi 使用教程（2026）：iPhone、iPad 订阅导入与排错
 createTime: 2026/03/24 10:34:23
 date: 2026-03-24T10:34:23.000Z
 updateTime: 2026/08/05
 permalink: /blog/clashmi/
 cover: https://image.ermao.net/images/blog/clashmi/20260305_103545-57abfa.png
-description: 2026年最新 Clash Mi 使用指南，详细讲解 iPhone/iPad 下载、订阅导入、连接设置、TUN 覆写以及常见报错解决方法，新手也能快速完成配置。 
+description: 在 iPhone 或 iPad 上安装 Clash Mi、导入订阅并排查连接失败或流量为 0 的问题。附 Android、Windows 和 Linux 的官方下载入口。
 tags:
   - Clash Mi
   - iOS翻墙
@@ -15,7 +15,7 @@ tags:
 ---
 内容修订：**2026年8月5日**
 
-Clash Mi 是一款集成 `mihomo`（Clash Meta）核心的代理客户端。根据[官方页面](https://clashmi.app/)，它提供 iOS、macOS、Android、Windows 和 Linux 等平台版本；本文聚焦下载安装与配置流程，不把个人偏好写成与 Shadowrocket 的性能排名。
+Clash Mi 是一款集成 `mihomo`（Clash Meta）核心的代理客户端。本文以 iPhone 和 iPad 为例演示订阅导入和连接设置，并列出其他平台的官方下载入口。
 
 如果你是第一次接触 Clash Mi，本教程将按照「下载安装 → 导入订阅 → 建立连接 → 解决问题」的顺序进行讲解，即使是新手用户，也可以按照步骤顺利完成配置。
 

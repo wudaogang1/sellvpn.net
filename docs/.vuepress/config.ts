@@ -582,6 +582,14 @@ export default defineUserConfig({
   }),
   bundler: viteBundler({
     viteOptions: {
+      build: {
+        rolldownOptions: {
+          output: {
+            // Keep Markdown source filenames out of published chunk URLs.
+            chunkFileNames: 'assets/chunk-[hash].js',
+          },
+        },
+      },
       optimizeDeps: {
         exclude: [
           'mark.js/src/vanilla.js',

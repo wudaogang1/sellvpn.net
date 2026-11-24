@@ -19,7 +19,7 @@ config:
     containerClass: sv-home-container
 ---
 
-<div class="sv-home">
+<main class="sv-home">
   <section class="sv-hero" aria-labelledby="home-title">
     <div class="sv-hero-copy">
       <p class="sv-eyebrow">科学上网选购指南</p>
@@ -32,7 +32,17 @@ config:
       <p class="sv-hero-meta"><strong>22 家</strong> 机场套餐对比 <span aria-hidden="true"></span> 最近更新 <time datetime="2026-11-19">2026.11.19</time></p>
     </div>
     <figure class="sv-hero-figure">
-      <img src="/cover-home-network-atlas.jpg" width="1280" height="853" alt="东亚地图上的网络节点连线示意" loading="eager" decoding="async" fetchpriority="high">
+      <img
+        src="/cover-home-network-atlas-1280.webp"
+        srcset="/cover-home-network-atlas-480.webp 480w, /cover-home-network-atlas-768.webp 768w, /cover-home-network-atlas-1280.webp 1280w"
+        sizes="(max-width: 700px) calc(100vw - 2 * clamp(18px, 4.2vw, 52px)), (max-width: 1280px) 45vw, 600px"
+        width="1280"
+        height="853"
+        alt="东亚地图上的网络节点连线示意"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      >
       <figcaption>网络线路示意</figcaption>
     </figure>
   </section>
@@ -120,6 +130,7 @@ config:
       <h2 id="check-title">购买前核对</h2>
       <p>首次购买可先选月付或短周期，确认流量倍率和设备兼容性。完成付款前，以服务商结算页显示为准。</p>
       <ul class="sv-guide-list">
+        <li><a href="/posts/airport-official-links-2026/"><strong>机场官网与注册入口</strong></a></li>
         <li><a href="/posts/airport-risk-checklist-2026/"><strong>机场风险与购买清单</strong></a></li>
         <li><a href="/posts/airport-speed-test-method-2026/"><strong>如何测试延迟、丢包与晚高峰表现</strong></a></li>
         <li><a href="/posts/airport-recommend-2026/"><strong>候选机场与自测指南</strong></a></li>
@@ -141,4 +152,4 @@ config:
       </details>
     </section>
   </div>
-</div>
+</main>
