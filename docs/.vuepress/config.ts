@@ -34,7 +34,7 @@ const generatedPageSeo = new Map([
     {
       heading: '按分类浏览文章',
       title: '文章分类｜机场推荐、机场测评与科学上网教程',
-      description: '按机场推荐、机场测评、科学上网教程和AI工具教程分类浏览 Sell VPN 的文章、使用指南、优惠信息与风险提示。',
+      description: '按类别查找 Sell VPN 的机场推荐、单家服务测评、科学上网和 AI 工具教程。选购时可浏览套餐比较、优惠信息与风险提示，配置时可查找 Clash、Shadowrocket 等客户端的安装和订阅导入指南。',
     },
   ],
   [

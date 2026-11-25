@@ -14,7 +14,7 @@ tags:
   - iOS翻墙
   - 科学上网
   - 机场订阅
-description: iPhone 或 iPad 如何用 Shadowrocket 导入机场订阅？从首页选择 Subscribe、刷新节点到验证连接，按订阅为空、节点超时、单个 App 无法访问三个环节排查。
+description: 在 iPhone 或 iPad 上用 Shadowrocket（小火箭）导入机场订阅，了解怎样选择 Subscribe、更新节点、验证连接和查看路由规则。遇到订阅为空、节点超时或单个 App 连不上时，按症状检查订阅、网络和配置。
 keywords:
   - Shadowrocket教程
   - 小火箭教程

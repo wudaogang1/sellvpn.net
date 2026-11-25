@@ -14,7 +14,7 @@ tags:
   - 机场推荐
   - VPN推荐
   - 科学上网
-description: 按 8 月 3 日 COCODUCK 会员商店记录，对比 ¥17 月付个人套餐、¥77 年付迷你鸭和加油包，整理 Android TV、桌面端及 iOS 导入方式。
+description: COCODUCK 个人套餐每月 100 GB，迷你鸭年付档每月 40 GB。根据会员商店记录比较首次付款和流量加油包的成本，查看 Android TV、桌面端和 iOS 的导入方式，以及购买前仍待核对的节点信息。
 ---
 
 机场测试于 **2026 年 8 月 3 日**查看了登录后的 COCODUCK 商店。个人套餐当时报价 **¥17/月、100GB/月**，最低的年付方案为 **¥77/年、40GB/月**。首次只试一个月，个人套餐的预付款较低。[COCODUCK 商店记录](https://jichangceshi.com/posts/cocoduck)

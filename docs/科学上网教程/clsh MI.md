@@ -5,7 +5,7 @@ date: 2026-03-24T10:34:23.000Z
 updateTime: 2026/08/05
 permalink: /blog/clashmi/
 cover: https://image.ermao.net/images/blog/clashmi/20260305_103545-57abfa.png
-description: 在 iPhone 或 iPad 上安装 Clash Mi、导入订阅并排查连接失败或流量为 0 的问题。附 Android、Windows 和 Linux 的官方下载入口。
+description: 在 iPhone 或 iPad 上安装 Clash Mi，添加 YAML 订阅链接、启用配置并验证连接。遇到导入失败、全局模式无法联网或连接后流量为 0 时，按订阅格式、代理组和 TUN 设置逐项排查。
 tags:
   - Clash Mi
   - iOS翻墙

@@ -13,7 +13,7 @@ tags:
   - OpenAI
   - AI编程
   - 编程工具
-description: Codex使用说明，介绍桌面端、CLI和IDE扩展的选择与安装方法，并讲解提示词、AGENTS.md、权限沙箱、代码审查、MCP及安全工作流。
+description: 从桌面端、CLI 和 IDE 扩展中选择 Codex 入口，完成首次安装和代码任务。用示例提示词明确改动范围，通过 AGENTS.md 记录项目规则，设置权限，并在提交前核对 Git diff、测试与代码审查结果。
 ---
 
 内容核对：**2026年8月7日**。本文依据 OpenAI 官方 Codex 文档整理；产品入口、命令和可用功能可能更新，请以文末官方页面为准。

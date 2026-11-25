@@ -14,7 +14,7 @@ tags:
   - 科学上网
   - 机场订阅
   - Windows翻墙
-description: Clash Verge 使用教程，面向 Windows 和 macOS 用户讲解下载安装到导入机场订阅、选择节点、规则模式、系统代理、TUN模式和常见连接问题排查。
+description: 在 Windows 或 macOS 安装 Clash Verge，导入并更新机场订阅，选节点后开启系统代理和规则模式。教程还说明订阅后没有节点、网页打不开或应用未走系统代理时，该检查哪些设置，以及何时考虑 TUN 模式。
 keywords:
   - Clash Verge教程
   - Clash Verge
