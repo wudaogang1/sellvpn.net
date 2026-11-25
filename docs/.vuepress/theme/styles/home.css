@@ -190,6 +190,11 @@
   aspect-ratio: 1.52;
 }
 
+.sv-hero-figure picture {
+  display: block;
+  height: 100%;
+}
+
 .sv-hero-figure img {
   display: block;
   width: 100%;

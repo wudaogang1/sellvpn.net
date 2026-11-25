@@ -32,17 +32,24 @@ config:
       <p class="sv-hero-meta"><strong>22 家</strong> 机场套餐对比 <span aria-hidden="true"></span> 最近更新 <time datetime="2026-11-19">2026.11.19</time></p>
     </div>
     <figure class="sv-hero-figure">
-      <img
-        src="/cover-home-network-atlas-1280.webp"
-        srcset="/cover-home-network-atlas-480.webp 480w, /cover-home-network-atlas-768.webp 768w, /cover-home-network-atlas-1280.webp 1280w"
-        sizes="(max-width: 700px) calc(100vw - 2 * clamp(18px, 4.2vw, 52px)), (max-width: 1280px) 45vw, 600px"
-        width="1280"
-        height="853"
-        alt="东亚地图上的网络节点连线示意"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      >
+      <picture>
+        <source
+          type="image/avif"
+          srcset="/cover-home-network-atlas-480.avif 480w, /cover-home-network-atlas-768.avif 768w, /cover-home-network-atlas-1280.avif 1280w"
+          sizes="(max-width: 700px) calc(100vw - 2 * clamp(18px, 4.2vw, 52px)), (max-width: 1280px) 45vw, 600px"
+        >
+        <img
+          src="/cover-home-network-atlas-1280.webp"
+          srcset="/cover-home-network-atlas-480.webp 480w, /cover-home-network-atlas-768.webp 768w, /cover-home-network-atlas-1280.webp 1280w"
+          sizes="(max-width: 700px) calc(100vw - 2 * clamp(18px, 4.2vw, 52px)), (max-width: 1280px) 45vw, 600px"
+          width="1280"
+          height="853"
+          alt="东亚地图上的网络节点连线示意"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        >
+      </picture>
       <figcaption>网络线路示意</figcaption>
     </figure>
   </section>
