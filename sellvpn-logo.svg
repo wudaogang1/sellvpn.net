@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Sell VPN</title>
+  <desc id="desc">绿色盾牌与网络节点组成的 Sell VPN 标志</desc>
+  <rect width="512" height="512" rx="120" fill="#174a38"/>
+  <path d="M256 108 375 151v88c0 70-46 128-119 157-73-29-119-87-119-157v-88Z" fill="none" stroke="#d9ef85" stroke-width="24" stroke-linejoin="round"/>
+  <path d="m203 261 53-50 53 50" fill="none" stroke="#d9ef85" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="203" cy="261" r="20" fill="#d9ef85"/>
+  <circle cx="256" cy="211" r="20" fill="#d9ef85"/>
+  <circle cx="309" cy="261" r="20" fill="#d9ef85"/>
+</svg>

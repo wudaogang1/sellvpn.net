@@ -1,0 +1,76 @@
+# Sell VPN
+
+> Sell VPN 按机场、VPN、翻墙和加速器四类需求，整理 2026 机场推荐、优惠信息、概念区别、风险提示、测评与客户端教程。
+
+本文件列出站内公开内容，链接均应与页面 canonical 网址保持一致。
+
+## 内容目录
+
+### 所有文章
+
+- [2026如何挑选机场：稳定机场推荐、VPN节点与新手选购指南](https://sellvpn.net/article/jeslp91s/): 第一次挑选机场或 VPN，可以先按日常浏览、开发或视频的用量筛选套餐，核对常用设备、节点地区和售后渠道。再用试用或月付档在自己的网络上测晚高峰速度与连接稳定性，判断是否值得续费。
+- [2026瞬云机场怎么样？价格、优惠、测速资料与稳定性复测指南](https://sellvpn.net/article/shunyun/): 比较瞬云的月付、轻量年付和两档不限时流量包，查看服务商标注的协议和香港、日本等节点的历史测速。先用短周期套餐在常用时段复测连接、流媒体播放和 ChatGPT，再根据使用需求决定是否续费。
+- [联系与纠错｜邮箱、Telegram 与更正说明](https://sellvpn.net/article/w4q5524n/): 通过 Telegram 或邮箱联系 Sell VPN，反馈机场测评、VPN 推荐和客户端教程的问题。提交事实纠错时，可附上文章地址、具体段落及可核实来源。
+- [Clash Verge 使用教程：Windows、macOS 导入机场订阅与常见问题](https://sellvpn.net/blog/clash-verge/): 在 Windows 或 macOS 安装 Clash Verge，导入并更新机场订阅，选节点后开启系统代理和规则模式。教程还说明订阅后没有节点、网页打不开或应用未走系统代理时，该检查哪些设置，以及何时考虑 TUN 模式。
+- [Clash Mi 使用教程（2026）：iPhone、iPad 订阅导入与排错](https://sellvpn.net/blog/clashmi/): 在 iPhone 或 iPad 上安装 Clash Mi，添加 YAML 订阅链接、启用配置并验证连接。遇到导入失败、全局模式无法联网或连接后流量为 0 时，按订阅格式、代理组和 TUN 设置逐项排查。
+- [Codex怎么用？2026安装、提示词、AGENTS.md与代码审查指南](https://sellvpn.net/blog/codex-guide/): 从桌面端、CLI 和 IDE 扩展中选择 Codex 入口，完成首次安装和代码任务。用示例提示词明确改动范围，通过 AGENTS.md 记录项目规则，设置权限，并在提交前核对 Git diff、测试与代码审查结果。
+- [Shadowrocket 使用教程：iPhone 导入订阅、更新节点和排查连接故障](https://sellvpn.net/blog/shadowrocket/): 在 iPhone 或 iPad 上用 Shadowrocket（小火箭）导入机场订阅，了解怎样选择 Subscribe、更新节点、验证连接和查看路由规则。遇到订阅为空、节点超时或单个 App 连不上时，按症状检查订阅、网络和配置。
+- [美区 Apple ID 注册教程（2026）｜无需信用卡](https://sellvpn.net/blog/us-apple-id-register/): 注册美区 Apple ID 时，如何选择美国地区、验证邮箱和手机号、填写地址？本文还讲解在 App Store 下载免费应用时怎样检查是否有 None 付款选项，以及如何确认账号已进入美国商店。
+- [VPN是什么？VPN和机场有什么区别（2026新手选择指南）](https://sellvpn.net/blog/vpn-vs-airport/): VPN 和机场怎么选？用公司内网、消费 VPN 和代理订阅三个场景解释账号权限、客户端和设备兼容性。再用两个套餐算一遍节点倍率如何影响可用流量，帮助你比较月费、重置日期和同时在线设备数。
+
+### Others
+
+- [机场推荐、VPN、翻墙与加速器指南（2026）](https://sellvpn.net/): 对比 22 家机场的套餐价格、流量和节点测试记录，按低价备用、ChatGPT 和流媒体等用途筛选。购买前核对优惠码的验券日期及适用条件，再按设备查阅 Clash、Shadowrocket 等客户端的安装和订阅导入教程。
+- [关于本站｜内容范围与纠错渠道](https://sellvpn.net/about/): 了解 Sell VPN 如何整理机场套餐、VPN 入门知识和客户端教程，区分服务商公开资料、编辑观察与有记录的测试。页面说明本站署名、编辑政策和联盟披露，并提供失效链接、价格变动及事实错误的反馈渠道。
+- [联盟推广披露｜佣金、推荐码与链接标注](https://sellvpn.net/affiliate-disclosure/): Sell VPN 对联盟链接、推荐码、可能获得的佣金、sponsored 链接关系标记、第三方结算价格以及购买风险的公开说明。
+- [编辑政策｜来源核验、测试证据与纠错流程](https://sellvpn.net/editorial-policy/): Sell VPN 的来源引用、事实核验、测试证据、标题表述、发布与修改日期、商业内容标注以及读者提交错误后的更正标准。
+- [99吧机场怎么样？2026资料整理：9.9元99GB、测速参考与购买建议](https://sellvpn.net/posts/99ba-review-2026/): 从 99 吧机场的 99 GB 入门档看月付流量是否够用，参考香港、日本和美国节点的历史测速。文中给出本地复测记录表，方便记录速度、连接稳定性和视频播放情况，使用 ChatGPT 的读者也可逐个节点验证。
+- [加速器、VPN、梯子、翻墙有什么区别？2026新手完整指南](https://sellvpn.net/posts/accelerator-vpn-ladder-difference/): 从用途区分加速器、VPN、梯子和翻墙。玩游戏时看线路延迟和丢包，远程办公时看身份验证和访问权限。文中还比较回国加速器、代理工具和免费 VPN，并列出选用前需要核对的隐私与安全条件。
+- [2026 机场优惠码汇总：折扣、套餐限制与结算参考](https://sellvpn.net/posts/airport-coupon-table/): 核对网际快车 20GB 按量包与 XXYUN、光年梯、快狸的入门套餐，比较有日期的验券报价、新客条件及无法享受折扣的商品。
+- [2026 机场官网入口汇总：33 家注册链接、优惠码与测评](https://sellvpn.net/posts/airport-official-links-2026/): 查找 33 家机场的官网或注册入口，包含网际快车、XXYUN、闪电鼠、环球梯、山水云、云界线等服务，附入门套餐参考、折扣适用条件及测评链接。
+- [2026机场推荐候选清单：价格、线路资料与本地复测指南](https://sellvpn.net/posts/airport-recommend-2026/): 2026 机场推荐候选清单。按需求筛选网际快车的备用按量包、XXYUN 的低价月付和瞬云等主力候选。价格、线路与解锁情况附资料来源，并说明如何用短周期套餐复测晚高峰丢包、视频播放和常用节点。
+- [2026机场防跑路与避坑指南：新手购买机场前必须检查的风险清单](https://sellvpn.net/posts/airport-risk-checklist-2026/): 新手购买机场前，可按这份避坑清单核对官网、优惠码、节点、客户端和售后。结算时确认实付、付款周期、流量重置与退款条件，再用短周期套餐测试晚高峰。文中说明年付风险，以及如何搭配备用订阅。
+- [机场测速怎么测才准确？2026科学上网节点延迟、速度、丢包与晚高峰测试方法](https://sellvpn.net/posts/airport-speed-test-method-2026/): 机场测速时固定设备、宽带与客户端，在白天、晚高峰和周末复测同一批节点。按教程记录延迟、丢包和下载速度，再用 YouTube 播放、ChatGPT 连续对话与流媒体访问检查实际使用表现。
+- [安迪 AnDy Cloud 机场｜100GB 月付、50GB 年付与流量覆盖规则](https://sellvpn.net/posts/andy-review-2026/): 对照安迪 100GB 月付与 50GB 年付的验券金额、同时可用设备数，说明月度重置和重复购买一次性 1000GB 的处理方式。
+- [宝云机场｜200GB 月付价格、500GB 季付与节点倍率](https://sellvpn.net/posts/baoyun-review-2026/): 宝云 200GB 月付券后预览 3.20 元。对照两款 500GB 季付的设备数、五地节点的 2 倍扣量标注，以及 365 天备用包的有效期。
+- [ChatGPT 机场怎么选？支持地区、节点测试与连接故障排查](https://sellvpn.net/posts/chatgpt-airport-ranking-2026/): 使用 ChatGPT 前如何判断是否需要 VPN 或机场？查官方支持地区，区分登录异常、对话中断和服务故障，再用同一设备对比直连与已有网络配置。
+- [2026便宜机场推荐与低价VPN：备用机场、短周期套餐选购指南](https://sellvpn.net/posts/cheap-airport-ranking-2026/): 查找 2026 年低价机场和备用订阅，比较网际快车按量包、XXYUN 月付与速界试用档的首次付款金额和流量。按轻度使用或备用需求挑套餐，再核对节点倍率、客户端兼容、晚高峰表现和售后。
+- [2026机场VPN省钱攻略：便宜机场、优惠机场与优惠码怎么选](https://sellvpn.net/posts/cheap-vpn-airport-coupon-guide-2026/): 想给机场订阅省钱，先把首次实付换算成月均费用和每 GB 成本，再看节点倍率、流量重置和设备数。按预算对照网际快车、XXYUN 与快狸的结算记录，了解怎样核对优惠码的首单、续费与套餐限制。
+- [冲上云霄机场怎么样？2026资料整理：台湾家宽与BGP线路口径、套餐价格及复测建议](https://sellvpn.net/posts/chongshangyunxiao/): 对比冲上云霄的月付和一次性流量包，梳理台湾家宽、三网 BGP 及香港和新加坡的历史测速资料。准备试用时，可按文中的核验项观察晚高峰线路切换和连接稳定性，并在常用节点上实际播放目标片库。
+- [COCODUCK 机场套餐与客户端｜100GB 月付、迷你鸭年付与流量加油包](https://sellvpn.net/posts/cocoduck-review-2026/): COCODUCK 个人套餐每月 100 GB，迷你鸭年付档每月 40 GB。根据会员商店记录比较首次付款和流量加油包的成本，查看 Android TV、桌面端和 iOS 的导入方式，以及购买前仍待核对的节点信息。
+- [大佬云机场测评（2026）｜财云 100GB 套餐、dly88 与 iOS 配置](https://sellvpn.net/posts/dalaoyun-review-2026/): 大佬云财云 100GB 月付原价 19.99 元，用 dly88 曾结算为 13.99 元。查看月付和年付差价、香港超时样本，以及 iOS 识别码和订阅导入限制。
+- [EdgenNova（边缘节点）机场测评 2026：套餐、节点与 SE888 优惠码](https://sellvpn.net/posts/edgenova-review-2026/): EdgenNova（边缘节点）机场测评，整理 15 元体验月付、25 元 120GB 标准套餐、SE888 优惠码与官网入口，补充带日期的后台节点记录和客户端试用检查项。
+- [Firefly 机场测评 2026｜套餐价格、优惠码与不限时流量包](https://sellvpn.net/posts/firefly-review-2026/): Firefly 机场怎么样？对比 2026 年 8 月记录的 ¥25/月 Lite、¥96 年付与 100GB 不限时包，整理节点地区、客户端入口和优惠码 firefly 的适用情况。
+- [Flybit机场怎么样？2026资料整理：IPLC线路口径、套餐价格与节点复测方法](https://sellvpn.net/posts/flybit-seo/): 查看 Flybit 的套餐流量、试用资料及亚洲和欧美的节点分布。文章解释如何在自己的网络上核对 IPLC 线路的晚高峰丢包、抖动与断流，并逐个节点验证 Netflix 播放或 ChatGPT 对话。
+- [光年梯机场测评｜110GB 首单月付 ¥13.50，常规套餐须使用官方客户端](https://sellvpn.net/posts/guangnianti-review-2026/): 对照光年梯 50 GB 年付和 110 GB 入门版，算清月流量与预付金额。购买前先确认设备兼容性，查看常规套餐的官方客户端、需要第三方订阅时应核对的专线配置，以及香港和日本节点的两次历史测速样本。
+- [光速云机场套餐与节点｜110GB 月付、年付轻量版和 AMM 活动记录](https://sellvpn.net/posts/guangsucloud-review-2026/): 按光速云后台记录比较 110 GB 月付、每月 59 GB 的轻量年付与 1,000 GB 不限时包，核对哪些档位会刷新流量、哪些需付费重置。另列 VLESS 节点状态及新人券 AMM 在付款前应确认的条件。
+- [环球梯机场测评（2026）｜HQ66 券后价、流量有效期与通用订阅](https://sellvpn.net/posts/huanqiuti-review-2026/): 环球梯微享月付 15 元含 60GB，轻享用 HQ66 曾结算为 15.20 元。核对轻享额度差异、一次性包的 365 天有效期和客服领取订阅的流程。
+- [翻墙是什么意思？VPN、机场、代理工具与科学上网区别（2026指南）](https://sellvpn.net/posts/jieshao/): 从零了解翻墙、科学上网、VPN、梯子和机场分别指什么。文中解释代理协议、客户端、订阅链接和软路由如何配合，比较机场服务与自建节点的维护责任，并说明怎么核对软件来源、服务商隐私条款和所在地规则。
+- [锦云机场套餐｜50GB 月付、365 天流量包和 2026888 优惠码](https://sellvpn.net/posts/jinyun-review-2026/): 锦云 50GB 月付验券后显示 ¥4.80。对照按月重置的五档套餐、365 天总量包与不限时包，说明优惠码 2026888 适用范围和设备数标注差异。
+- [极速Cloud 机场｜新人体验、1000GB 月付与不限时包怎么选](https://sellvpn.net/posts/jisucloud-review-2026/): 对照极速Cloud 新人体验、常规 1000GB 月付和一次性流量包，整理 ikds88 验券记录、标注设备数与重复购买时的余额问题。
+- [九云机场｜9yun 月付折扣、365 天流量包和节点倍率](https://sellvpn.net/posts/jiuyun-review-2026/): 九云 150GB 月付验券预览为 4.80 元。对照三档月付、两种有效期的流量包及节点倍率，说明换套餐前应核对的旧额度。
+- [快狸机场测评：6 档套餐价格、sellvpn 优惠码与 3 笔结算报价](https://sellvpn.net/posts/kuaili-review-2026/): 2026 年 11 月 14 日，快狸优惠码 sellvpn 在月狸月付、森狸年付和天狸流量重置的结算页分别显示 12 元、96 元和 140 元。查看三张截图、六档套餐流量及付款周期。
+- [榴莲云机场测评（2026）｜ll88 优惠码、140GB 月付与不限时流量包](https://sellvpn.net/posts/liulianyun-review-2026/): 榴莲云小榴莲 140GB 用 ll88 曾结算为 16.80 元月付。对比 50GB 入门档、96 元年付和 100GB 不限时包，并说明五地节点样本的差异。
+- [鲤云机场套餐｜100GB 月付 ¥5，大鲤月付与季付费用对比](https://sellvpn.net/posts/liyun-review-2026/): 鲤云后台的小鲤 100GB 月付标价 ¥5，大鲤 400GB 季付标价 ¥30。本文比较四种月度额度、三种总量包，并区分新人券验券结果与实际账单。
+- [秒秒云机场套餐｜探花月付、特惠季付与福气包怎么选](https://sellvpn.net/posts/miaomiaoyun-review-2026/): 秒秒云探花月付与特惠季付的区别在于首次付款金额和每月额度。本文对照 11 月 14 日的验券报价，并说明福气包期限与设备数的标注差异。
+- [熊猫Cloud 机场套餐｜300GB 月付、红包流量包与 88888 优惠码](https://sellvpn.net/posts/pandacloud-review-2026/): 熊猫Cloud 的 300GB 月付验券后显示 ¥5.40。对照 500GB 季付、600GB 月付和两款 365 天红包流量包，说明设备上限与一次性包的期限差异。
+- [全球云机场套餐与节点记录｜¥20 月付、一次性流量包与独享专线](https://sellvpn.net/posts/quanqiuyun/): 比较全球云入门月付、59 GB 年付与三档不限时流量包，算清首笔开支和每月额度。购买商业方案前，重点核对商品页标注的 1.5 TB 与同名订阅账户显示的总量差异，并查看节点协议和独享专线的商品说明。
+- [闪电鼠机场测评（2026）｜sd88 券后价、50GB 与 100GB 月付怎么选](https://sellvpn.net/posts/shandianshu-review-2026/): 闪电鼠机场限时版原价 15 元含 50GB，性价版用 sd88 曾降至 13.92 元含 100GB。对照优惠适用范围、一次性包额度差异及五地节点延迟。
+- [山水云机场测评｜100GB 月付、2026888 优惠码与节点表现](https://sellvpn.net/posts/shanshuiyun-review-2026/): 山水云机场 100GB 月付原价 12 元，使用 2026888 后应付 9.60 元。对比 8 款套餐、128GB 福利包有效期、五地 VLESS 节点及第三方测速。
+- [神行加速机场测评｜sx0077 优惠、套餐价格与节点延迟](https://sellvpn.net/posts/shenxing-review-2026/): 神行加速机场 100GB 月付用 sx0077 后应付 13.92 元。比较 7 款套餐、96 元年付特惠与 50 条 VLESS 线路，附五地客户端延迟。
+- [Soso云机场怎么样？2026年7月资料整理：官网入口、节点体验与购买建议](https://sellvpn.net/posts/sosoyun-review-2026/): 想把 Soso 云作为备用订阅，可先核对月付流量、设备限制和短周期试用规则，再按设备选择客户端并导入订阅。文中列出晚高峰复测场景，包括网页加载、YouTube 拖动、Netflix 地区片库和 AI 对话。
+- [SSONE机场怎么样？2026资料整理：10元60GB套餐、公开测速参考与复测建议](https://sellvpn.net/posts/ssone/): 从 SSONE 的 60 GB 入门月付与季度、年付方案开始比对，查看 Shadowsocks、Trojan 和客户端导入说明。试用时可按核验清单分别记录白天和晚高峰速度、断流恢复时间、视频播放与 ChatGPT 登录情况。
+- [2026 流媒体机场推荐｜Netflix、Disney+ 解锁测试](https://sellvpn.net/posts/streaming-airport-ranking-2026/): 流媒体机场节点怎么选？用 YouTube 检查 4K 播放和晚高峰速度，确认 Netflix 与 Disney+ 的地区片库，再排查 TikTok 的设备和地区问题。附日享流量、节点倍率和平台检测记录。
+- [速界机场套餐与优惠｜¥15 单月试用、¥25 极速版与年付额度](https://sellvpn.net/posts/sujie-review-2026/): 速界单月试用标注 50GB，极速版标注每月 120GB。对照六档价格、限时年付 45GB 与 50GB 的差异，附 sujie888 首次优惠及客户端入口记录。
+- [U1S1 机场套餐｜120GB 月付、60GB 年付与定制包](https://sellvpn.net/posts/u1s1-review-2026/): 对照 U1S1 的 120 GB 入门月付与每月 60 GB 轻量年付，根据用量核算预付成本。核对商品页的 BGP、IEPL 和 Shadowsocks 说明与节点列表标注的 VLESS 协议，并查找各平台客户端入口。
+- [2026 机场推荐与对比｜22 家套餐、优惠码和节点测试记录](https://sellvpn.net/posts/vpn-airport-ranking-2026/): 对照 22 家机场的套餐、流量规则、优惠码和节点测试记录。用网际快车的按量包与 XXYUN 的 100GB 月付估算费用，再查快狸等服务的验券条件。附购买后 24 小时测试清单和各家测评入口。
+- [网际快车机场套餐｜20GB 按量包、每日 60GB 与节点倍率](https://sellvpn.net/posts/wangjikuai-review-2026/): 对比网际快车的一次性总量包和每日重置的日享包，按实际用量选择。用 20 GB 套餐举例计算 5 倍住宅线路的扣量，并查看 39 条线路的倍率、各设备的订阅入口和晚间单次测速的测试条件。
+- [唯兔云机场套餐｜节假日限时价、常规月付与不限时流量包](https://sellvpn.net/posts/weituyun/): 比较唯兔云节假日 100 GB 月付、常规 150 GB 月付、两档轻量年付和不限时流量包。按月用量判断哪个套餐能覆盖需求，并核对 VLESS 节点的历史在线记录、客户端入口和新客券的适用条件。
+- [稳连云机场套餐｜月付价格、wenlian 验券范围与流量重置](https://sellvpn.net/posts/wenlianyun-review-2026/): 稳连云 100GB 月付标价 ¥8。根据 11 月 15 日的商店记录，说明 wenlian 在哪些套餐通过验证、哪些流量包无法用券，以及流量按哪一天重置。
+- [无忧链接机场测评 2026｜月付与永久流量包、wuyou666 优惠码](https://sellvpn.net/posts/wuyou-review-2026/): 无忧链接（无忧 Link）机场怎么样？整理 2026 年 8 月记录的 ¥19 月付、¥79 年付和 100GB、300GB 不限时包，说明 wuyou666 优惠与节点测试要点。
+- [XXYUN 加速机场套餐｜100GB 月付、首单 9 折与官方客户端](https://sellvpn.net/posts/xxyun-review-2026/): XXYUN 的 100GB 月付标价 ¥9.99，11 月新客验券预览为 ¥8.99。查看三档月付、两款不限时包、官方客户端要求和 42 条地区线路记录。
+- [一号 One 机场套餐｜¥7 月付、128GB 季付和一次性流量包](https://sellvpn.net/posts/yihao-one-review-2026/): 一号 One（一号 Cloud）100GB 月付与 128GB 特惠季付的价格对照，附 365 天流量包期限差异、优惠码 yihao 的核验进度及客户端导入方式。
+- [云界线机场测评｜130GB 月付、yjx888 首单价与五地测速](https://sellvpn.net/posts/yunjiexian-review-2026/): 云界线机场轻云 130GB 月付原价 19.88 元，使用 yjx888 首单应付 13.92 元。对照 7 款套餐、96 元年付小包验券结果及五地节点测速。
+- [隐私说明｜访问统计、外部链接与联系信息](https://sellvpn.net/privacy/): 查看 Sell VPN 如何通过 Google Analytics 4 统计访问，以及推广链接点击时记录哪些字段。页面也说明托管服务可能处理的访问日志、外部网站适用的隐私规则，以及主动联系本站时提供的信息如何使用。
+- [机场与 VPN 测评方法｜测速、解锁与证据记录](https://sellvpn.net/review-methodology/): 了解 Sell VPN 如何评估机场和 VPN 的延迟、丢包、流媒体与 AI 服务。本站测试记录日期、地区、运营商、节点和设备，并保存直连基线及原始记录。文中也说明怎样区分本站实测、公开资料和待复测结果。
+- [机场测评目录](https://sellvpn.net/reviews/): 按服务商查找 Sell VPN 的单家机场文章，了解每篇收录的是套餐和订阅规则、第三方节点测试样本，还是需要再次核对的历史资料。

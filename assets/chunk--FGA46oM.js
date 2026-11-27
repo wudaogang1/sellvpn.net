@@ -1,0 +1,1 @@
+var e=`/cover-science-internet-2026.jpg`;export{e as t};
