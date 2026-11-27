@@ -311,6 +311,27 @@
   border-bottom: 0;
 }
 
+.sellvpn-reviews-page .vp-doc-meta {
+  display: none;
+}
+
+.sellvpn-review-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 16px 0;
+}
+
+.sellvpn-reviews-page .vp-doc-container .vp-doc.plume-content table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.sellvpn-reviews-page table :is(th, td):first-child {
+  width: 30%;
+}
+
 .vp-doc-container .vp-doc.plume-content :where(p > img, p > a > img) {
   display: block;
   max-width: 100%;

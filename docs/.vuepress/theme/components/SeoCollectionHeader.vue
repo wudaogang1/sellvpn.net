@@ -26,6 +26,7 @@ const pages: Record<string, { title: string; description: string }> = {
 const content = computed(() => pages[route.path])
 const sections = [
   { path: '/blog/', label: '全部文章' },
+  { path: '/reviews/', label: '机场测评' },
   { path: '/blog/categories/', label: '分类' },
   { path: '/blog/tags/', label: '标签' },
   { path: '/blog/archives/', label: '归档' },

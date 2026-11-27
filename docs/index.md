@@ -73,12 +73,12 @@ config:
         <h3>各大机场优惠码</h3>
         <p>核对折扣、适用套餐和限制</p>
       </a>
-      <a class="sv-quick-card" href="/blog/categories/">
+      <a class="sv-quick-card" href="/reviews/">
         <span class="sv-card-icon sv-icon-reviews">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h8l4 4v12H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm7 0v5h5M8.5 13H15m-6.5 3.5h5"/></svg>
         </span>
-        <h3>按分类找文章</h3>
-        <p>浏览机场测评、推荐和教程</p>
+        <h3>机场测评目录</h3>
+        <p>按服务商查找单家测评</p>
       </a>
       <a class="sv-quick-card" href="#client-guides">
         <span class="sv-card-icon sv-icon-client">

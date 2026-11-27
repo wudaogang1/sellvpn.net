@@ -25,7 +25,7 @@ description: 查看 Flybit 的套餐流量、试用资料及亚洲和欧美的�
 **Flybit机场**是一家采用 **IPLC专线架构** 的科学上网服务商，主打稳定性与长期可用性。  
 公开资料称其面向 ChatGPT、Netflix、YouTube 等场景；晚高峰稳定性和实际可用性仍需在本地逐节点测试。
 
-- [官方入口：👉 https://goflybit.com ](https://www.fb7777.shop/#/register?code=gsg1tyG4) 
+- [打开 Flybit 邀请入口](https://www.fb7777.shop/#/register?code=gsg1tyG4)
 - 入门套餐：**25元 / 128GB / 30天**  
 - 优惠码：**flybit（新用户9折）**
 
@@ -285,7 +285,7 @@ A：安卓推荐 Clash，iOS 推荐 Clash MI或 Shadowrocket。
 
 可作为候选场景，建议先短周期测试再决定是否续费。
 
-[👉 官方入口：  https://goflybit.com](https://www.fb7777.shop/#/register?code=gsg1tyG4)
+[打开 Flybit 邀请入口](https://www.fb7777.shop/#/register?code=gsg1tyG4)
 
 ---
 

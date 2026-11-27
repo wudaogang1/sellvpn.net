@@ -340,6 +340,7 @@ export default defineUserConfig({
 
     navbar: [
       { text: '机场推荐', link: '/posts/vpn-airport-ranking-2026/' },
+      { text: '机场测评', link: '/reviews/' },
       { text: '优惠码', link: '/posts/airport-coupon-table/' },
       {
         text: '场景专题',
